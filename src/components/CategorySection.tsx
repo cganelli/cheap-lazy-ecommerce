@@ -17,6 +17,7 @@ interface CategorySectionProps {
   featuredImage?: string
   itemCount: number
   headingImage?: string
+  loading?: boolean
 }
 
 export default function CategorySection({ title, products, featuredImage, itemCount, headingImage }: CategorySectionProps) {

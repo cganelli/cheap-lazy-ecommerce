@@ -15,9 +15,10 @@ interface TrendingProduct {
 
 interface TrendingSectionProps {
   products: TrendingProduct[]
+  loading?: boolean
 }
 
-export default function TrendingSection({ products }: TrendingSectionProps) {
+export default function TrendingSection({ products, loading = false }: TrendingSectionProps) {
   const openAmazonLink = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer')
   }
@@ -30,11 +31,26 @@ export default function TrendingSection({ products }: TrendingSectionProps) {
           alt="What's New"
           className="h-16 mb-2 object-contain"
         />
-        <p className="text-gray-600">Hot deals and popular items flying off the shelves</p>
+        <p className="text-gray-600">
+          {loading ? 'Loading trending products...' : 'Hot deals and popular items flying off the shelves'}
+        </p>
       </div>
 
       <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-        {products.map((product, index) => (
+        {loading ? (
+          // Loading skeletons
+          [...Array(5)].map((_, index) => (
+            <div key={index} className="flex-shrink-0 w-64 border border-gray-200 bg-white rounded-lg animate-pulse">
+              <div className="bg-gray-300 h-48 rounded-t-lg"></div>
+              <div className="p-4">
+                <div className="bg-gray-300 h-4 rounded mb-2"></div>
+                <div className="bg-gray-300 h-4 rounded mb-2 w-3/4"></div>
+                <div className="bg-gray-300 h-6 rounded w-1/2"></div>
+              </div>
+            </div>
+          ))
+        ) : products.length > 0 ? (
+          products.map((product, index) => (
           <div
             key={product.id}
             className="flex-shrink-0 w-64 overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer border border-gray-200 bg-white rounded-lg"
@@ -86,7 +102,13 @@ export default function TrendingSection({ products }: TrendingSectionProps) {
               )}
             </div>
           </div>
-        ))}
+        ))
+        ) : (
+          // No products available
+          <div className="flex-shrink-0 w-full text-center py-8">
+            <p className="text-gray-500">No trending products available</p>
+          </div>
+        )}
       </div>
 
       <style jsx>{`
