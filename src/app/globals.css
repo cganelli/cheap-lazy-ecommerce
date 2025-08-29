@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Custom color palette */
+  --primary-red: #E63946;
+  --honeydew: #F1FAEE;
+  --light-blue: #A8DADC;
+  --cerulean: #457B9D;
+  --dark-blue: #1D3557;
+
+  /* Light theme */
+  --background: var(--honeydew);
+  --foreground: var(--dark-blue);
+  --card: var(--honeydew);
+  --card-foreground: var(--dark-blue);
+  --popover: var(--honeydew);
+  --popover-foreground: var(--dark-blue);
+  --primary: var(--primary-red);
+  --primary-foreground: var(--honeydew);
+  --secondary: var(--light-blue);
+  --secondary-foreground: var(--dark-blue);
+  --muted: var(--light-blue);
+  --muted-foreground: var(--cerulean);
+  --accent: var(--cerulean);
+  --accent-foreground: var(--honeydew);
+  --destructive: #ef4444;
+  --destructive-foreground: var(--honeydew);
+  --border: var(--light-blue);
+  --input: var(--light-blue);
+  --ring: var(--primary-red);
+  --radius: 0.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: var(--dark-blue);
+    --foreground: var(--honeydew);
+    --card: var(--dark-blue);
+    --card-foreground: var(--honeydew);
+    --popover: var(--dark-blue);
+    --popover-foreground: var(--honeydew);
+    --primary: var(--primary-red);
+    --primary-foreground: var(--honeydew);
+    --secondary: var(--cerulean);
+    --secondary-foreground: var(--honeydew);
+    --muted: var(--cerulean);
+    --muted-foreground: var(--light-blue);
+    --accent: var(--light-blue);
+    --accent-foreground: var(--dark-blue);
+    --destructive: #ef4444;
+    --destructive-foreground: var(--honeydew);
+    --border: var(--cerulean);
+    --input: var(--cerulean);
+    --ring: var(--primary-red);
+  }
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: #A0B5D0;
+  color: hsl(var(--foreground));
+  font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.custom-red {
+  color: var(--primary-red);
+}
+
+.custom-bg-red {
+  background-color: var(--primary-red);
+}
+
+.custom-blue {
+  color: var(--dark-blue);
+}
+
+.custom-bg-blue {
+  background-color: var(--dark-blue);
+}
+
+.custom-light-blue {
+  color: var(--light-blue);
+}
+
+.custom-bg-light-blue {
+  background-color: var(--light-blue);
+}
