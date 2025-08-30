@@ -2,18 +2,16 @@
 
 import { useState } from 'react'
 import { Search, Menu, X } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
-interface HeaderProps {
-  onSearch: (query: string) => void
-}
-
-export default function Header({ onSearch }: HeaderProps) {
+export default function Header() {
   const [searchQuery, setSearchQuery] = useState('')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const router = useRouter()
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    onSearch(searchQuery)
+    router.push('/?q=' + encodeURIComponent(searchQuery))
   }
 
   return (

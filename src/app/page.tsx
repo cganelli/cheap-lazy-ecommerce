@@ -73,7 +73,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen" style={{backgroundColor: '#A0B5D0'}}>
-      <Header onSearch={handleSearch} />
+      <Header />
       <CategoryNavigation onCategorySelect={handleCategorySelect} selectedCategory={selectedCategory} />
 
       {/* Hero Banner */}

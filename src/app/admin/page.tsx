@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Plus, Edit, Trash2, ExternalLink, Save, X } from 'lucide-react'
+import { safeStorage } from '@/lib/safeStorage'
 
 interface AmazonProduct {
   id: string
@@ -36,7 +37,7 @@ export default function AdminPage() {
 
   // Load products from localStorage on mount
   useEffect(() => {
-    const storedProducts = localStorage.getItem('amazon-products')
+    const storedProducts = safeStorage.get('amazon-products')
     if (storedProducts) {
       try {
         setProducts(JSON.parse(storedProducts))
@@ -49,7 +50,7 @@ export default function AdminPage() {
   // Save products to localStorage
   const saveProducts = (updatedProducts: AmazonProduct[]) => {
     setProducts(updatedProducts)
-    localStorage.setItem('amazon-products', JSON.stringify(updatedProducts))
+    safeStorage.set('amazon-products', JSON.stringify(updatedProducts))
   }
 
   // Extract ASIN from Amazon URL

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react'
 import { Product, Category, ProductFilters, ApiResponse } from '@/types/product'
 import { productApi } from '@/services/productApi'
 import { amazonProductService } from '@/services/amazonProductService'
+import { safeStorage } from '@/lib/safeStorage'
 
 // Hook for fetching all products with filters
 export function useProducts(filters: ProductFilters = {}) {
@@ -279,7 +280,7 @@ export function useFavorites() {
   useEffect(() => {
     // Load favorites from localStorage on mount
     try {
-      const stored = localStorage.getItem('product-favorites')
+      const stored = safeStorage.get('product-favorites')
       if (stored) {
         setFavorites(new Set(JSON.parse(stored)))
       }
@@ -295,7 +296,7 @@ export function useFavorites() {
 
       // Save to localStorage
       try {
-        localStorage.setItem('product-favorites', JSON.stringify(Array.from(newFavorites)))
+        safeStorage.set('product-favorites', JSON.stringify(Array.from(newFavorites)))
       } catch (error) {
         console.error('Failed to save favorites:', error)
       }
@@ -311,7 +312,7 @@ export function useFavorites() {
 
       // Save to localStorage
       try {
-        localStorage.setItem('product-favorites', JSON.stringify(Array.from(newFavorites)))
+        safeStorage.set('product-favorites', JSON.stringify(Array.from(newFavorites)))
       } catch (error) {
         console.error('Failed to save favorites:', error)
       }

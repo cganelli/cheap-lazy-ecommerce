@@ -1,14 +1,13 @@
+'use client'
+
 import Header from '@/components/Header'
 import { Button } from '@/components/ui/button'
 
 export default function About() {
-  const handleSearch = (query: string) => {
-    console.log('Search from About page:', query)
-  }
 
   return (
     <div className="min-h-screen" style={{backgroundColor: '#A0B5D0'}}>
-      <Header onSearch={handleSearch} />
+      <Header />
 
       <div className="bg-white min-h-screen">
         <div className="max-w-4xl mx-auto px-4 py-12">

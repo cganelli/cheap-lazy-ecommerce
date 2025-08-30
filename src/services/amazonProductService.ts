@@ -1,4 +1,5 @@
 import { Product, Category, ApiResponse, ProductFilters } from '@/types/product'
+import { safeStorage } from '@/lib/safeStorage'
 
 interface AmazonProduct {
   id: string
@@ -21,7 +22,7 @@ interface AmazonProduct {
 class AmazonProductService {
   private getStoredProducts(): AmazonProduct[] {
     try {
-      const stored = localStorage.getItem('amazon-products')
+      const stored = safeStorage.get('amazon-products')
       return stored ? JSON.parse(stored) : []
     } catch (error) {
       console.error('Failed to load Amazon products:', error)
