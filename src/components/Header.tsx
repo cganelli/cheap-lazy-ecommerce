@@ -1,15 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 
-type HeaderProps = { showSearch?: boolean }; // no onSearch
+type HeaderProps = { showSearch?: boolean }; // no onSearch prop
 
 export default function Header({ showSearch = true }: HeaderProps) {
   const router = useRouter();
-  const params = useSearchParams();
-  const [q, setQ] = useState(params.get('q') ?? '');
+  const [q, setQ] = useState(''); // ✅ no useSearchParams here
 
   const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
