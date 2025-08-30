@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -H 0.0.0.0 --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "bunx tsc --noEmit && next lint",
-    "format": "bunx biome format --write"
+    "dev": "next dev",
+    "build": "next build && next export",
+    "typecheck": "tsc --noEmit",
+    "lint": "next lint",
+    "preview:out": "npx http-server out -p 4321"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",

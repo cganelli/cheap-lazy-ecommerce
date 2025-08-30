@@ -1,5 +1,8 @@
 'use client'
 
+// Enforce static generation. If anything dynamic sneaks in, build will error (good TDD guard).
+export const dynamic = 'force-static';
+
 import { useState } from 'react'
 import Header from '@/components/Header'
 import TrendingSection from '@/components/TrendingSection'
