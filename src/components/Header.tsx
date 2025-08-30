@@ -1,18 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { Search, Menu, X } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function Header() {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const router = useRouter()
+  const params = useSearchParams()
+  const [searchQuery, setSearchQuery] = useState(params.get('q') ?? '')
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = useCallback((e: React.FormEvent) => {
     e.preventDefault()
-    router.push('/?q=' + encodeURIComponent(searchQuery))
-  }
+    const next = searchQuery.trim()
+    router.push(next ? '/?q=' + encodeURIComponent(next) : '/')
+  }, [searchQuery, router])
 
   return (
     <header className="w-full border-b border-gray-200 shadow-sm" style={{backgroundColor: '#A0B5D0'}}>

@@ -1,13 +1,10 @@
 import Header from '@/components/Header'
 
 export default function Privacy() {
-  const handleSearch = (query: string) => {
-    console.log('Search from Privacy page:', query)
-  }
 
   return (
     <div className="min-h-screen" style={{backgroundColor: '#A0B5D0'}}>
-      <Header onSearch={handleSearch} />
+      <Header />
 
       <div className="bg-white min-h-screen">
         <div className="max-w-4xl mx-auto px-4 py-12">
