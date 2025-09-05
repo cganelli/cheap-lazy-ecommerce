@@ -14,11 +14,6 @@ export const metadata: Metadata = {
   authors: [{ name: "Cheap & Lazy Stuff" }],
   creator: "cheapandlazystuff.com",
   publisher: "Cheap & Lazy Stuff",
-  icons: {
-    icon: '/favicon.png',
-    shortcut: '/favicon.png',
-    apple: '/favicon.png',
-  },
   formatDetection: {
     email: false,
     address: false,
