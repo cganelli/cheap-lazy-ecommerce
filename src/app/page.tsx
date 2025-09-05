@@ -11,11 +11,36 @@ import CategoryNavigation from '@/components/CategoryNavigation'
 import { Button } from '@/components/ui/button'
 import { useProducts, useCategories, useProductSearch, useProductFilters, useTrendingProducts } from '@/hooks/useProducts'
 import { amazonProductService } from '@/services/amazonProductService'
+import { useAmazonItems } from '@/hooks/useAmazonItems'
+import ProductCard from '@/components/ProductCard'
+
+// Amazon Products Section Component
+function AmazonProductsSection() {
+  const ASINS = ['B0ABC12345', 'B09XYZ6789', 'B0DEF45678']; // replace with your real ASINs
+  const { items, loading, error } = useAmazonItems(ASINS);
+
+  return (
+    <div>
+      {loading && <p className="text-center text-gray-600">Loading products…</p>}
+      {error && <p className="text-center text-red-600 text-sm">Error: {error}</p>}
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {items.map((it) => (
+          <ProductCard
+            key={it.asin}
+            {...it}
+            ugcBlurb="Small, quick, and easy to clean. Perfect for one person."
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All Categories')
-  const [email, setEmail] = useState('')
+  const [footerEmail, setFooterEmail] = useState('')
 
   // Use hooks for dynamic data
   const { filters, updateFilter } = useProductFilters({
@@ -51,11 +76,11 @@ export default function HomePage() {
     }
   }
 
-  const handleNewsletterSignup = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('Newsletter signup:', email)
-    alert('Thank you for subscribing to our newsletter!')
-    setEmail('')
+  const handleFooterNewsletterSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Footer newsletter signup:', footerEmail);
+    alert('Thank you for subscribing to our newsletter!');
+    setFooterEmail('');
   }
 
   // Group products by category for display
@@ -79,38 +104,10 @@ export default function HomePage() {
       {/* Hero Banner */}
       <div className="w-full mb-4" style={{backgroundColor: '#A0B5D0', height: '200px', overflow: 'hidden'}}>
         <img
-          src="/Short_banner.png"
+          src="/Cheap-Lazy-Hero-2.png"
           alt="Cheap & Lazy Stuff - Too cheap to waste money. Too lazy to waste time."
           className="w-full h-full object-cover"
         />
-      </div>
-
-      {/* Newsletter Signup Section */}
-      <div className="bg-white py-8 mb-8">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-2xl font-bold custom-blue mb-4">
-            📧 Get the Best Deals First!
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Subscribe to our newsletter and never miss out on amazing deals, new arrivals, and exclusive offers.
-          </p>
-          <form onSubmit={handleNewsletterSignup} className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="flex-1 w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500"
-            />
-            <Button type="submit" className="custom-bg-red hover:bg-red-600 text-white w-full sm:w-auto">
-              Subscribe Now
-            </Button>
-          </form>
-          <p className="text-xs text-gray-500 mt-3">
-            We respect your privacy. Unsubscribe anytime.
-          </p>
-        </div>
       </div>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
@@ -288,6 +285,16 @@ export default function HomePage() {
           </>
         )}
 
+        {/* Amazon Products Section */}
+        <div className="bg-white py-12 mb-8">
+          <div className="max-w-7xl mx-auto px-4">
+            <h2 className="text-2xl font-bold custom-blue mb-6 text-center">
+              Actually Good Cheap Finds
+            </h2>
+            <AmazonProductsSection />
+          </div>
+        </div>
+
         {/* API Status Indicator */}
         <div className="fixed bottom-4 right-4 z-50">
           <div className="bg-white rounded-lg shadow-lg p-3 text-sm">
@@ -313,6 +320,28 @@ export default function HomePage() {
         {/* Footer */}
         <footer className="mt-16 py-8 border-t border-gray-200">
           <div className="max-w-7xl mx-auto px-4">
+            {/* Newsletter Signup Section */}
+            <div className="bg-white py-8 mb-8">
+              <div className="max-w-4xl mx-auto px-4 text-center">
+                <h2 className="text-2xl font-bold custom-blue mb-4">Get the Best Deals First!</h2>
+                <p className="text-gray-600 mb-6">Subscribe to our newsletter and never miss out on amazing deals, new arrivals, and exclusive offers.</p>
+                <form onSubmit={handleFooterNewsletterSignup} className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
+                  <input
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={footerEmail}
+                    onChange={(e) => setFooterEmail(e.target.value)}
+                    required
+                    className="flex-1 w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                  />
+                  <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary h-10 px-4 py-2 custom-bg-red hover:bg-red-600 text-white w-full sm:w-auto" type="submit">
+                    Subscribe Now
+                  </button>
+                </form>
+                <p className="text-xs text-gray-500 mt-3">We respect your privacy. Unsubscribe anytime.</p>
+              </div>
+            </div>
+
             <div className="text-center mb-6">
               <p className="text-gray-600 mb-2">
                 © 2025 Cheap & Lazy Stuff. Find great deals on everything you need.

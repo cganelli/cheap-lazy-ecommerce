@@ -2,6 +2,8 @@
 
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
+import { useRouter } from 'next/navigation'
+import { useCallback } from 'react'
 
 interface CategoryNavigationProps {
   onCategorySelect: (category: string) => void
@@ -39,6 +41,14 @@ const allCategories = [
 
 export default function CategoryNavigation({ onCategorySelect, selectedCategory = "All Categories" }: CategoryNavigationProps) {
   const [showAllCategories, setShowAllCategories] = useState(false)
+  const router = useRouter()
+  const [q, setQ] = useState('')
+
+  const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const next = q.trim();
+    router.push(next ? '/?q=' + encodeURIComponent(next) : '/');
+  }, [q, router]);
 
   return (
     <div className="bg-white border-b border-gray-200 shadow-sm">
@@ -70,6 +80,22 @@ export default function CategoryNavigation({ onCategorySelect, selectedCategory 
               {category}
             </button>
           ))}
+
+          {/* Search Box - positioned after Pet Care */}
+          <form onSubmit={onSubmit} className="flex items-center gap-2 ml-4">
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search products…"
+              className="border rounded px-2 py-1 text-sm"
+            />
+            <button 
+              type="submit" 
+              className="whitespace-nowrap px-4 py-2 rounded-md transition-colors custom-bg-red text-white hover:bg-red-600"
+            >
+              Search
+            </button>
+          </form>
         </div>
 
         {/* Dropdown Categories (when expanded) */}

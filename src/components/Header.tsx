@@ -8,34 +8,57 @@ type HeaderProps = { showSearch?: boolean }; // no onSearch prop
 
 export default function Header({ showSearch = true }: HeaderProps) {
   const router = useRouter();
-  const [q, setQ] = useState(''); // ✅ no useSearchParams here
+  const [email, setEmail] = useState('');
 
-  const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+  const handleNewsletterSignup = (e: React.FormEvent) => {
     e.preventDefault();
-    const next = q.trim();
-    router.push(next ? '/?q=' + encodeURIComponent(next) : '/');
-  }, [q, router]);
+    console.log('Newsletter signup:', email);
+    alert('Thank you for subscribing to our newsletter!');
+    setEmail('');
+  };
 
   return (
     <header className="border-b">
-      <nav className="max-w-5xl mx-auto flex items-center gap-4 p-4">
-        <Link href="/">Home</Link>
-        <Link href="/about">About</Link>
-        <Link href="/terms">Terms</Link>
-        <Link href="/privacy">Privacy</Link>
+      <nav className="max-w-5xl mx-auto flex items-center gap-4 p-1">
+        <div className="flex items-center gap-4">
+          <Link href="/" style={{color: '#1D3557'}}>Home</Link>
+          <Link href="/about" style={{color: '#1D3557'}}>About</Link>
+          <Link href="/privacy" style={{color: '#1D3557'}}>Privacy</Link>
+          <Link href="/terms" style={{color: '#1D3557'}}>Terms</Link>
+        </div>
 
         {showSearch && (
-          <form onSubmit={onSubmit} className="ml-auto flex items-center gap-2">
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search products…"
-              className="border rounded px-2 py-1"
-            />
-            <button type="submit" className="border rounded px-3 py-1">Search</button>
-          </form>
+          <div className="flex-1 flex items-center justify-end">
+            <div className="text-right">
+              <h3 className="text-sm font-semibold mb-1" style={{color: '#1D3557'}}>Get the Best Deals First!</h3>
+              <form onSubmit={handleNewsletterSignup} className="flex items-center gap-2">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="border rounded px-2 py-1 text-sm"
+                />
+                <button type="submit" className="border rounded px-2 py-1 text-sm bg-red-600 text-white hover:bg-red-700">Subscribe</button>
+              </form>
+            </div>
+          </div>
         )}
       </nav>
+      
+      {/* Amazon Affiliate Copy - aligned with privacy text */}
+      <div className="max-w-5xl mx-auto px-4 pb-1 flex justify-between items-start">
+        <div className="flex items-start">
+          <div className="w-6"></div> {/* Spacer to align with "Home" */}
+          <p className="text-sm" style={{color: '#1D3557', opacity: 0.7}}>
+            As an Amazon Associate, I may earn from qualifying purchases.
+          </p>
+        </div>
+        <div className="text-right">
+          <p className="text-sm" style={{color: '#1D3557'}}>We respect your privacy. Unsubscribe anytime.</p>
+        </div>
+      </div>
     </header>
   );
 }
