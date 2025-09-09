@@ -1,4 +1,4 @@
-/*    /index.html   200
+# keep this file, but remove the 410 rule for amazon-items
+# (other redirects go here if you have them)
 
-# Kill switch for Amazon items endpoint
-/.netlify/functions/amazon-items  /410.html  410
+/*    /index.html   200
