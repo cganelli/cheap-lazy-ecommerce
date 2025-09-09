@@ -1,1 +1,4 @@
 /*    /index.html   200
+
+# Kill switch for Amazon items endpoint
+/.netlify/functions/amazon-items  /410.html  410

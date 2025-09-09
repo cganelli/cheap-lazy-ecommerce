@@ -28,18 +28,33 @@ export function useAmazonItems(asins: string[]) {
     setLoading(true);
     setError(null);
 
-    const url = '/.netlify/functions/amazon-items?asins=' + encodeURIComponent(asins.join(','));
-
-    fetch(url)
-      .then(r => r.json())
-      .then((data) => {
+    const fetchAmazonItems = async () => {
+      try {
+        const res = await fetch("/.netlify/functions/amazon-items", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            "x-site-key": process.env.NEXT_PUBLIC_SITE_KEY as string,
+          },
+          body: JSON.stringify({ asins }),
+        });
+        
+        if (!res.ok) {
+          throw new Error(`Request failed ${res.status}`);
+        }
+        
+        const data = await res.json();
         if (cancelled) return;
         if (data?.items) setItems(data.items);
         if (data?.errors?.length) console.warn('PA-API Errors', data.errors);
-      })
-      .catch((e) => !cancelled && setError(String(e)))
-      .finally(() => !cancelled && setLoading(false));
+      } catch (e) {
+        if (!cancelled) setError(String(e));
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
 
+    fetchAmazonItems();
     return () => { cancelled = true; };
   }, [asins]);
 

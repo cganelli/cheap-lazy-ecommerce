@@ -4,15 +4,43 @@
 const aws4 = require('aws4');
 
 exports.handler = async (event) => {
+  const cors = {
+    "access-control-allow-origin": "https://www.cheapandlazystuff.com",
+    "access-control-allow-methods": "POST, OPTIONS",
+    "access-control-allow-headers": "x-site-key, content-type",
+    "vary": "Origin",
+  };
+
+  if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 204, headers: cors, body: "" };
+  }
+
+  if (event.httpMethod !== "POST") {
+    return { statusCode: 405, headers: cors, body: "Use POST" };
+  }
+
+  const key = event.headers["x-site-key"] || event.headers["X-Site-Key"];
+  if (key !== process.env.SITE_KEY) {
+    return { statusCode: 403, headers: cors, body: "Forbidden" };
+  }
+
   try {
     const { PAAPI_ACCESS_KEY, PAAPI_SECRET_KEY, PAAPI_PARTNER_TAG } = process.env;
     if (!PAAPI_ACCESS_KEY || !PAAPI_SECRET_KEY || !PAAPI_PARTNER_TAG) {
-      return json(500, { error: 'Missing PA-API env vars' });
+      return json(500, { error: 'Missing PA-API env vars' }, cors);
     }
 
-    const asinsParam = event.queryStringParameters?.asins || '';
-    const asins = asinsParam.split(',').map(s => s.trim()).filter(Boolean);
-    if (!asins.length) return json(400, { error: 'Provide ?asins=ASIN1,ASIN2' });
+    let asins = [];
+    try {
+      const body = JSON.parse(event.body || '{}');
+      asins = body.asins || [];
+    } catch (e) {
+      return json(400, { error: 'Invalid JSON body' }, cors);
+    }
+    
+    if (!Array.isArray(asins) || !asins.length) {
+      return json(400, { error: 'Provide asins array in POST body' }, cors);
+    }
 
     const host   = 'webservices.amazon.com';
     const region = 'us-east-1';
@@ -60,9 +88,9 @@ exports.handler = async (event) => {
     const items = (data.ItemsResult?.Items || []).map(mapItem);
 
     // Include any API Errors array for visibility
-    return json(200, { items, errors: data.Errors || null });
+    return json(200, { items, errors: data.Errors || null }, cors);
   } catch (err) {
-    return json(500, { error: String(err?.message || err) });
+    return json(500, { error: String(err?.message || err) }, cors);
   }
 };
 
@@ -109,13 +137,12 @@ function mapItem(item) {
   };
 }
 
-function json(statusCode, obj) {
+function json(statusCode, obj, corsHeaders = {}) {
   return {
     statusCode,
     headers: {
       'content-type': 'application/json',
-      'access-control-allow-origin': '*',
-      'access-control-allow-methods': 'GET,OPTIONS',
+      ...corsHeaders,
     },
     body: JSON.stringify(obj),
   };
