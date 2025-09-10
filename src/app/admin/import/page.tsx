@@ -89,7 +89,7 @@ export default function ImportProductsPage() {
         setRows(parsed);
         setStatus(`Parsed rows: ${parsed.length}. Unique ASINs: ${new Set(parsed.map((r) => r.asin)).size}`);
       },
-      error: (e) => {
+      error: (e: Error) => {
         setErrors([e.message]);
         setStatus("");
       },
@@ -116,7 +116,7 @@ export default function ImportProductsPage() {
         setCsvText(Papa.unparse(parsed)); // also fill the textarea with normalized CSV
         setStatus(`Parsed rows: ${parsed.length}. Unique ASINs: ${new Set(parsed.map((r) => r.asin)).size}`);
       },
-      error: (e) => {
+      error: (e: Error) => {
         setErrors([e.message]);
         setStatus("");
       },
