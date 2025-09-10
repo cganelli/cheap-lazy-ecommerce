@@ -1,46 +1,39 @@
 // netlify/edge-functions/guard-amazon-items.ts
-export default async (req: Request, _ctx: any) => {
-  const url = new URL(req.url);
 
-  // === CORS / Preflight ===
-  const ALLOW_ORIGIN = "https://cheapandlazystuff.com"; // adjust if using a preview domain
-  const corsHeaders = {
-    "access-control-allow-origin": ALLOW_ORIGIN,
-    "access-control-allow-methods": "POST, OPTIONS",
-    "access-control-allow-headers": "content-type, x-site-key",
-    "vary": "origin",
-  };
+// Make TS happy during Next.js build and read the key at the edge.
+declare const Deno:
+  | { env: { get(name: string): string | undefined } }
+  | undefined;
 
+const SITE_KEY =
+  (typeof Deno !== "undefined" && Deno?.env?.get("SITE_KEY")) || "";
+
+export default async function guard(req: Request, context: any) {
+  // Handle CORS preflight quickly
   if (req.method === "OPTIONS") {
-    return new Response(null, { status: 204, headers: corsHeaders });
+    return new Response(null, {
+      status: 204,
+      headers: {
+        "access-control-allow-origin": req.headers.get("origin") ?? "*",
+        "access-control-allow-headers": "content-type,x-site-key",
+        "access-control-allow-methods": "POST,OPTIONS",
+      },
+    });
   }
 
-  // === Same-site check ===
-  const origin = req.headers.get("origin") || "";
-  const referer = req.headers.get("referer") || "";
-  const sameSite =
-    origin.startsWith(ALLOW_ORIGIN) ||
-    referer.startsWith(ALLOW_ORIGIN) ||
-    origin === "" || // allow server-to-server / same-origin without origin header
-    referer === "";
-
-  if (!sameSite) {
-    return new Response("Forbidden (origin)", { status: 403, headers: corsHeaders });
+  if (!SITE_KEY) {
+    return new Response("SITE_KEY not set", { status: 500 });
   }
 
-  // === Method check ===
   if (req.method !== "POST") {
-    return new Response("Method Not Allowed", { status: 405, headers: corsHeaders });
+    return new Response("Method Not Allowed", { status: 405 });
   }
 
-  // === Header key check ===
-  const hasKey = req.headers.get("x-site-key") === "your-secure-random-string-here"; // keep in sync with Netlify env
-  if (!hasKey) {
-    return new Response("Unauthorized", { status: 401, headers: corsHeaders });
+  const headerKey = req.headers.get("x-site-key");
+  if (!headerKey || headerKey !== SITE_KEY) {
+    return new Response("Forbidden", { status: 403 });
   }
 
-  // Allow through to the function
-  return await _ctx.next();
-};
-
-export const config = { path: "/.netlify/functions/amazon-items" };
+  // All good — continue to the serverless function
+  return context.next();
+}
