@@ -1,40 +1,46 @@
-// Edge guard for /.netlify/functions/amazon-items
-export default async (req: Request, ctx: any) => {
-  const origin = req.headers.get("origin") || "";
-  const referer = req.headers.get("referer") || "";
-  const ua = req.headers.get("user-agent") || "";
-  const method = req.method;
+// netlify/edge-functions/guard-amazon-items.ts
+export default async (req: Request, _ctx: any) => {
+  const url = new URL(req.url);
 
-  // allow same-site only
-  const sameSite =
-    origin.startsWith("https://www.cheapandlazystuff.com") ||
-    referer.startsWith("https://www.cheapandlazystuff.com") ||
-    origin.startsWith("https://cheapandlazystuff.com") ||
-    referer.startsWith("https://cheapandlazystuff.com");
-
-  // require POST and a simple header key
-  // TODO: Fix environment variable access in edge functions
-  const hasKey = req.headers.get("x-site-key") === "your-site-key-here";
-
-  // drop obvious bots
-  const isBot = /\b(bot|crawler|spider|scan|monitor|curl|wget)\b/i.test(ua);
-
-  const cors = {
-    "access-control-allow-origin": "https://www.cheapandlazystuff.com",
+  // === CORS / Preflight ===
+  const ALLOW_ORIGIN = "https://cheapandlazystuff.com"; // adjust if using a preview domain
+  const corsHeaders = {
+    "access-control-allow-origin": ALLOW_ORIGIN,
     "access-control-allow-methods": "POST, OPTIONS",
-    "access-control-allow-headers": "x-site-key, content-type",
-    "vary": "Origin",
+    "access-control-allow-headers": "content-type, x-site-key",
+    "vary": "origin",
   };
 
-  if (method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
-
-  if (!sameSite || method !== "POST" || !hasKey || isBot) {
-    return new Response("Forbidden", { status: 403, headers: cors });
+  if (req.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: corsHeaders });
   }
 
-  return ctx.next();
+  // === Same-site check ===
+  const origin = req.headers.get("origin") || "";
+  const referer = req.headers.get("referer") || "";
+  const sameSite =
+    origin.startsWith(ALLOW_ORIGIN) ||
+    referer.startsWith(ALLOW_ORIGIN) ||
+    origin === "" || // allow server-to-server / same-origin without origin header
+    referer === "";
+
+  if (!sameSite) {
+    return new Response("Forbidden (origin)", { status: 403, headers: corsHeaders });
+  }
+
+  // === Method check ===
+  if (req.method !== "POST") {
+    return new Response("Method Not Allowed", { status: 405, headers: corsHeaders });
+  }
+
+  // === Header key check ===
+  const hasKey = req.headers.get("x-site-key") === "YOUR_ACTUAL_SITE_KEY"; // keep in sync with Netlify env
+  if (!hasKey) {
+    return new Response("Unauthorized", { status: 401, headers: corsHeaders });
+  }
+
+  // Allow through to the function
+  return await _ctx.next();
 };
 
-export const config = {
-  path: "/.netlify/functions/amazon-items",
-};
+export const config = { path: "/.netlify/functions/amazon-items" };

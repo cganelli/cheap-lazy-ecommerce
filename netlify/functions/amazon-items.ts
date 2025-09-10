@@ -2,28 +2,55 @@
 import type { Handler } from '@netlify/functions'
 import { readCache } from './_lib/cache'
 
-const ORIGIN = 'https://cheapandlazystuff.com'
-const REQUIRED_HEADER = 'x-site-key'
+// at top-level
+const ALLOW_ORIGIN = "https://cheapandlazystuff.com";
+const baseHeaders = {
+  "access-control-allow-origin": ALLOW_ORIGIN,
+  "access-control-allow-methods": "POST, OPTIONS",
+  "access-control-allow-headers": "content-type, x-site-key",
+  "content-type": "application/json",
+};
 
 export const handler: Handler = async (event) => {
-  // method + header checks (keep aligned with your edge guard)
-  if (event.httpMethod !== 'POST') {
-    return response(405, { error: 'POST required' })
+  if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 204, headers: baseHeaders, body: "" };
   }
-  const siteKey = event.headers[REQUIRED_HEADER]
+
+  if (event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      headers: baseHeaders,
+      body: JSON.stringify({ error: "POST only" }),
+    };
+  }
+
+  // method + header checks (keep aligned with your edge guard)
+  const siteKey = event.headers['x-site-key']
   if (!siteKey || siteKey !== process.env.SITE_KEY) {
-    return response(401, { error: 'Unauthorized' })
+    return {
+      statusCode: 401,
+      headers: baseHeaders,
+      body: JSON.stringify({ error: 'Unauthorized' })
+    }
   }
 
   // CORS
   const origin = event.headers.origin || ''
-  if (origin && origin !== ORIGIN) {
-    return response(403, { error: 'Bad origin' })
+  if (origin && origin !== ALLOW_ORIGIN) {
+    return {
+      statusCode: 403,
+      headers: baseHeaders,
+      body: JSON.stringify({ error: 'Bad origin' })
+    }
   }
 
   const cached = await readCache()
   if (!cached) {
-    return response(503, { error: 'Cache empty' })
+    return {
+      statusCode: 503,
+      headers: baseHeaders,
+      body: JSON.stringify({ error: 'Cache empty' })
+    }
   }
 
   // support optional filtering by ASIN list from client
@@ -37,24 +64,14 @@ export const handler: Handler = async (event) => {
     ? cached.items.filter(i => filterAsins.includes(String(i.asin)))
     : cached.items
 
-  return response(200, {
-    updatedAt: cached.updatedAt,
-    ttlSeconds: cached.ttlSeconds,
-    count: items.length,
-    items,
-  })
-}
-
-function response(statusCode: number, body: any) {
   return {
-    statusCode,
-    body: JSON.stringify(body),
-    headers: {
-      'content-type': 'application/json',
-      'access-control-allow-origin': ORIGIN,
-      'access-control-allow-headers': REQUIRED_HEADER + ', content-type',
-      'access-control-allow-methods': 'POST, OPTIONS',
-      'cache-control': 'no-store',
-    },
+    statusCode: 200,
+    headers: baseHeaders,
+    body: JSON.stringify({
+      updatedAt: cached.updatedAt,
+      ttlSeconds: cached.ttlSeconds,
+      count: items.length,
+      items,
+    }),
   }
 }
