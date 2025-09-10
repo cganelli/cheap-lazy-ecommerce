@@ -13,9 +13,11 @@ export type CachedItems = {
 const store = getStore({ name: STORE_NAME })
 
 export async function readCache(): Promise<CachedItems | null> {
-  return await store.getJSON(KEY)
+  const data = await store.get(KEY)
+  if (!data) return null
+  return JSON.parse(data)
 }
 
 export async function writeCache(payload: CachedItems) {
-  await store.setJSON(KEY, payload)
+  await store.set(KEY, JSON.stringify(payload))
 }
