@@ -3,6 +3,17 @@
 import { useCallback, useMemo, useState } from "react";
 import Papa from "papaparse";
 
+// normalize headers: strip BOM, trim, lowercase, turn spaces into underscores
+const normalizeHeader = (h: string) =>
+  h.replace(/^\uFEFF/, "").trim().toLowerCase().replace(/\s+/g, "_");
+
+type RawRow = {
+  asin?: string;
+  name?: string;
+  affiliate_url?: string;
+  category?: string;
+};
+
 type Row = {
   asin: string;
   name: string;
@@ -10,13 +21,43 @@ type Row = {
   category?: string;
 };
 
-const REQUIRED = ["asin", "name", "affiliate_url"] as const;
-
-function normalizeHeader(h: string) {
-  return h.trim().toLowerCase().replace(/\s+/g, "_");
+// parse CSV text (pasted)
+function parseCsvText(text: string): { rows: RawRow[]; fields: string[] } {
+  const res = Papa.parse<RawRow>(text.replace(/^\uFEFF/, ""), {
+    header: true,
+    skipEmptyLines: true,
+    transformHeader: normalizeHeader,
+  });
+  const fields = (res.meta.fields || []).map(normalizeHeader);
+  return { rows: (res.data || []) as RawRow[], fields };
 }
 
-function cleanRow(r: any): Row | null {
+// parse CSV file (upload/drag-drop)
+async function parseCsvFile(file: File): Promise<{ rows: RawRow[]; fields: string[] }> {
+  return new Promise((resolve, reject) => {
+    Papa.parse<RawRow>(file, {
+      header: true,
+      skipEmptyLines: true,
+      transformHeader: normalizeHeader,
+      complete: (res) => {
+        const fields = (res.meta.fields || []).map(normalizeHeader);
+        resolve({ rows: (res.data || []) as RawRow[], fields });
+      },
+      error: reject,
+    });
+  });
+}
+
+// validate presence of required headers
+function requireHeaders(fields: string[]) {
+  const needed = ["asin", "name", "affiliate_url"];
+  const missing = needed.filter((f) => !fields.includes(f));
+  if (missing.length) {
+    throw new Error(`Missing header(s): ${missing.join(", ")}`);
+  }
+}
+
+function cleanRow(r: RawRow): Row | null {
   const asin = String(r.asin ?? "").trim();
   const name = String(r.name ?? "").trim();
   const affiliate_url = String(r.affiliate_url ?? "").trim();
@@ -32,64 +73,51 @@ export default function ImportProductsPage() {
   const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const parseCsvText = useCallback((text: string) => {
+  const handleParseText = useCallback((text: string) => {
     setErrors([]);
-    const res = Papa.parse(text, {
-      header: true,
-      skipEmptyLines: "greedy",
-      transformHeader: normalizeHeader,
-    });
-
-    const errs: string[] = [];
-    // Validate headers
-    const headers = (res.meta.fields ?? []).map(String);
-    for (const key of REQUIRED) {
-      if (!headers.includes(key)) errs.push(`Missing header: ${key}`);
-    }
-
-    const parsed: Row[] = [];
-    if (!errs.length) {
-      for (const r of res.data as any[]) {
+    try {
+      const { rows: rawRows, fields } = parseCsvText(text);
+      requireHeaders(fields);
+      
+      const parsed: Row[] = [];
+      for (const r of rawRows) {
         const cleaned = cleanRow(r);
         if (cleaned) parsed.push(cleaned);
       }
-      if (!parsed.length) errs.push("No valid rows found.");
+      if (!parsed.length) {
+        setErrors(["No valid rows found."]);
+      } else {
+        setRows(parsed);
+        setErrors([]);
+      }
+    } catch (e: any) {
+      setErrors([e.message || "Parse error"]);
     }
-
-    setRows(parsed);
-    setErrors(errs);
   }, []);
 
-  const handleFile = useCallback((file: File) => {
+  const handleFile = useCallback(async (file: File) => {
     setLoading(true);
     setErrors([]);
-    Papa.parse(file, {
-      header: true,
-      skipEmptyLines: "greedy",
-      transformHeader: normalizeHeader,
-      complete: (res) => {
-        const errs: string[] = [];
-        const headers = (res.meta.fields ?? []).map(String);
-        for (const key of REQUIRED) {
-          if (!headers.includes(key)) errs.push(`Missing header: ${key}`);
-        }
-        const parsed: Row[] = [];
-        if (!errs.length) {
-          for (const r of res.data as any[]) {
-            const cleaned = cleanRow(r);
-            if (cleaned) parsed.push(cleaned);
-          }
-          if (!parsed.length) errs.push("No valid rows found.");
-        }
+    try {
+      const { rows: rawRows, fields } = await parseCsvFile(file);
+      requireHeaders(fields);
+      
+      const parsed: Row[] = [];
+      for (const r of rawRows) {
+        const cleaned = cleanRow(r);
+        if (cleaned) parsed.push(cleaned);
+      }
+      if (!parsed.length) {
+        setErrors(["No valid rows found."]);
+      } else {
         setRows(parsed);
-        setErrors(errs);
-        setLoading(false);
-      },
-      error: (e) => {
-        setErrors([e.message]);
-        setLoading(false);
-      },
-    });
+        setErrors([]);
+      }
+    } catch (e: any) {
+      setErrors([e.message || "Parse error"]);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   const handleFileInput = useCallback(
@@ -213,7 +241,7 @@ export default function ImportProductsPage() {
         placeholder="Or paste CSV text here…"
         value={csvText}
         onChange={(e) => setCsvText(e.target.value)}
-        onBlur={() => csvText && parseCsvText(csvText)}
+        onBlur={() => csvText && handleParseText(csvText)}
         spellCheck={false}
         style={{
           width: "100%",
@@ -228,7 +256,7 @@ export default function ImportProductsPage() {
       />
 
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-        <button onClick={() => parseCsvText(csvText)}>Parse pasted CSV</button>
+        <button onClick={() => handleParseText(csvText)}>Parse pasted CSV</button>
         <button onClick={previewWithImages} disabled={!rows.length || loading}>
           Preview with images
         </button>
