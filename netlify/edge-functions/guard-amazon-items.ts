@@ -33,4 +33,3 @@ export default async function guard(req: Request) {
 export const config = {
   path: '/.netlify/functions/amazon-items',
 };
-};
