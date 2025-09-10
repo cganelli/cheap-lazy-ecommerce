@@ -14,11 +14,6 @@ export const metadata: Metadata = {
   authors: [{ name: "Cheap & Lazy Stuff" }],
   creator: "cheapandlazystuff.com",
   publisher: "Cheap & Lazy Stuff",
-  icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/favicon.ico',
-  },
   formatDetection: {
     email: false,
     address: false,
@@ -44,6 +39,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico?v=4" sizes="any" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png?v=4" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png?v=4" />
+      </head>
       <body className={`${inter.variable} antialiased`}>
         {children}
       </body>
