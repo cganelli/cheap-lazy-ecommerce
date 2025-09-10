@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@netlify/blobs": "^10.0.10",
+    "@netlify/functions": "^4.2.5",
     "@radix-ui/react-slot": "^1.2.3",
     "aws4": "^1.13.2",
     "class-variance-authority": "^0.7.1",
