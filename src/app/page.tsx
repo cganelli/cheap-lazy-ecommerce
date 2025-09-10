@@ -16,8 +16,20 @@ import ProductCard from '@/components/ProductCard'
 
 // Amazon Products Section Component
 function AmazonProductsSection() {
-  const ASINS = ['B0ABC12345', 'B09XYZ6789', 'B0DEF45678']; // replace with your real ASINs
+  // Only fetch Amazon products if we have real ASINs configured
+  // For now, return empty to avoid hanging on fake ASINs
+  const ASINS: string[] = []; // Add your real ASINs here when ready
   const { items, loading, error } = useAmazonItems(ASINS);
+
+  // Don't show anything if no ASINs are configured
+  if (ASINS.length === 0) {
+    return (
+      <div className="text-center text-gray-600 py-8">
+        <p>No Amazon products configured yet.</p>
+        <p className="text-sm mt-2">Add your ASINs to display real products.</p>
+      </div>
+    );
+  }
 
   return (
     <div>

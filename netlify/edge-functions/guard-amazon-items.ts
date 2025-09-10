@@ -34,7 +34,7 @@ export default async (req: Request, _ctx: any) => {
   }
 
   // === Header key check ===
-  const hasKey = req.headers.get("x-site-key") === "YOUR_ACTUAL_SITE_KEY"; // keep in sync with Netlify env
+  const hasKey = req.headers.get("x-site-key") === "your-secure-random-string-here"; // keep in sync with Netlify env
   if (!hasKey) {
     return new Response("Unauthorized", { status: 401, headers: corsHeaders });
   }
