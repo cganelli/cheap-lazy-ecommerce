@@ -151,6 +151,82 @@ export default function AdminPage() {
     }
   }
 
+  // Simple CSV import (no Amazon API calls)
+  const importProductsFromCSV = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) {
+      return
+    }
+
+    if (!file.name.toLowerCase().endsWith('.csv')) {
+      alert('Please select a CSV file')
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      try {
+        const csvText = e.target?.result as string
+        const lines = csvText.split('\n').filter(line => line.trim())
+        
+        if (lines.length < 2) {
+          alert('CSV file must have at least a header row and one data row')
+          return
+        }
+
+        // Parse header
+        const headers = lines[0].split(',').map(h => h.trim().toLowerCase())
+        const requiredHeaders = ['asin', 'name', 'affiliate_url']
+        const missingHeaders = requiredHeaders.filter(h => !headers.includes(h))
+        
+        if (missingHeaders.length > 0) {
+          alert(`Missing required columns: ${missingHeaders.join(', ')}`)
+          return
+        }
+
+        // Parse data rows
+        const importedProducts: AmazonProduct[] = []
+        
+        for (let i = 1; i < lines.length; i++) {
+          const values = lines[i].split(',').map(v => v.trim())
+          if (values.length >= 3) {
+            const asin = values[headers.indexOf('asin')] || ''
+            const name = values[headers.indexOf('name')] || ''
+            const affiliateUrl = values[headers.indexOf('affiliate_url')] || ''
+            const category = values[headers.indexOf('category')] || 'General'
+
+            if (asin && name && affiliateUrl) {
+              importedProducts.push({
+                id: Date.now().toString() + i,
+                title: name,
+                category: category,
+                price: 0, // Will need to be filled in manually
+                amazonUrl: affiliateUrl,
+                amazonASIN: asin,
+                imageUrl: '/placeholder-product.png', // Placeholder image
+                description: '',
+                tags: [],
+                dateAdded: new Date().toISOString(),
+                isPurchased: false
+              })
+            }
+          }
+        }
+
+        if (importedProducts.length > 0) {
+          saveProducts([...products, ...importedProducts])
+          alert(`Successfully imported ${importedProducts.length} products from CSV!`)
+        } else {
+          alert('No valid products found in CSV file')
+        }
+      } catch (error) {
+        alert('Error importing CSV file. Please check the format.')
+        console.error('CSV import error:', error)
+      }
+    }
+    reader.readAsText(file)
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -173,6 +249,17 @@ export default function AdminPage() {
                   type="file"
                   accept=".json"
                   onChange={importProducts}
+                  className="hidden"
+                />
+              </label>
+              <label className="cursor-pointer">
+                <Button variant="outline" asChild>
+                  <span>Import CSV</span>
+                </Button>
+                <input
+                  type="file"
+                  accept=".csv"
+                  onChange={importProductsFromCSV}
                   className="hidden"
                 />
               </label>
