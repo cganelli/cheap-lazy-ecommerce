@@ -153,20 +153,21 @@ export default function AdminPage() {
 
   // Import products from CSV
   const importProductsFromCSV = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (!file) {
-      return
-    }
+    try {
+      const file = event.target.files?.[0]
+      if (!file) {
+        return
+      }
 
-    // Check if it's a CSV file
-    if (!file.name.toLowerCase().endsWith('.csv')) {
-      alert('Please select a CSV file')
-      return
-    }
+      // Check if it's a CSV file
+      if (!file.name.toLowerCase().endsWith('.csv')) {
+        alert('Please select a CSV file')
+        return
+      }
 
-    const reader = new FileReader()
-    reader.onload = async (e) => {
-      try {
+      const reader = new FileReader()
+      reader.onload = async (e) => {
+        try {
         const csvText = e.target?.result as string
         const lines = csvText.split('\n').filter(line => line.trim())
         
@@ -226,7 +227,7 @@ export default function AdminPage() {
 
         // Fetch product data from Amazon PA-API
         try {
-          const siteKey = process.env.NEXT_PUBLIC_SITE_KEY
+          const siteKey = process.env.NEXT_PUBLIC_SITE_KEY || ''
           if (!siteKey) {
             console.warn('NEXT_PUBLIC_SITE_KEY not set, skipping image fetch')
             saveProducts([...products, ...importedProducts])
@@ -273,12 +274,16 @@ export default function AdminPage() {
           saveProducts([...products, ...importedProducts])
           alert(`Successfully imported ${importedProducts.length} products (without images - Amazon API unavailable)`)
         }
-      } catch (error) {
-        alert('Error importing CSV file. Please check the format.')
-        console.error('CSV import error:', error)
+        } catch (error) {
+          alert('Error importing CSV file. Please check the format.')
+          console.error('CSV import error:', error)
+        }
       }
+      reader.readAsText(file)
+    } catch (error) {
+      alert('Error reading file. Please try again.')
+      console.error('File read error:', error)
     }
-    reader.readAsText(file)
   }
 
   return (
