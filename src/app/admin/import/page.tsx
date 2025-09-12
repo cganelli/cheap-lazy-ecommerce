@@ -160,7 +160,8 @@ export default function ImportProductsPage() {
     const csvFile = files.find(file => 
       file.name.toLowerCase().endsWith('.csv') || 
       file.type.toLowerCase().includes('csv') ||
-      file.type.toLowerCase().includes('text/plain')
+      file.type.toLowerCase().includes('text/plain') ||
+      file.type === '' // Some browsers don't set MIME type
     );
     
     if (csvFile) {
@@ -172,7 +173,7 @@ export default function ImportProductsPage() {
         parseFile();
       }
     } else {
-      setErrors(["Please drop a CSV file (.csv extension)"]);
+      setErrors(["Please drop a CSV file (.csv extension). Files found: " + files.map(f => f.name).join(", ")]);
     }
   }, [parseFile]);
 
@@ -277,7 +278,7 @@ export default function ImportProductsPage() {
             <input 
               ref={fileRef} 
               type="file" 
-              accept=".csv,text/csv,application/csv,text/plain" 
+              accept=".csv" 
               className="file-input file-input-bordered file-input-primary w-full"
               onChange={(e) => {
                 const file = e.target.files?.[0];
@@ -289,6 +290,29 @@ export default function ImportProductsPage() {
             <label className="label">
               <span className="label-text-alt">Supported formats: .csv files only</span>
             </label>
+            
+            {/* Fallback input without restrictions */}
+            <div className="mt-2">
+              <label className="label">
+                <span className="label-text text-sm text-base-content/70">If CSV files don't show up, try this:</span>
+              </label>
+              <input 
+                type="file" 
+                className="file-input file-input-bordered file-input-secondary w-full"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    console.log('Fallback file selected:', file.name, file.type);
+                    // Copy to main file input
+                    if (fileRef.current) {
+                      const dataTransfer = new DataTransfer();
+                      dataTransfer.items.add(file);
+                      fileRef.current.files = dataTransfer.files;
+                    }
+                  }
+                }}
+              />
+            </div>
           </div>
 
           <div className="card-actions justify-end mt-4">
