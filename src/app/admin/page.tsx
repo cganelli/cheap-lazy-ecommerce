@@ -152,22 +152,21 @@ export default function AdminPage() {
   }
 
   // Import products from CSV
-  const importProductsFromCSV = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      const file = event.target.files?.[0]
-      if (!file) {
-        return
-      }
+  const importProductsFromCSV = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) {
+      return
+    }
 
-      // Check if it's a CSV file
-      if (!file.name.toLowerCase().endsWith('.csv')) {
-        alert('Please select a CSV file')
-        return
-      }
+    // Check if it's a CSV file
+    if (!file.name.toLowerCase().endsWith('.csv')) {
+      alert('Please select a CSV file')
+      return
+    }
 
-      const reader = new FileReader()
-      reader.onload = async (e) => {
-        try {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      try {
         const csvText = e.target?.result as string
         const lines = csvText.split('\n').filter(line => line.trim())
         
@@ -222,68 +221,15 @@ export default function AdminPage() {
           return
         }
 
-        // Show loading message
-        alert(`Found ${importedProducts.length} products. Fetching images and prices from Amazon...`)
-
-        // Fetch product data from Amazon PA-API
-        try {
-          const siteKey = process.env.NEXT_PUBLIC_SITE_KEY || ''
-          if (!siteKey) {
-            console.warn('NEXT_PUBLIC_SITE_KEY not set, skipping image fetch')
-            saveProducts([...products, ...importedProducts])
-            alert(`Successfully imported ${importedProducts.length} products (without images - PA-API not configured)`)
-            return
-          }
-
-          const response = await fetch('/.netlify/functions/amazon-items', {
-            method: 'POST',
-            headers: {
-              'content-type': 'application/json',
-              'x-site-key': siteKey,
-            },
-            body: JSON.stringify({ asins: asins.slice(0, 10) }), // PA-API limit: 10 ASINs per call
-          })
-
-          if (response.ok) {
-            const data = await response.json()
-            const amazonData = data.items || []
-
-            // Update products with Amazon data
-            const updatedProducts = importedProducts.map(product => {
-              const amazonItem = amazonData.find((item: any) => item.asin === product.amazonASIN)
-              if (amazonItem) {
-                return {
-                  ...product,
-                  imageUrl: amazonItem.image_url || '/placeholder-product.png',
-                  price: amazonItem.price ? parseFloat(amazonItem.price.replace('$', '')) : 0,
-                  title: amazonItem.name || product.title,
-                }
-              }
-              return product
-            })
-
-            saveProducts([...products, ...updatedProducts])
-            alert(`Successfully imported ${updatedProducts.length} products with images and prices from Amazon!`)
-          } else {
-            console.warn('Failed to fetch Amazon data, importing without images')
-            saveProducts([...products, ...importedProducts])
-            alert(`Successfully imported ${importedProducts.length} products (without images - Amazon API error)`)
-          }
-        } catch (error) {
-          console.warn('Error fetching Amazon data:', error)
-          saveProducts([...products, ...importedProducts])
-          alert(`Successfully imported ${importedProducts.length} products (without images - Amazon API unavailable)`)
-        }
-        } catch (error) {
-          alert('Error importing CSV file. Please check the format.')
-          console.error('CSV import error:', error)
-        }
+        // Import products without Amazon API for now (simplified)
+        saveProducts([...products, ...importedProducts])
+        alert(`Successfully imported ${importedProducts.length} products from CSV!`)
+      } catch (error) {
+        alert('Error importing CSV file. Please check the format.')
+        console.error('CSV import error:', error)
       }
-      reader.readAsText(file)
-    } catch (error) {
-      alert('Error reading file. Please try again.')
-      console.error('File read error:', error)
     }
+    reader.readAsText(file)
   }
 
   return (
