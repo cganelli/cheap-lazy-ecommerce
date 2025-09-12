@@ -122,86 +122,6 @@ export default function AdminPage() {
     }
   }
 
-  // Fetch images and prices from Amazon for products without images
-  const fetchAmazonData = async () => {
-    const productsWithoutImages = products.filter(p => 
-      p.imageUrl === '/placeholder-product.png' || 
-      p.imageUrl === '' || 
-      !p.imageUrl
-    )
-
-    if (productsWithoutImages.length === 0) {
-      alert('All products already have images!')
-      return
-    }
-
-    const asins = productsWithoutImages.map(p => p.amazonASIN).filter(Boolean)
-    
-    if (asins.length === 0) {
-      alert('No ASINs found in products without images!')
-      return
-    }
-
-    alert(`Fetching images and prices for ${asins.length} products from Amazon...`)
-
-    try {
-      const siteKey = process.env.NEXT_PUBLIC_SITE_KEY || ''
-      if (!siteKey) {
-        alert('Amazon API not configured. Please set NEXT_PUBLIC_SITE_KEY environment variable.')
-        return
-      }
-
-      // Process in batches of 10 (Amazon API limit)
-      const batches = []
-      for (let i = 0; i < asins.length; i += 10) {
-        batches.push(asins.slice(i, i + 10))
-      }
-
-      let updatedCount = 0
-      
-      for (const batch of batches) {
-        const response = await fetch('/.netlify/functions/amazon-items', {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            'x-site-key': siteKey,
-          },
-          body: JSON.stringify({ asins: batch }),
-        })
-
-        if (response.ok) {
-          const data = await response.json()
-          const amazonData = data.items || []
-
-          // Update products with Amazon data
-          const updatedProducts = products.map(product => {
-            if (product.imageUrl === '/placeholder-product.png' || !product.imageUrl) {
-              const amazonItem = amazonData.find((item: any) => item.asin === product.amazonASIN)
-              if (amazonItem) {
-                updatedCount++
-                return {
-                  ...product,
-                  imageUrl: amazonItem.image_url || '/placeholder-product.png',
-                  price: amazonItem.price ? parseFloat(amazonItem.price.replace('$', '')) : product.price,
-                  title: amazonItem.name || product.title,
-                }
-              }
-            }
-            return product
-          })
-
-          saveProducts(updatedProducts)
-        } else {
-          console.warn(`Failed to fetch batch: ${response.status}`)
-        }
-      }
-
-      alert(`Successfully updated ${updatedCount} products with Amazon images and prices!`)
-    } catch (error) {
-      console.error('Error fetching Amazon data:', error)
-      alert('Error fetching Amazon data. Please try again.')
-    }
-  }
 
   // Export products as JSON
   const exportProducts = () => {
@@ -344,13 +264,6 @@ export default function AdminPage() {
                   className="hidden"
                 />
               </label>
-              <Button 
-                variant="outline" 
-                onClick={fetchAmazonData}
-                className="text-blue-600 hover:text-blue-700"
-              >
-                Fetch Amazon Images
-              </Button>
               <Button 
                 variant="outline" 
                 onClick={deleteProductsWithoutImages}
