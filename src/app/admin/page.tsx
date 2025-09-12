@@ -120,7 +120,7 @@ export default function AdminPage() {
   }
 
   // Import products from CSV
-  const importProductsFromCSV = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const importProductsFromCSV = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (!file) {
       return
@@ -133,7 +133,7 @@ export default function AdminPage() {
     }
 
     const reader = new FileReader()
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       try {
         const csvText = e.target?.result as string
         const lines = csvText.split('\n').filter(line => line.trim())
@@ -155,6 +155,8 @@ export default function AdminPage() {
 
         // Parse data rows
         const importedProducts: AmazonProduct[] = []
+        const asins: string[] = []
+        
         for (let i = 1; i < lines.length; i++) {
           const values = lines[i].split(',').map(v => v.trim())
           if (values.length >= 3) {
@@ -164,14 +166,15 @@ export default function AdminPage() {
             const category = values[headers.indexOf('category')] || 'General'
 
             if (asin && name && affiliateUrl) {
+              asins.push(asin)
               importedProducts.push({
                 id: Date.now().toString() + i,
                 title: name,
                 category: category,
-                price: 0, // Will need to be filled in manually
+                price: 0, // Will be updated with PA-API data
                 amazonUrl: affiliateUrl,
                 amazonASIN: asin,
-                imageUrl: '/placeholder-product.png',
+                imageUrl: '/placeholder-product.png', // Will be updated with PA-API data
                 description: '',
                 tags: [],
                 dateAdded: new Date().toISOString(),
@@ -181,11 +184,62 @@ export default function AdminPage() {
           }
         }
 
-        if (importedProducts.length > 0) {
-          saveProducts([...products, ...importedProducts])
-          alert(`Successfully imported ${importedProducts.length} products from CSV!`)
-        } else {
+        if (importedProducts.length === 0) {
           alert('No valid products found in CSV file')
+          return
+        }
+
+        // Show loading message
+        alert(`Found ${importedProducts.length} products. Fetching images and prices from Amazon...`)
+
+        // Fetch product data from Amazon PA-API
+        try {
+          const siteKey = process.env.NEXT_PUBLIC_SITE_KEY
+          if (!siteKey) {
+            console.warn('NEXT_PUBLIC_SITE_KEY not set, skipping image fetch')
+            saveProducts([...products, ...importedProducts])
+            alert(`Successfully imported ${importedProducts.length} products (without images - PA-API not configured)`)
+            return
+          }
+
+          const response = await fetch('/.netlify/functions/amazon-items', {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json',
+              'x-site-key': siteKey,
+            },
+            body: JSON.stringify({ asins: asins.slice(0, 10) }), // PA-API limit: 10 ASINs per call
+          })
+
+          if (response.ok) {
+            const data = await response.json()
+            const amazonData = data.items || []
+
+            // Update products with Amazon data
+            const updatedProducts = importedProducts.map(product => {
+              const amazonItem = amazonData.find((item: any) => item.asin === product.amazonASIN)
+              if (amazonItem) {
+                return {
+                  ...product,
+                  imageUrl: amazonItem.image_url || '/placeholder-product.png',
+                  price: amazonItem.price ? parseFloat(amazonItem.price.replace('$', '')) : 0,
+                  title: amazonItem.name || product.title,
+                }
+              }
+              return product
+            })
+
+            saveProducts([...products, ...updatedProducts])
+            alert(`Successfully imported ${updatedProducts.length} products with images and prices from Amazon!`)
+          } else {
+            console.warn('Failed to fetch Amazon data, importing without images')
+            saveProducts([...products, ...importedProducts])
+            alert(`Successfully imported ${importedProducts.length} products (without images - Amazon API error)`)
+          }
+        } catch (error) {
+          console.warn('Error fetching Amazon data:', error)
+          saveProducts([...products, ...importedProducts])
+          alert(`Successfully imported ${importedProducts.length} products (without images - Amazon API unavailable)`)
         }
       } catch (error) {
         alert('Error importing CSV file. Please check the format.')
