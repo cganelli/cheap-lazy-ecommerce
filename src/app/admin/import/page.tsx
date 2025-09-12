@@ -1,4 +1,6 @@
 // app/admin/import/page.tsx
+// Admin page for importing products via CSV file upload
+// Supports columns: asin, name, affiliate_url, category
 "use client";
 
 import { useCallback, useMemo, useRef, useState } from "react";
@@ -66,6 +68,7 @@ export default function ImportProductsPage() {
   const [rows, setRows] = useState<Row[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
   const [status, setStatus] = useState<string>("");
+  const [isDragOver, setIsDragOver] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const requiredMissing = useMemo(() => {
@@ -98,7 +101,23 @@ export default function ImportProductsPage() {
 
   const parseFile = useCallback(() => {
     const file = fileRef.current?.files?.[0];
-    if (!file) return;
+    if (!file) {
+      setErrors(["No file selected. Please choose a CSV file first."]);
+      return;
+    }
+
+    // Check if file is CSV-like
+    const fileName = file.name.toLowerCase();
+    const fileType = file.type.toLowerCase();
+    const isCsvFile = fileName.endsWith('.csv') || 
+                     fileType.includes('csv') || 
+                     fileType.includes('text/plain') ||
+                     fileType === '';
+
+    if (!isCsvFile) {
+      setErrors(["Please select a CSV file (.csv extension or CSV content)"]);
+      return;
+    }
 
     setStatus("Parsing file...");
     setErrors([]);
@@ -117,11 +136,45 @@ export default function ImportProductsPage() {
         setStatus(`Parsed rows: ${parsed.length}. Unique ASINs: ${new Set(parsed.map((r) => r.asin)).size}`);
       },
       error: (e: Error) => {
-        setErrors([e.message]);
+        setErrors([`Error parsing file: ${e.message}`]);
         setStatus("");
       },
     });
   }, []);
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+  }, []);
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    
+    const files = Array.from(e.dataTransfer.files);
+    const csvFile = files.find(file => 
+      file.name.toLowerCase().endsWith('.csv') || 
+      file.type.toLowerCase().includes('csv') ||
+      file.type.toLowerCase().includes('text/plain')
+    );
+    
+    if (csvFile) {
+      // Simulate file input change
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(csvFile);
+      if (fileRef.current) {
+        fileRef.current.files = dataTransfer.files;
+        parseFile();
+      }
+    } else {
+      setErrors(["Please drop a CSV file (.csv extension)"]);
+    }
+  }, [parseFile]);
 
   const previewWithImages = useCallback(async () => {
     try {
@@ -178,39 +231,163 @@ export default function ImportProductsPage() {
   }, [rows]);
 
   return (
-    <div style={{ padding: 24, maxWidth: 1000, margin: "0 auto" }}>
-      <h1>Import products</h1>
-      <p>Required columns: <code>asin</code>, <code>name</code>, <code>affiliate_url</code>. Optional: <code>category</code>.</p>
-
-      <div style={{ border: "1px dashed #999", padding: 16, borderRadius: 8, marginBottom: 12 }}>
-        <input ref={fileRef} type="file" accept=".csv,text/csv" />
-        <div style={{ marginTop: 8 }}>
-          <button onClick={parseFile}>Parse uploaded CSV</button>
+    <div className="container mx-auto p-6 max-w-4xl">
+      <div className="hero bg-base-200 rounded-lg mb-8">
+        <div className="hero-content text-center">
+          <div className="max-w-md">
+            <h1 className="text-4xl font-bold text-primary">Import Products</h1>
+            <p className="py-4">
+              Upload a CSV file with your products. Required columns: <code className="bg-base-300 px-2 py-1 rounded">asin</code>, <code className="bg-base-300 px-2 py-1 rounded">name</code>, <code className="bg-base-300 px-2 py-1 rounded">affiliate_url</code>. Optional: <code className="bg-base-300 px-2 py-1 rounded">category</code>.
+            </p>
+          </div>
         </div>
       </div>
 
-      <textarea
-        value={csvText}
-        onChange={(e) => setCsvText(e.target.value)}
-        placeholder="Or paste CSV text here…"
-        style={{ width: "100%", minHeight: 240, padding: 12, fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}
-      />
+      {/* File Upload Section */}
+      <div className="card bg-base-100 shadow-xl mb-6">
+        <div className="card-body">
+          <h2 className="card-title text-2xl mb-4">📁 Upload CSV File</h2>
+          
+          {/* Drag and Drop Area */}
+          <div 
+            className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+              isDragOver 
+                ? 'border-primary bg-primary/10' 
+                : 'border-base-300 hover:border-primary/50'
+            }`}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
+            <div className="flex flex-col items-center space-y-4">
+              <svg className="w-12 h-12 text-base-content/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              <div>
+                <p className="text-lg font-medium">Drop your CSV file here</p>
+                <p className="text-sm text-base-content/70">or click to browse</p>
+              </div>
+            </div>
+          </div>
 
-      <div style={{ display: "flex", gap: 16, marginTop: 12, flexWrap: "wrap" }}>
-        <button onClick={parseText}>Parse pasted CSV</button>
-        <button onClick={previewWithImages}>Preview with images</button>
-        <button onClick={downloadCsvWithImageUrl}>Download CSV with image_url</button>
+          <div className="form-control w-full mt-4">
+            <label className="label">
+              <span className="label-text">Or choose your CSV file manually</span>
+            </label>
+            <input 
+              ref={fileRef} 
+              type="file" 
+              accept=".csv,text/csv,application/csv,text/plain" 
+              className="file-input file-input-bordered file-input-primary w-full"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  console.log('File selected:', file.name, file.type);
+                }
+              }}
+            />
+            <label className="label">
+              <span className="label-text-alt">Supported formats: .csv files only</span>
+            </label>
+          </div>
+
+          <div className="card-actions justify-end mt-4">
+            <button 
+              onClick={parseFile}
+              className="btn btn-primary"
+              disabled={!fileRef.current?.files?.[0]}
+            >
+              📊 Parse Uploaded CSV
+            </button>
+          </div>
+        </div>
       </div>
 
-      <div style={{ marginTop: 12 }}>
-        {status && <p><strong>{status}</strong></p>}
-        {!!requiredMissing.length && rows.length === 0 && (
-          <p style={{ color: "#b00020" }}>Missing header(s): {requiredMissing.join(", ")}</p>
+      {/* Alternative: Paste CSV */}
+      <div className="card bg-base-100 shadow-xl mb-6">
+        <div className="card-body">
+          <h2 className="card-title text-2xl mb-4">📝 Or Paste CSV Text</h2>
+          
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Paste your CSV data here</span>
+            </label>
+            <textarea
+              value={csvText}
+              onChange={(e) => setCsvText(e.target.value)}
+              placeholder="asin,name,affiliate_url,category&#10;B123456789,Amazing Product,https://amazon.com/dp/B123456789,Electronics&#10;..."
+              className="textarea textarea-bordered h-32 font-mono text-sm"
+            />
+          </div>
+
+          <div className="card-actions justify-end mt-4">
+            <button 
+              onClick={parseText}
+              className="btn btn-secondary"
+              disabled={!csvText.trim()}
+            >
+              📊 Parse Pasted CSV
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Actions */}
+      {rows.length > 0 && (
+        <div className="card bg-base-100 shadow-xl mb-6">
+          <div className="card-body">
+            <h2 className="card-title text-2xl mb-4">✅ Parsed Data ({rows.length} products)</h2>
+            
+            <div className="flex flex-wrap gap-4">
+              <button 
+                onClick={previewWithImages}
+                className="btn btn-info"
+              >
+                🖼️ Preview with Images
+              </button>
+              <button 
+                onClick={downloadCsvWithImageUrl}
+                className="btn btn-success"
+              >
+                💾 Download Enhanced CSV
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Status Messages */}
+      <div className="space-y-4">
+        {status && (
+          <div className="alert alert-info">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current shrink-0 w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>{status}</span>
+          </div>
         )}
+
+        {!!requiredMissing.length && rows.length === 0 && (
+          <div className="alert alert-warning">
+            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+            <span>Missing required header(s): {requiredMissing.join(", ")}</span>
+          </div>
+        )}
+
         {!!errors.length && (
-          <ul style={{ color: "#b00020" }}>
-            {errors.map((e, i) => <li key={i}>{e}</li>)}
-          </ul>
+          <div className="alert alert-error">
+            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <h3 className="font-bold">Errors:</h3>
+              <ul className="list-disc list-inside">
+                {errors.map((e, i) => <li key={i}>{e}</li>)}
+              </ul>
+            </div>
+          </div>
         )}
       </div>
     </div>
