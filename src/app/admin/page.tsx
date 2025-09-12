@@ -90,6 +90,38 @@ export default function AdminPage() {
     }
   }
 
+  // Delete products with placeholder images
+  const deleteProductsWithoutImages = () => {
+    const productsWithoutImages = products.filter(p => 
+      p.imageUrl === '/placeholder-product.png' || 
+      p.imageUrl === '' || 
+      !p.imageUrl
+    )
+    
+    if (productsWithoutImages.length === 0) {
+      alert('No products with placeholder images found!')
+      return
+    }
+
+    if (confirm(`Delete ${productsWithoutImages.length} products with placeholder images?`)) {
+      const productsWithImages = products.filter(p => 
+        p.imageUrl !== '/placeholder-product.png' && 
+        p.imageUrl !== '' && 
+        p.imageUrl
+      )
+      saveProducts(productsWithImages)
+      alert(`Deleted ${productsWithoutImages.length} products with placeholder images`)
+    }
+  }
+
+  // Clear all products
+  const clearAllProducts = () => {
+    if (confirm(`Are you sure you want to delete ALL ${products.length} products?`)) {
+      saveProducts([])
+      alert('All products deleted!')
+    }
+  }
+
   // Export products as JSON
   const exportProducts = () => {
     const dataStr = JSON.stringify(products, null, 2)
@@ -285,6 +317,20 @@ export default function AdminPage() {
                   className="hidden"
                 />
               </label>
+              <Button 
+                variant="outline" 
+                onClick={deleteProductsWithoutImages}
+                className="text-orange-600 hover:text-orange-700"
+              >
+                Clean Up (No Images)
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={clearAllProducts}
+                className="text-red-600 hover:text-red-700"
+              >
+                Clear All
+              </Button>
               <a href="/" className="text-blue-600 hover:underline">
                 ← Back to Site
               </a>
@@ -295,10 +341,16 @@ export default function AdminPage() {
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
           <div className="bg-white p-6 rounded-lg shadow-sm">
             <h3 className="text-sm font-medium text-gray-500">Total Products</h3>
             <p className="text-2xl font-bold text-gray-900">{products.length}</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-sm">
+            <h3 className="text-sm font-medium text-gray-500">With Images</h3>
+            <p className="text-2xl font-bold text-green-600">
+              {products.filter(p => p.imageUrl && p.imageUrl !== '/placeholder-product.png').length}
+            </p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-sm">
             <h3 className="text-sm font-medium text-gray-500">Categories</h3>
