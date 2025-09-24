@@ -14,3 +14,9 @@ function = "guard-amazon-items"
   to = "/.netlify/functions/products"
   status = 200
   force = true
+
+[[redirects]]
+  from = "/api/ping"
+  to = "/.netlify/functions/ping"
+  status = 200
+  force = true
