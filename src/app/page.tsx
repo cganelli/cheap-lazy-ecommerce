@@ -207,7 +207,6 @@ export default function HomePage() {
                         )}
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-lg font-bold custom-red">${product.price.toFixed(2)}</span>
                         <Button size="sm" className="custom-bg-red hover:bg-red-600 text-white">
                           View Details
                         </Button>
@@ -236,8 +235,8 @@ export default function HomePage() {
                 products={trendingProducts.map(p => ({
                   id: p.id.toString(),
                   name: p.title,
-                  price: `$${p.price.toFixed(2)}`,
-                  originalPrice: p.originalPrice ? `$${p.originalPrice.toFixed(2)}` : undefined,
+                  price: '', // Hide prices until Amazon API is available
+                  originalPrice: undefined,
                   image: p.image,
                   amazonUrl: p.amazonUrl || '#',
                   badge: p.badge,
@@ -262,7 +261,7 @@ export default function HomePage() {
                         products={categoryProducts.slice(0, 4).map(p => ({
                           id: p.id.toString(),
                           name: p.title,
-                          price: `$${p.price.toFixed(2)}`,
+                          price: '', // Hide prices until Amazon API is available
                           image: p.image,
                           amazonUrl: p.amazonUrl || '#',
                           badge: p.badge
@@ -282,7 +281,7 @@ export default function HomePage() {
                     products={allProducts.map(p => ({
                       id: p.id.toString(),
                       name: p.title,
-                      price: `$${p.price.toFixed(2)}`,
+                      price: '', // Hide prices until Amazon API is available
                       image: p.image,
                       amazonUrl: p.amazonUrl || '#',
                       badge: p.badge

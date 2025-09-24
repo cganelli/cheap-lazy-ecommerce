@@ -2,9 +2,27 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { Product, Category, ProductFilters, ApiResponse } from '@/types/product'
-import { productApi } from '@/services/productApi'
+import { getProductsSync, Product as StaticProduct } from '@/lib/static-products'
 import { amazonProductService } from '@/services/amazonProductService'
 import { safeStorage } from '@/lib/safeStorage'
+
+// Convert static product to our Product type
+function convertStaticProduct(staticProduct: StaticProduct): Product {
+  return {
+    id: staticProduct.asin,
+    title: staticProduct.title,
+    name: staticProduct.title,
+    price: staticProduct.price || 0,
+    description: staticProduct.title,
+    category: staticProduct.category || 'Uncategorized',
+    image: staticProduct.image_url,
+    images: [staticProduct.image_url],
+    rating: { rate: 4.5, count: 100 }, // Default rating
+    amazonUrl: staticProduct.affiliate_url,
+    availability: 'in_stock',
+    sku: staticProduct.asin
+  }
+}
 
 // Hook for fetching all products with filters
 export function useProducts(filters: ProductFilters = {}) {
@@ -21,16 +39,88 @@ export function useProducts(filters: ProductFilters = {}) {
       // Check if user has Amazon products configured
       const hasAmazonProducts = amazonProductService.hasAmazonProducts()
 
-      const response = hasAmazonProducts
-        ? await amazonProductService.getAllAmazonProducts(filters)
-        : await productApi.getAllProducts(filters)
-
-      if (response.success) {
-        setProducts(response.data)
-        setPagination(response.pagination)
+      if (hasAmazonProducts) {
+        // Use Amazon products if available
+        const response = await amazonProductService.getAllAmazonProducts(filters)
+        if (response.success) {
+          setProducts(response.data)
+          setPagination(response.pagination)
+        } else {
+          setError(response.message || 'Failed to fetch products')
+          setProducts([])
+        }
       } else {
-        setError(response.message || 'Failed to fetch products')
-        setProducts([])
+        // Use static products
+        const staticProducts = getProductsSync()
+        let filteredProducts = staticProducts.map(convertStaticProduct)
+
+        // Apply filters
+        if (filters.category) {
+          filteredProducts = filteredProducts.filter(p => 
+            p.category.toLowerCase() === filters.category!.toLowerCase()
+          )
+        }
+
+        if (filters.minPrice !== undefined) {
+          filteredProducts = filteredProducts.filter(p => p.price >= filters.minPrice!)
+        }
+
+        if (filters.maxPrice !== undefined) {
+          filteredProducts = filteredProducts.filter(p => p.price <= filters.maxPrice!)
+        }
+
+        if (filters.search) {
+          const searchTerm = filters.search.toLowerCase()
+          filteredProducts = filteredProducts.filter(p => 
+            p.title.toLowerCase().includes(searchTerm) ||
+            p.description.toLowerCase().includes(searchTerm)
+          )
+        }
+
+        // Apply sorting
+        if (filters.sortBy) {
+          filteredProducts.sort((a, b) => {
+            let aVal: any, bVal: any
+            
+            switch (filters.sortBy) {
+              case 'price':
+                aVal = a.price
+                bVal = b.price
+                break
+              case 'rating':
+                aVal = a.rating?.rate || 0
+                bVal = b.rating?.rate || 0
+                break
+              case 'name':
+                aVal = a.title.toLowerCase()
+                bVal = b.title.toLowerCase()
+                break
+              default:
+                return 0
+            }
+
+            if (filters.sortOrder === 'desc') {
+              return bVal > aVal ? 1 : -1
+            } else {
+              return aVal > bVal ? 1 : -1
+            }
+          })
+        }
+
+        // Apply pagination
+        const limit = filters.limit || 20
+        const page = filters.page || 1
+        const startIndex = (page - 1) * limit
+        const endIndex = startIndex + limit
+        const paginatedProducts = filteredProducts.slice(startIndex, endIndex)
+
+        setProducts(paginatedProducts)
+        setPagination({
+          page,
+          limit,
+          total: filteredProducts.length,
+          totalPages: Math.ceil(filteredProducts.length / limit)
+        })
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')
@@ -72,15 +162,24 @@ export function useProductsByCategory(category: string, limit?: number) {
     try {
       const hasAmazonProducts = amazonProductService.hasAmazonProducts()
 
-      const response = hasAmazonProducts
-        ? await amazonProductService.getAmazonProductsByCategory(category, limit)
-        : await productApi.getProductsByCategory(category, limit)
-
-      if (response.success) {
-        setProducts(response.data)
+      if (hasAmazonProducts) {
+        // Use Amazon products if available
+        const response = await amazonProductService.getAmazonProductsByCategory(category, limit)
+        if (response.success) {
+          setProducts(response.data)
+        } else {
+          setError(response.message || 'Failed to fetch products')
+          setProducts([])
+        }
       } else {
-        setError(response.message || 'Failed to fetch products')
-        setProducts([])
+        // Use static products
+        const staticProducts = getProductsSync()
+        const categoryProducts = staticProducts
+          .filter(product => product.category?.toLowerCase() === category.toLowerCase())
+          .slice(0, limit || 20)
+          .map(convertStaticProduct)
+        
+        setProducts(categoryProducts)
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')
@@ -121,16 +220,58 @@ export function useProductSearch(query: string, filters: ProductFilters = {}) {
     try {
       const hasAmazonProducts = amazonProductService.hasAmazonProducts()
 
-      const response = hasAmazonProducts
-        ? await amazonProductService.searchAmazonProducts(query, filters)
-        : await productApi.searchProducts(query, filters)
-
-      if (response.success) {
-        setProducts(response.data)
-        setPagination(response.pagination)
+      if (hasAmazonProducts) {
+        // Use Amazon search if available
+        const response = await amazonProductService.searchAmazonProducts(query, filters)
+        if (response.success) {
+          setProducts(response.data)
+          setPagination(response.pagination)
+        } else {
+          setError(response.message || 'Search failed')
+          setProducts([])
+        }
       } else {
-        setError(response.message || 'Search failed')
-        setProducts([])
+        // Use static products search
+        const staticProducts = getProductsSync()
+        const searchTerm = query.toLowerCase()
+        
+        const searchResults = staticProducts
+          .filter(product => 
+            product.title.toLowerCase().includes(searchTerm) ||
+            (product.category && product.category.toLowerCase().includes(searchTerm))
+          )
+          .map(convertStaticProduct)
+
+        // Apply additional filters
+        let filteredResults = searchResults
+        if (filters.category) {
+          filteredResults = filteredResults.filter(p => 
+            p.category.toLowerCase() === filters.category!.toLowerCase()
+          )
+        }
+
+        if (filters.minPrice !== undefined) {
+          filteredResults = filteredResults.filter(p => p.price >= filters.minPrice!)
+        }
+
+        if (filters.maxPrice !== undefined) {
+          filteredResults = filteredResults.filter(p => p.price <= filters.maxPrice!)
+        }
+
+        // Apply pagination
+        const limit = filters.limit || 20
+        const page = filters.page || 1
+        const startIndex = (page - 1) * limit
+        const endIndex = startIndex + limit
+        const paginatedResults = filteredResults.slice(startIndex, endIndex)
+
+        setProducts(paginatedResults)
+        setPagination({
+          page,
+          limit,
+          total: filteredResults.length,
+          totalPages: Math.ceil(filteredResults.length / limit)
+        })
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Search error occurred')
@@ -170,12 +311,14 @@ export function useProduct(id: string | number | null) {
     setError(null)
 
     try {
-      const response = await productApi.getProduct(id)
-
-      if (response.success) {
-        setProduct(response.data)
+      // Use static products for now
+      const staticProducts = getProductsSync()
+      const foundProduct = staticProducts.find(p => p.asin === id.toString())
+      
+      if (foundProduct) {
+        setProduct(convertStaticProduct(foundProduct))
       } else {
-        setError(response.message || 'Failed to fetch product')
+        setError('Product not found')
         setProduct(null)
       }
     } catch (err) {
@@ -211,15 +354,35 @@ export function useCategories() {
     try {
       const hasAmazonProducts = amazonProductService.hasAmazonProducts()
 
-      const response = hasAmazonProducts
-        ? await amazonProductService.getAmazonCategories()
-        : await productApi.getCategories()
-
-      if (response.success) {
-        setCategories(response.data)
+      if (hasAmazonProducts) {
+        // Use Amazon categories if available
+        const response = await amazonProductService.getAmazonCategories()
+        if (response.success) {
+          setCategories(response.data)
+        } else {
+          setError(response.message || 'Failed to fetch categories')
+          setCategories([])
+        }
       } else {
-        setError(response.message || 'Failed to fetch categories')
-        setCategories([])
+        // Generate categories from static products
+        const staticProducts = getProductsSync()
+        const categoryMap = new Map<string, number>()
+        
+        staticProducts.forEach(product => {
+          const category = product.category || 'Uncategorized'
+          categoryMap.set(category, (categoryMap.get(category) || 0) + 1)
+        })
+
+        const categories: Category[] = Array.from(categoryMap.entries()).map(([name, count]) => ({
+          id: name.toLowerCase().replace(/\s+/g, '-'),
+          title: name,
+          name: name,
+          slug: name.toLowerCase().replace(/\s+/g, '-'),
+          itemCount: count,
+          isActive: true
+        }))
+
+        setCategories(categories)
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')
@@ -335,16 +498,13 @@ export function useFavorites() {
 
   const getFavoriteProducts = useCallback(async (): Promise<Product[]> => {
     const favoriteIds = Array.from(favorites)
+    const staticProducts = getProductsSync()
     const products: Product[] = []
 
     for (const id of favoriteIds) {
-      try {
-        const response = await productApi.getProduct(id)
-        if (response.success && response.data) {
-          products.push(response.data)
-        }
-      } catch (error) {
-        console.error(`Failed to fetch favorite product ${id}:`, error)
+      const foundProduct = staticProducts.find(p => p.asin === id.toString())
+      if (foundProduct) {
+        products.push(convertStaticProduct(foundProduct))
       }
     }
 
@@ -375,15 +535,23 @@ export function useTrendingProducts(limit: number = 5) {
     try {
       const hasAmazonProducts = amazonProductService.hasAmazonProducts()
 
-      const response = hasAmazonProducts
-        ? await amazonProductService.getTrendingAmazonProducts(limit)
-        : await productApi.getAllProducts({ limit, sortBy: 'rating', sortOrder: 'desc' })
-
-      if (response.success) {
-        setProducts(response.data)
+      if (hasAmazonProducts) {
+        // Use Amazon trending products if available
+        const response = await amazonProductService.getTrendingAmazonProducts(limit)
+        if (response.success) {
+          setProducts(response.data)
+        } else {
+          setError(response.message || 'Failed to fetch trending products')
+          setProducts([])
+        }
       } else {
-        setError(response.message || 'Failed to fetch trending products')
-        setProducts([])
+        // Use static products as trending
+        const staticProducts = getProductsSync()
+        const trendingProducts = staticProducts
+          .slice(0, limit) // Take first N products as "trending"
+          .map(convertStaticProduct)
+        
+        setProducts(trendingProducts)
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')
