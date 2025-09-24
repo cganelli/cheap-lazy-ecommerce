@@ -259,12 +259,12 @@ export default function HomePage() {
               />
             </div>
 
-            {/* Category Sections */}
+            {/* Category Sections - Always show all categories in alphabetical order */}
             <div className="space-y-12">
-              {selectedCategory === 'All Categories' ? (
-                // Show all categories
-                categories.map((category) => {
-                  const categoryProducts = productsByCategory[category.id] || []
+              {categories
+                .sort((a, b) => a.title.localeCompare(b.title)) // Sort alphabetically
+                .map((category) => {
+                  const categoryProducts = productsByCategory[category.title] || []
                   if (categoryProducts.length === 0) return null
 
                   return (
@@ -286,25 +286,7 @@ export default function HomePage() {
                     </div>
                   )
                 })
-              ) : (
-                // Show selected category
-                <div id={selectedCategory.toLowerCase().replace(/\s+/g, '-')}>
-                  <CategorySection
-                    title={selectedCategory}
-                    products={allProducts.map(p => ({
-                      id: p.id.toString(),
-                      name: p.title,
-                      price: '', // Hide prices until Amazon API is available
-                      image: p.image,
-                      amazonUrl: p.amazonUrl || '#',
-                      badge: p.badge
-                    }))}
-                    headingImage={`/${selectedCategory.toUpperCase().replace(/\s+/g, '_')}_RED_TOUCHING.png`}
-                    itemCount={allProducts.length}
-                    loading={allProductsLoading}
-                  />
-                </div>
-              )}
+              }
             </div>
           </>
         )}

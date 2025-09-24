@@ -17,9 +17,10 @@ export default function CategoryNavigation({ onCategorySelect, selectedCategory 
   const [q, setQ] = useState('')
   const { categories, loading } = useCategories()
 
-  // Create category arrays from the dynamic data
-  const mainCategories = ["All Categories", ...categories.slice(0, 7).map(cat => cat.title)]
-  const allCategories = ["All Categories", ...categories.map(cat => cat.title)]
+  // Create category arrays from the dynamic data, sorted alphabetically
+  const sortedCategories = categories.sort((a, b) => a.title.localeCompare(b.title))
+  const mainCategories = ["All Categories", ...sortedCategories.slice(0, 7).map(cat => cat.title)]
+  const allCategories = ["All Categories", ...sortedCategories.map(cat => cat.title)]
 
   const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
