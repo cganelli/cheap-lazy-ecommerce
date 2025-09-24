@@ -11,7 +11,7 @@ function = "guard-amazon-items"
 
 [[redirects]]
   from = "/api/products"
-  to = "/api/products.json"
+  to = "/.netlify/functions/products"
   status = 200
   force = true
 
