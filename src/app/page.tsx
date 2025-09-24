@@ -137,6 +137,13 @@ export default function HomePage() {
     return acc
   }, {} as Record<string, typeof allProducts>)
 
+  // Debug logging
+  console.log('All products loaded:', allProducts.length)
+  console.log('Categories loaded:', categories.length)
+  console.log('Categories:', categories.map(c => c.title))
+  console.log('Products by category:', Object.keys(productsByCategory))
+  console.log('Products by category counts:', Object.entries(productsByCategory).map(([cat, prods]) => `${cat}: ${prods.length}`))
+
   // Show search results if searching
   const showSearchResults = searchQuery.trim().length > 0
 
@@ -265,13 +272,13 @@ export default function HomePage() {
                 .sort((a, b) => a.title.localeCompare(b.title)) // Sort alphabetically
                 .map((category) => {
                   const categoryProducts = productsByCategory[category.title] || []
-                  if (categoryProducts.length === 0) return null
+                  console.log(`Category ${category.title}: ${categoryProducts.length} products`)
 
                   return (
                     <div key={category.id} id={category.title.toLowerCase().replace(/\s+/g, '-')}>
                       <CategorySection
                         title={category.title}
-                        products={categoryProducts.slice(0, 12).map(p => ({
+                        products={categoryProducts.map(p => ({
                           id: p.id.toString(),
                           name: p.title,
                           price: '', // Hide prices until Amazon API is available
