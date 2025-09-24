@@ -90,9 +90,11 @@ export default function CategorySection({ title, products, featuredImage, itemCo
                 <p className="text-sm font-medium text-gray-900 line-clamp-2 mb-1">
                   {product.name}
                 </p>
-                <p className="text-lg font-bold custom-red">
-                  {product.price}
-                </p>
+                {product.price && (
+                  <p className="text-lg font-bold custom-red">
+                    {product.price}
+                  </p>
+                )}
               </div>
             </div>
           ))}
