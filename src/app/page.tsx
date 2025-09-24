@@ -93,7 +93,7 @@ export default function HomePage() {
   })
 
   const { products: allProducts, loading: allProductsLoading } = useProducts(filters)
-  const { products: searchResults, loading: searchLoading } = useProductSearch(searchQuery, { limit: 12 })
+  const { products: searchResults, loading: searchLoading } = useProductSearch(searchQuery, 12)
   const { categories, loading: categoriesLoading } = useCategories()
 
   // Get trending products
