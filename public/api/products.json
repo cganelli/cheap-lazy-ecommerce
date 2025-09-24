@@ -1,10 +1,580 @@
-[
-  {
-    "asin": "B0F7LSKLTZ",
-    "title": "Sample Product — Replace me",
-    "price": 19.99,
-    "image_url": "/products/B0F7LSKLTZ.jpg",
-    "category": "Kitchen",
-    "affiliate_url": "https://www.amazon.com/dp/B0F7LSKLTZ?tag=YOURTAG"
-  }
-]
+{
+  "items": [
+    {
+      "asin": "",
+      "title": "Dog Bark Deterrent Device, 3X Ultrasonic Anti Barking, 6 Training Modes 23 FT Range Barks No More Indoors Outdoors Behavior Correct Safe & Humane Rechargeable Compact Bark Control for Dogs",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0F7LSKLTZ.jpg",
+      "category": "Pet Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Geesta Dehydrator Rack Stainless Steel Stand Compatible with Ninja Foodi AG300, AG300C, AG301, AG301C, AG302, AG400, IG301A Ninja Foodi Grill Accessories",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B087CX6F6X.jpg",
+      "category": "Kitchen",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "HOTEC 4 Pieces Silicone Whisks Set, Wire Balloon Whisks Egg Beater, Non-slip Handle Whisk for Non-stick Cookware Perfect for Cooking, Stirring, Beating and Blending (Black)",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0BYRP4QHJ.jpg",
+      "category": "Kitchen",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "JAYVAR Onion Holder for Slicing, Onion Cutter Vegetable Chopper, Stainless Steel Tomato Slicer Vegetable Cutter for Potato, Avocados, Eggs, Food Slicer Assistant Tool for Fruit Lemon and Meat",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0C9ZGMN9D.jpg",
+      "category": "Kitchen",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "OXO Good Grips Corn Prep Peeler",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B07PLCYTFZ.jpg",
+      "category": "Kitchen",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Polder Candy Thermometer, Stainless Steel Cooking Thermometer with Pot Clip, for Jam, Syrup, Jelly, Yogurt, and Deep Fry, 12\"",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B001FB6IFY.jpg",
+      "category": "Kitchen",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "3 Pack Pet Food Can Covers Universal Can Lids Safe/Silicone Dog&Cat Food Can Lid Covers (green+blue+orange)",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B095M6H5D7.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Grannick's Care Dogs Bitter Apple No Chew Spray 8oz",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B01KNFI86E.jpg",
+      "category": "Pet Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Arm & Hammer for Pets Ringers Fresh Breath Dental Treats for Dogs,Value Pack,32 Pcs Dog Dental Chews Fight Bad Dog Breath,Plaque & Tartar Without Brushing With Baking Soda(Pack of 1,32 Count)",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0815JLWCM.jpg",
+      "category": "Pet Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Nature's Miracle Deodorizing Bath Wipes Sunkissed Breeze Scent, 100 ct",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0CCB4XW1M.jpg",
+      "category": "Pet Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Zymox Advanced Enzymatic Ear Wipes for Dogs and Cats - for Dirty, Waxy, Smelly Ears - Premium Strength Ear Cleaner Wipes - Non-Irritating - Hypoallergenic - 100 ct",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0CSGXJV7K.jpg",
+      "category": "Pet Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Vet\u2019s Best Enzymatic Dog Toothpaste \u2013 Vet Formulated Dental Gel for Teeth Cleaning, Fresh Breath, Tartar Control, Plaque Remover & Oral Hygiene for Dogs, 3.5 oz",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0002AQMZU.jpg",
+      "category": "Pet Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "TropiClean Fresh Breath Oral Care Spray for Dogs & Cats | Dog Breath Spray | Mint Breath Freshener | Pet Bad Breath Treatment | Made in The USA | 4 oz",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B01MZ1W9NT.jpg",
+      "category": "Pet Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Douxo S3 Pyo Mousse, Contains 3% Chlorhexidine & 0.5% Ophytrium, Antiseptic & Hydrating, for Bacterial or Yeast Skin Infections, for Dogs, 5.1 fl. oz. (150mL)",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B094783CJ9.jpg",
+      "category": "Pet Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Nylabone Advanced Oral Care Pet Dental Water Additive, Liquid Tartar Remover & Breath Freshener for Dogs, Dog Teeth-Cleaning, Original Flavor, 32 oz.",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B006YFYNIU.jpg",
+      "category": "Pet Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Zesty Paws Dog Allergy Relief- Dog Itching Skin Relief- Dog Probiotics for Itchy Skin and Itchy Ears- Dog Allergy Paw Relief- Dog Allergy Chews- Dog Itch Relief - Dog Skin Allergy Relief - PB - 90ct",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B079TWY9FK.jpg",
+      "category": "Pet Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Nutramax Cosequin for Dogs Joint Health Supplement, Contains Glucosamine for Dogs, Plus Chondroitin and MSM, Supports Healthy Joints, For All Breeds and Sizes, Chewable Tablets, 132 Count",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B003ULL1NQ.jpg",
+      "category": "Pet Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Zesty Paws Dog Multivitamin, Chewable Dog Vitamins and Supplements for Hip & Joints, Skin & Coat, Omega 3 Fish Oil for Dogs- Senior & Puppy Multivitamin- Chicken- 90ct",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B07121B839.jpg",
+      "category": "Pet Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Pet Snuffle Mat for Dogs,Interactive Feed Puzzle for Boredom,Encourages Natural Foraging Skills for Cats Rabbits Dogs Bowl, Dog Treat Dispenser Indoor Outdoor Stress Relief,Travel Portable and Compact",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B08HSBQBWN.jpg",
+      "category": "Pet Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "TKTK Pimple Patches, 12 mm Invisible Acne Patches for Face with Salicylic Acid, 0.01cm Extra Thin Outer Edge, Hydrocolloid Zit Patch for Pustule, Whitehead, Cystic Acne Spot, 48 Count",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0C74LKMBX.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "SEVICH Hairline Powder - Quick Cover for Thinning Grey Hair, Eyebrows & Beard for Women & Men, Windproof & Sweatproof, Blonde",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B08NPTTYB4.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Glycolic Acid 20% Resurfacing Pads for Face & Body with Vitamins B5, C & E, Green Tea, Calendula, Allantoin - Exfoliates Surface Skin and Reduces Appearance of Fine Lines and Wrinkles - Peel Pads",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B07JQG2WF5.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Derma E Anti-Wrinkle Renewal Skin Cream \u2013 Vitamin A Wrinkle Treatment Cream \u2013 Vegan Anti-Aging Moisturizer to Smooth & Renew Aging Skin, 4 oz",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B00021KD2C.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Small Jewelry Box Necklace Ring Storage Organizer Mini Jewelry case Double Layer Travel Jewelry Organizer for Women Girls Gift/Black",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B08C36CYNW.jpg",
+      "category": "Household",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Onsen Nail & Cuticle Cream Treatment w/Japanese Tsubaki, Jojoba & Lavender Oil, Shea Butter \u2013 Strengthens Nails, Softens Cuticles - Daily Repair Care (1 Count/15 ml)",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B08VV26W43.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Teamoy Travel Jewelry Case for Women,Jewelry Storage Organizer for Necklace, Earrings, Bracelet, Purple",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0BG8M3G45.jpg",
+      "category": "Household",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "MelodySusie Electric USB Nail Drill Machine,PC120I Portable Electric Nail File Efile Set for Acrylic Gel Nails, Manicure Pedicure Tool with Nail Drill Bits Sanding Bands Gold",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B07Y9Y5JM4.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "BONNIESTORE Winged Eyeliner Stamp 2 Pack,Dual-ended Eyeliner Stamp for Perfect Wing Cat Eyes,Long Lasting Liquid Eyeliner Pen Waterproof Smudge Proof Smudge Proof for All Eye Shapes",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B07J4KKFJ3.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "540 Titanium Derma Roller for Face Hair Beard Scalp,Beard Microneedle Roller,Personal Use Microneedling,Microdermabrasion Cosmetic Beauty Instrument for Men Women\uff08Black 1.o\uff09",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0DHRT3NTT.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Maybelline Instant Age Rewind Eraser Dark Circles Treatment Multi-Use Concealer, 120, 1 Count",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B004Y9GTYE.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "CeraVe Skin Renewing Eye Cream For Wrinkles, Under Eye Cream With Peptides + Caffeine + Niacinamide, For Wrinkles & Crows Feet, Paraben Free & Opthalmologist Tested",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0B3GCCRVH.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "TruSkin Vitamin C Serum For Face \u2013 Anti Aging Face Serum with Vitamin C, Hyaluronic Acid, Vitamin E \u2013 Brightening Formula \u2013 Improve Appearance of Dark Spots, Tone, Fine Lines & Wrinkles, 2 Fl Oz",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B01EKUBU5Y.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Bio-Oil Skincare Body Oil Serum, Face and Body Moisturizer with Vitamin E & A, for Scars, Stretch Marks, Sensitive Skin, All Skin Types, Dermatologist Recommended, Non-Comedogenic, 6.7 Oz",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B00AREGVUM.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "SOL DE JANEIRO Brazilian Bum Bum Cream",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B09KDMFMX4.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Amazon Basic Care Weekly (7-Day) Pill Organizer, Vitamin Planner, And Medicine Box, Medium Compartments, Blue",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0BFRWTGZK.jpg",
+      "category": "Health",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "BioSilk Hydrating Therapy Pure Moisture Leave-In Spray, Replenishes Hair Moisture & Protects From Frizz, Sulfate, Paraben, & Cruelty-Free, 7 Oz",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B00J9H8O6C.jpg",
+      "category": "Hair Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "CHI 44 Iron Guard Thermal Protection Spray, Nourishing Formula Helps Resist Heat Damage to Hair & Tame Frizz, 2 Oz",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B004452DPM.jpg",
+      "category": "Hair Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Crack HAIR FIX Styling Treatment - Multi-Tasking, Anti-Frizz, Leave-In Styling Cream with Protection from Humidity, Chlorine, Heat Treatments & Sun, 3 oz",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B004DHYZU2.jpg",
+      "category": "Hair Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Medix 5.5 Retinol Body Lotion Firming Moisturizer | Crepey Skincare Treatment | Retinol Body Cream | Anti Aging Firming Cream For Women Targets Look Of Crepe Skin, Wrinkles, & Sagging Skin, 15 Fl Oz",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B01N8UM9HR.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Mise En Scene PerfectSerum Original - HairOil for Frizzy & Dry, Hydration and Nutrition Hairy Essence for Damage Care, Korean HairCare Product, Hair Serum 2.71 Fl. Oz.",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B081JHTPKP.jpg",
+      "category": "Hair Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Gold Bond Age Renew Neck & Chest Firming Cream, 2 oz \u2013 Clinically Tested Moisturizer for Smoother, Firmer Skin",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B01B5D3VOC.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "PROTOCOL FOR LIFE BALANCE NAC N-Acetyl Cysteine 1000mg - Glutathione Production & Respiratory Function - 120 Tabs",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B01B6SG6ZC.jpg",
+      "category": "Health",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Aligns_Probiotic Daily Supplement (84 Count.) for Digestive Balance - Supports Gut Health, Occasional Gas, Bloating & Abdominal Comfort - Gluten Free, Vegetarian Capsules",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0FMP34X3X.jpg",
+      "category": "Health",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "NOW Foods L-Carnitine 500 mg, 240 Veg Caps - Fitness Support* - Purest Form - Non-GMO - Vegan/Vegetarian - 500mg Capsules - Amino Acid Health Supplement",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0CB97GT21.jpg",
+      "category": "Health",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Source Naturals Berberine Vegetable Capsule, for Gastrointestinal Support* - 120 Vegetarian Capsules",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0753CVDC6.jpg",
+      "category": "Health",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Trunature Grape Seed & Resveratrol 150 Softgels",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B001TH7JWA.jpg",
+      "category": "Health",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Carlson Chelated Magnesium 200mg, 180 Tablets",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B001LF39BU.jpg",
+      "category": "Health",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Nordic Naturals Ultimate Omega, Lemon Flavor - 120 Soft Gels - 1280 mg Omega-3 - High-Potency Fish Oil Supplement with EPA & DHA - Promotes Brain & Heart Health - Non-GMO - 60 Servings",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B002CQU54Q.jpg",
+      "category": "Health",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Banana Boat Continuous Spf#50+ Spray 6 Ounce Sun Comfort (177ml) (2 Pack)",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B00XWCSOZ6.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "L'Oreal Paris Revitalift Bright Reveal Anti-Aging Facial Cleanser with Glycolic Acid 5 fl. oz (Pack of 2)",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B07L6XQW1Q.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "OLLY Max Strength Sleep Gummy, 10mg Melatonin, L-Theanine, Chamomile, Lemon Balm, Sugar Free, Vegetarian Sleep Aid, Strawberry - 50 Count",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0CB79FWKZ.jpg",
+      "category": "Health",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Clairol Root Touch-Up by Nice'n Easy Permanent Hair Dye, 9A Light Ash Blonde Hair Color, Pack of 2",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B019GMWA5K.jpg",
+      "category": "Hair Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "L\u2019Or\u00e9al Paris Magic Root Permanent Hair Color, 10 Minute Hair Dye Kit to Rescue Roots with 100% Gray Hair Coverage, 9 Light Blonde, 2 Pack",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B084W34G5C.jpg",
+      "category": "Hair Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "OGX Renewing + Argan Oil of Morocco, Cold-Pressed Argan Oil for Hair Penetrating Treatment & Shine, Moisturizing & Strengthening Silky Oil for All Hair Types, Paraben & Sulfate Free, 3.3 fl oz",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0048EZNR4.jpg",
+      "category": "Hair Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "oico Moisture Recovery Moisturizing Conditioner | For Thick, Coarse, Dry Hair | Replenish Moisture | Restore Smoothness & Elasticity | Strengthen & Reduce Breakage | With Jojoba Oil & Shea Butter",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B083M7WZBZ.jpg",
+      "category": "Hair Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "VALITIC Kojic Acid Dark Spot Remover Soap Bars with Vitamin C, Retinol, Collagen, Turmeric - Original Japanese Complex Infused with Hyaluronic Acid, Vitamin E, Shea Butter, Castile Olive Oil - 5 Pack",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0C8TSZ2CK.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Arvazallia Heat Protectant Spray with Argan Oil - Professional Grade Thermal Protector, Leave-in Conditioner, Anti-frizz, and Shine Spray",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B014HJJTTM.jpg",
+      "category": "Hair Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Ezy Dose Weekly (7-Day) AM/PM Pill Organizer, Vitamin and Medicine Box, Small Pop-out Compartments, 2 Times a Day, Blue and Purple Lids",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B001THDDFC.jpg",
+      "category": "Health",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Silicone Scalp Massager, Scalp Scrubber for Hair Growth with Soft Bristles, Scalp Exfoliator Brush Dandruff Removal Shampoo Brush for Wet Dry Scalp Care",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0CSWHMD1B.jpg",
+      "category": "Hair Care",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Saltverk Birch Smoked Sea Salt - Gourmet, Icelandic, Hand Harvested and Sustainably Made - 3.17 Oz Jar",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B017NZFVCG.jpg",
+      "category": "Kitchen",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "BUG BITE THING Suction Tool - Bug Bites and Bee/Wasp Stings, Natural Insect Bite Relief- White/3 Pack",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B01EAS3ER8.jpg",
+      "category": "Household",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "O'Keeffe's Working Hands Hand Cream for Extreme Dryness - 3.4 oz Jar (1 Pack) - Repairing Skincare for Cracked, Dry Hands",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B00121UVU0.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "LANEIGE Lip Sleeping Mask: Nourish, Hydrate, Vitamin C, Murumuru & Shea Butter, Antioxidants, Flaky, Dry Lips",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B09HN81KVR.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "L.A. COLORS Metal Nail Polish, Metallica CNL158",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B07XF623PG.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "4PCS Soft Rubber Nail Polish Bottle Holder, Nail Polishes Stand, Anti-spill Bottle Stand, Painting Manicure Display Tools, Non Tippable Nail Art Supplies, for Nail Polish Organizer Accessories",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0DZ6RGTLN.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Resin Nail Art Palette with 5 Pcs Nail Art Painting Drawing Brushes, Nail Polish Mixing Palette Double-Ended Dotting Pen Nail Art Liner Brush Nail Drawing Brushes for Nail Art Design",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0DYNVPY7X.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "5pcs Nail Art Liner Brushes, Liner Brush For Nails Gel, Painting Art Design Brush Set Nail Dotting Drawing Tool For Long Lines, Thin Details, Fine Drawing Sizes 7/9/11/15/25 mm (Pink)",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0CHRX1SZS.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Rechargeable Soft Selfie Light for Phone, Camera, Laptop, 4-14H Battery Portable LED Light for Pictures, Phone Light Clip",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0C6551BVY.jpg",
+      "category": "Electronics",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Cable Clips, Cord Holder, Adhesive Cord Clips, Wire Holder for Cable Management, Phone Charger, Desk, Wall, Nightstand and Office, White 9 PCS",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B07RK94L8J.jpg",
+      "category": "Electronics",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "200PCS Precision Tip Cotton Swabs with Wooden Sticks, Pointed Tip Cotton Swabs for Nail Polish Touch Up, Disposable Makeup Applicators, Cotton Sticks for Makeup, Microblading Supplies",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B0CQQ5XJLP.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "Sally Hansen Nail Salon Pro Brush Kit, 1 Pack, Nail Art Brush Kit, Nail Tools",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B09855HCGQ.jpg",
+      "category": "Beauty",
+      "affiliate_url": ""
+    },
+    {
+      "asin": "",
+      "title": "GAVISCON MAX Relief Acid Reflux & Heartburn, 50 chewable foamtabs",
+      "price": null,
+      "image_url": "https://cheapandlazystuff.com/products/B076Q4G7YZ.jpg",
+      "category": "Health",
+      "affiliate_url": ""
+    }
+  ]
+}
