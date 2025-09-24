@@ -14,27 +14,27 @@ import ProductCard from '@/components/ProductCard'
 
 // Static Products Section Component
 function StaticProductsSection() {
-  const { products: staticProducts, loading } = useProducts({ limit: 8 })
-
-  if (loading) {
-    return (
-      <div className="text-center text-gray-600 py-8">
-        <p>Loading products...</p>
-      </div>
-    )
-  }
-
-  if (staticProducts.length === 0) {
-    return (
-      <div className="text-center text-gray-600 py-8">
-        <p>No products available.</p>
-      </div>
-    )
-  }
+  // Temporarily hardcode some products for testing
+  const testProducts = [
+    {
+      id: "B0F7LSKLTZ",
+      title: "Dog Bark Deterrent Device",
+      name: "Dog Bark Deterrent Device",
+      price: 0,
+      description: "Dog Bark Deterrent Device",
+      category: "Pet Care",
+      image: "https://cheapandlazystuff.com/products/B0F7LSKLTZ.jpg",
+      images: ["https://cheapandlazystuff.com/products/B0F7LSKLTZ.jpg"],
+      rating: { rate: 4.5, count: 100 },
+      amazonUrl: "https://amzn.to/4mshS3J",
+      availability: "in_stock",
+      sku: "B0F7LSKLTZ"
+    }
+  ];
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {staticProducts.map((product) => (
+      {testProducts.map((product) => (
         <div key={product.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
           <div className="p-4">
             <div className="relative mb-4">

@@ -1,4 +1,4 @@
-// Static products data
+// Static products data - All 72 products from CSV
 export const PRODUCTS = [
   {
     "asin": "B0F7LSKLTZ",
