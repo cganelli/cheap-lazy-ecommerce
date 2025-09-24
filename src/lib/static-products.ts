@@ -1,23 +1,20 @@
-// API-free product source: imports the static JSON at build time
-import catalog from "../../data/products.json";
+// API-free product source: imports the static data at build time
+import { PRODUCTS, StaticProduct } from './products-data';
 
-export type Product = {
-  asin: string;
-  title: string;
-  price: number | null;
-  image_url: string;
-  category?: string;
-  affiliate_url: string;
-};
+export type Product = StaticProduct;
 
 export async function getProducts(): Promise<Product[]> {
   // no network; this is baked into the build
-  const items = (catalog as any)?.items ?? [];
-  return items as Product[];
+  return PRODUCTS;
 }
 
 // For client-side components that can't use async at top level
 export function getProductsSync(): Product[] {
-  const items = (catalog as any)?.items ?? [];
-  return items as Product[];
+  return PRODUCTS;
+}
+
+// Debug function to check if products are loaded
+export function debugProducts(): void {
+  console.log('Products loaded:', PRODUCTS.length);
+  console.log('First product:', PRODUCTS[0]);
 }
