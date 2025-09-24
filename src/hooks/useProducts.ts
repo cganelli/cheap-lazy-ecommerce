@@ -49,13 +49,22 @@ export function useProducts(filters: ProductFilters = {}) {
     try {
       // Use static products only
       const staticProducts = getProductsSync()
+      debugProducts(staticProducts)
       
       let filteredProducts = staticProducts.map(convertStaticProduct)
 
       // Apply filters
-      if (memoizedFilters.category) {
+      if (memoizedFilters.category && memoizedFilters.category !== 'All Categories') {
         filteredProducts = filteredProducts.filter(p => 
-          p.category.toLowerCase() === memoizedFilters.category!.toLowerCase()
+          p.category?.toLowerCase() === memoizedFilters.category?.toLowerCase()
+        )
+      }
+
+      if (memoizedFilters.search) {
+        const searchTerm = memoizedFilters.search.toLowerCase()
+        filteredProducts = filteredProducts.filter(p => 
+          p.title.toLowerCase().includes(searchTerm) ||
+          p.description.toLowerCase().includes(searchTerm)
         )
       }
 
@@ -67,40 +76,19 @@ export function useProducts(filters: ProductFilters = {}) {
         filteredProducts = filteredProducts.filter(p => p.price <= memoizedFilters.maxPrice!)
       }
 
-      if (memoizedFilters.search) {
-        const searchTerm = memoizedFilters.search.toLowerCase()
-        filteredProducts = filteredProducts.filter(p => 
-          p.title.toLowerCase().includes(searchTerm) ||
-          p.description.toLowerCase().includes(searchTerm)
-        )
-      }
-
       // Apply sorting
       if (memoizedFilters.sortBy) {
         filteredProducts.sort((a, b) => {
-          let aVal: any, bVal: any
-          
+          const order = memoizedFilters.sortOrder === 'desc' ? -1 : 1
           switch (memoizedFilters.sortBy) {
             case 'price':
-              aVal = a.price
-              bVal = b.price
-              break
-            case 'rating':
-              aVal = a.rating?.rate || 0
-              bVal = b.rating?.rate || 0
-              break
+              return (a.price - b.price) * order
             case 'name':
-              aVal = a.title.toLowerCase()
-              bVal = b.title.toLowerCase()
-              break
+              return a.title.localeCompare(b.title) * order
+            case 'rating':
+              return ((a.rating?.rate || 0) - (b.rating?.rate || 0)) * order
             default:
               return 0
-          }
-
-          if (memoizedFilters.sortOrder === 'desc') {
-            return bVal > aVal ? 1 : -1
-          } else {
-            return aVal > bVal ? 1 : -1
           }
         })
       }
