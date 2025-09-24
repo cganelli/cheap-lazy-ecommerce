@@ -49,7 +49,7 @@ export function useProducts(filters: ProductFilters = {}) {
     try {
       // Use static products only
       const staticProducts = getProductsSync()
-      debugProducts(staticProducts)
+      debugProducts()
       
       let filteredProducts = staticProducts.map(convertStaticProduct)
 
