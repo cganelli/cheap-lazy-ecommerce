@@ -271,7 +271,7 @@ export default function HomePage() {
                     <div key={category.id} id={category.title.toLowerCase().replace(/\s+/g, '-')}>
                       <CategorySection
                         title={category.title}
-                        products={categoryProducts.slice(0, 4).map(p => ({
+                        products={categoryProducts.slice(0, 12).map(p => ({
                           id: p.id.toString(),
                           name: p.title,
                           price: '', // Hide prices until Amazon API is available

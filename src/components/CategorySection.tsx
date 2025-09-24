@@ -64,11 +64,11 @@ export default function CategorySection({ title, products, featuredImage, itemCo
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {products.slice(0, 8).map((product) => (
+        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+          {products.map((product) => (
             <div
               key={product.id}
-              className="relative overflow-hidden hover:shadow-md transition-shadow cursor-pointer border border-gray-200 bg-white rounded-lg"
+              className="flex-shrink-0 w-48 relative overflow-hidden hover:shadow-md transition-shadow cursor-pointer border border-gray-200 bg-white rounded-lg"
               onClick={() => openAmazonLink(product.amazonUrl)}
             >
               <div className="relative">
