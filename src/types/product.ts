@@ -80,7 +80,7 @@ export const API_PROVIDERS = {
   },
   STATIC_PRODUCTS: {
     name: 'Static Products JSON',
-    baseUrl: '/api/products',
+    baseUrl: process.env.NODE_ENV === 'development' ? '/api/products.json' : '/api/products',
     rateLimitPerMinute: 1000,
     isActive: true
   },
