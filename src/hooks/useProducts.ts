@@ -30,38 +30,45 @@ export function useProducts(filters: ProductFilters = {}) {
   const [error, setError] = useState<string | null>(null)
   const [pagination, setPagination] = useState<ApiResponse<Product[]>['pagination']>()
 
+  // Memoize filters to prevent infinite re-renders
+  const memoizedFilters = useMemo(() => filters, [
+    filters.category,
+    filters.minPrice,
+    filters.maxPrice,
+    filters.search,
+    filters.sortBy,
+    filters.sortOrder,
+    filters.limit,
+    filters.page
+  ])
+
   const fetchProducts = useCallback(async () => {
     setLoading(true)
     setError(null)
 
     try {
-      // Debug: check if products are loaded
-      debugProducts()
-      
       // Use static products only
       const staticProducts = getProductsSync()
-      console.log('Static products loaded:', staticProducts.length)
-      console.log('First static product:', staticProducts[0])
       
       let filteredProducts = staticProducts.map(convertStaticProduct)
 
       // Apply filters
-      if (filters.category) {
+      if (memoizedFilters.category) {
         filteredProducts = filteredProducts.filter(p => 
-          p.category.toLowerCase() === filters.category!.toLowerCase()
+          p.category.toLowerCase() === memoizedFilters.category!.toLowerCase()
         )
       }
 
-      if (filters.minPrice !== undefined) {
-        filteredProducts = filteredProducts.filter(p => p.price >= filters.minPrice!)
+      if (memoizedFilters.minPrice !== undefined) {
+        filteredProducts = filteredProducts.filter(p => p.price >= memoizedFilters.minPrice!)
       }
 
-      if (filters.maxPrice !== undefined) {
-        filteredProducts = filteredProducts.filter(p => p.price <= filters.maxPrice!)
+      if (memoizedFilters.maxPrice !== undefined) {
+        filteredProducts = filteredProducts.filter(p => p.price <= memoizedFilters.maxPrice!)
       }
 
-      if (filters.search) {
-        const searchTerm = filters.search.toLowerCase()
+      if (memoizedFilters.search) {
+        const searchTerm = memoizedFilters.search.toLowerCase()
         filteredProducts = filteredProducts.filter(p => 
           p.title.toLowerCase().includes(searchTerm) ||
           p.description.toLowerCase().includes(searchTerm)
@@ -69,11 +76,11 @@ export function useProducts(filters: ProductFilters = {}) {
       }
 
       // Apply sorting
-      if (filters.sortBy) {
+      if (memoizedFilters.sortBy) {
         filteredProducts.sort((a, b) => {
           let aVal: any, bVal: any
           
-          switch (filters.sortBy) {
+          switch (memoizedFilters.sortBy) {
             case 'price':
               aVal = a.price
               bVal = b.price
@@ -90,7 +97,7 @@ export function useProducts(filters: ProductFilters = {}) {
               return 0
           }
 
-          if (filters.sortOrder === 'desc') {
+          if (memoizedFilters.sortOrder === 'desc') {
             return bVal > aVal ? 1 : -1
           } else {
             return aVal > bVal ? 1 : -1
@@ -99,13 +106,12 @@ export function useProducts(filters: ProductFilters = {}) {
       }
 
       // Apply pagination
-      const limit = filters.limit || 20
-      const page = filters.page || 1
+      const limit = memoizedFilters.limit || 20
+      const page = memoizedFilters.page || 1
       const startIndex = (page - 1) * limit
       const endIndex = startIndex + limit
       const paginatedProducts = filteredProducts.slice(startIndex, endIndex)
 
-      console.log('Final products count:', paginatedProducts.length)
       setProducts(paginatedProducts)
       setPagination({
         page,
@@ -120,7 +126,7 @@ export function useProducts(filters: ProductFilters = {}) {
     } finally {
       setLoading(false)
     }
-  }, [filters])
+  }, [memoizedFilters])
 
   useEffect(() => {
     fetchProducts()

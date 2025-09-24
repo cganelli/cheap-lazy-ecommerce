@@ -14,27 +14,27 @@ import ProductCard from '@/components/ProductCard'
 
 // Static Products Section Component
 function StaticProductsSection() {
-  // Temporarily hardcode some products for testing
-  const testProducts = [
-    {
-      id: "B0F7LSKLTZ",
-      title: "Dog Bark Deterrent Device",
-      name: "Dog Bark Deterrent Device",
-      price: 0,
-      description: "Dog Bark Deterrent Device",
-      category: "Pet Care",
-      image: "https://cheapandlazystuff.com/products/B0F7LSKLTZ.jpg",
-      images: ["https://cheapandlazystuff.com/products/B0F7LSKLTZ.jpg"],
-      rating: { rate: 4.5, count: 100 },
-      amazonUrl: "https://amzn.to/4mshS3J",
-      availability: "in_stock",
-      sku: "B0F7LSKLTZ"
-    }
-  ];
+  const { products: staticProducts, loading } = useProducts({ limit: 8 })
+
+  if (loading) {
+    return (
+      <div className="text-center text-gray-600 py-8">
+        <p>Loading products...</p>
+      </div>
+    )
+  }
+
+  if (staticProducts.length === 0) {
+    return (
+      <div className="text-center text-gray-600 py-8">
+        <p>No products available.</p>
+      </div>
+    )
+  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {testProducts.map((product) => (
+      {staticProducts.map((product) => (
         <div key={product.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
           <div className="p-4">
             <div className="relative mb-4">
@@ -155,25 +155,6 @@ export default function HomePage() {
       </div>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
-        {/* Admin Notice for Demo Data */}
-        {!usingAmazonProducts && (
-          <div className="mb-8 bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="font-medium text-blue-900">Using Demo Products</h3>
-                <p className="text-sm text-blue-700">
-                  You're currently viewing demo products. Add your own Amazon products for authentic affiliate marketing!
-                </p>
-              </div>
-              <a
-                href="/admin"
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm font-medium"
-              >
-                Add Your Products
-              </a>
-            </div>
-          </div>
-        )}
 
         {showSearchResults ? (
           /* Search Results */

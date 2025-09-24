@@ -4,7 +4,7 @@ export const PRODUCTS = [
     "asin": "B0F7LSKLTZ",
     "title": "Dog Bark Deterrent Device, 3X Ultrasonic Anti Barking, 6 Training Modes 23 FT Range Barks No More Indoors Outdoors Behavior Correct Safe & Humane Rechargeable Compact Bark Control for Dogs",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0F7LSKLTZ.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Pet Care",
     "affiliate_url": "https://amzn.to/4mshS3J"
   },
@@ -12,7 +12,7 @@ export const PRODUCTS = [
     "asin": "B087CX6F6X",
     "title": "Geesta Dehydrator Rack Stainless Steel Stand Compatible with Ninja Foodi AG300, AG300C, AG301, AG301C, AG302, AG400, IG301A Ninja Foodi Grill Accessories",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B087CX6F6X.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Kitchen",
     "affiliate_url": "https://amzn.to/3KiWssz"
   },
@@ -20,7 +20,7 @@ export const PRODUCTS = [
     "asin": "B0BYRP4QHJ",
     "title": "HOTEC 4 Pieces Silicone Whisks Set, Wire Balloon Whisks Egg Beater, Non-slip Handle Whisk for Non-stick Cookware Perfect for Cooking, Stirring, Beating and Blending (Black)",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0BYRP4QHJ.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Kitchen",
     "affiliate_url": "https://amzn.to/4nm8BLY"
   },
@@ -28,7 +28,7 @@ export const PRODUCTS = [
     "asin": "B0C9ZGMN9D",
     "title": "JAYVAR Onion Holder for Slicing, Onion Cutter Vegetable Chopper, Stainless Steel Tomato Slicer Vegetable Cutter for Potato, Avocados, Eggs, Food Slicer Assistant Tool for Fruit Lemon and Meat",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0C9ZGMN9D.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Kitchen",
     "affiliate_url": "https://amzn.to/46k2fGY"
   },
@@ -36,7 +36,7 @@ export const PRODUCTS = [
     "asin": "B07PLCYTFZ",
     "title": "OXO Good Grips Corn Prep Peeler",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B07PLCYTFZ.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Kitchen",
     "affiliate_url": "https://amzn.to/4gGZIdm"
   },
@@ -44,7 +44,7 @@ export const PRODUCTS = [
     "asin": "B001FB6IFY",
     "title": "Polder Candy Thermometer, Stainless Steel Cooking Thermometer with Pot Clip, for Jam, Syrup, Jelly, Yogurt, and Deep Fry, 12\"",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B001FB6IFY.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Kitchen",
     "affiliate_url": "https://amzn.to/3VtxJUP"
   },
@@ -52,7 +52,7 @@ export const PRODUCTS = [
     "asin": "B095M6H5D7",
     "title": "3 Pack Pet Food Can Covers Universal Can Lids Safe/Silicone Dog&Cat Food Can Lid Covers (green+blue+orange)",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B095M6H5D7.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/4pBSQ51"
   },
@@ -60,7 +60,7 @@ export const PRODUCTS = [
     "asin": "B01KNFI86E",
     "title": "Grannick's Care Dogs Bitter Apple No Chew Spray 8oz",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B01KNFI86E.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Pet Care",
     "affiliate_url": "https://amzn.to/4pEd2mG"
   },
@@ -68,7 +68,7 @@ export const PRODUCTS = [
     "asin": "B0815JLWCM",
     "title": "Arm & Hammer for Pets Ringers Fresh Breath Dental Treats for Dogs,Value Pack,32 Pcs Dog Dental Chews Fight Bad Dog Breath,Plaque & Tartar Without Brushing With Baking Soda(Pack of 1,32 Count)",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0815JLWCM.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Pet Care",
     "affiliate_url": "https://amzn.to/3VxhoOQ"
   },
@@ -76,7 +76,7 @@ export const PRODUCTS = [
     "asin": "B0CCB4XW1M",
     "title": "Nature's Miracle Deodorizing Bath Wipes Sunkissed Breeze Scent, 100 ct",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0CCB4XW1M.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Pet Care",
     "affiliate_url": "https://amzn.to/4mtN56E"
   },
@@ -84,7 +84,7 @@ export const PRODUCTS = [
     "asin": "B0CSGXJV7K",
     "title": "Zymox Advanced Enzymatic Ear Wipes for Dogs and Cats - for Dirty, Waxy, Smelly Ears - Premium Strength Ear Cleaner Wipes - Non-Irritating - Hypoallergenic - 100 ct",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0CSGXJV7K.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Pet Care",
     "affiliate_url": "https://amzn.to/4gAI3E1"
   },
@@ -92,7 +92,7 @@ export const PRODUCTS = [
     "asin": "B0002AQMZU",
     "title": "Vet\u2019s Best Enzymatic Dog Toothpaste \u2013 Vet Formulated Dental Gel for Teeth Cleaning, Fresh Breath, Tartar Control, Plaque Remover & Oral Hygiene for Dogs, 3.5 oz",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0002AQMZU.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Pet Care",
     "affiliate_url": "https://amzn.to/3KCyrg3"
   },
@@ -100,7 +100,7 @@ export const PRODUCTS = [
     "asin": "B01MZ1W9NT",
     "title": "TropiClean Fresh Breath Oral Care Spray for Dogs & Cats | Dog Breath Spray | Mint Breath Freshener | Pet Bad Breath Treatment | Made in The USA | 4 oz",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B01MZ1W9NT.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Pet Care",
     "affiliate_url": "https://amzn.to/4pyTAYR"
   },
@@ -108,7 +108,7 @@ export const PRODUCTS = [
     "asin": "B094783CJ9",
     "title": "Douxo S3 Pyo Mousse, Contains 3% Chlorhexidine & 0.5% Ophytrium, Antiseptic & Hydrating, for Bacterial or Yeast Skin Infections, for Dogs, 5.1 fl. oz. (150mL)",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B094783CJ9.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Pet Care",
     "affiliate_url": "https://amzn.to/3IzDZr1"
   },
@@ -116,7 +116,7 @@ export const PRODUCTS = [
     "asin": "B006YFYNIU",
     "title": "Nylabone Advanced Oral Care Pet Dental Water Additive, Liquid Tartar Remover & Breath Freshener for Dogs, Dog Teeth-Cleaning, Original Flavor, 32 oz.",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B006YFYNIU.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Pet Care",
     "affiliate_url": "https://amzn.to/4nqU3uI"
   },
@@ -124,7 +124,7 @@ export const PRODUCTS = [
     "asin": "B079TWY9FK",
     "title": "Zesty Paws Dog Allergy Relief- Dog Itching Skin Relief- Dog Probiotics for Itchy Skin and Itchy Ears- Dog Allergy Paw Relief- Dog Allergy Chews- Dog Itch Relief - Dog Skin Allergy Relief - PB - 90ct",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B079TWY9FK.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Pet Care",
     "affiliate_url": "https://amzn.to/42Nzccr"
   },
@@ -132,7 +132,7 @@ export const PRODUCTS = [
     "asin": "B003ULL1NQ",
     "title": "Nutramax Cosequin for Dogs Joint Health Supplement, Contains Glucosamine for Dogs, Plus Chondroitin and MSM, Supports Healthy Joints, For All Breeds and Sizes, Chewable Tablets, 132 Count",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B003ULL1NQ.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Pet Care",
     "affiliate_url": "https://amzn.to/4mCuMwd"
   },
@@ -140,7 +140,7 @@ export const PRODUCTS = [
     "asin": "B07121B839",
     "title": "Zesty Paws Dog Multivitamin, Chewable Dog Vitamins and Supplements for Hip & Joints, Skin & Coat, Omega 3 Fish Oil for Dogs- Senior & Puppy Multivitamin- Chicken- 90ct",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B07121B839.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Pet Care",
     "affiliate_url": "https://amzn.to/4nfyjSb"
   },
@@ -148,7 +148,7 @@ export const PRODUCTS = [
     "asin": "B08HSBQBWN",
     "title": "Pet Snuffle Mat for Dogs,Interactive Feed Puzzle for Boredom,Encourages Natural Foraging Skills for Cats Rabbits Dogs Bowl, Dog Treat Dispenser Indoor Outdoor Stress Relief,Travel Portable and Compact",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B08HSBQBWN.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Pet Care",
     "affiliate_url": "https://amzn.to/3W2C2qf"
   },
@@ -156,7 +156,7 @@ export const PRODUCTS = [
     "asin": "B0C74LKMBX",
     "title": "TKTK Pimple Patches, 12 mm Invisible Acne Patches for Face with Salicylic Acid, 0.01cm Extra Thin Outer Edge, Hydrocolloid Zit Patch for Pustule, Whitehead, Cystic Acne Spot, 48 Count",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0C74LKMBX.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/42IfVcr"
   },
@@ -164,7 +164,7 @@ export const PRODUCTS = [
     "asin": "B08NPTTYB4",
     "title": "SEVICH Hairline Powder - Quick Cover for Thinning Grey Hair, Eyebrows & Beard for Women & Men, Windproof & Sweatproof, Blonde",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B08NPTTYB4.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/3IneHfT"
   },
@@ -172,7 +172,7 @@ export const PRODUCTS = [
     "asin": "B07JQG2WF5",
     "title": "Glycolic Acid 20% Resurfacing Pads for Face & Body with Vitamins B5, C & E, Green Tea, Calendula, Allantoin - Exfoliates Surface Skin and Reduces Appearance of Fine Lines and Wrinkles - Peel Pads",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B07JQG2WF5.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/4pDONFo"
   },
@@ -180,7 +180,7 @@ export const PRODUCTS = [
     "asin": "B00021KD2C",
     "title": "Derma E Anti-Wrinkle Renewal Skin Cream \u2013 Vitamin A Wrinkle Treatment Cream \u2013 Vegan Anti-Aging Moisturizer to Smooth & Renew Aging Skin, 4 oz",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B00021KD2C.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/4mAYthg"
   },
@@ -188,7 +188,7 @@ export const PRODUCTS = [
     "asin": "B08C36CYNW",
     "title": "Small Jewelry Box Necklace Ring Storage Organizer Mini Jewelry case Double Layer Travel Jewelry Organizer for Women Girls Gift/Black",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B08C36CYNW.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Household",
     "affiliate_url": "https://amzn.to/4nEgGvg"
   },
@@ -196,7 +196,7 @@ export const PRODUCTS = [
     "asin": "B08VV26W43",
     "title": "Onsen Nail & Cuticle Cream Treatment w/Japanese Tsubaki, Jojoba & Lavender Oil, Shea Butter \u2013 Strengthens Nails, Softens Cuticles - Daily Repair Care (1 Count/15 ml)",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B08VV26W43.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/3VtwQeW"
   },
@@ -204,7 +204,7 @@ export const PRODUCTS = [
     "asin": "B0BG8M3G45",
     "title": "Teamoy Travel Jewelry Case for Women,Jewelry Storage Organizer for Necklace, Earrings, Bracelet, Purple",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0BG8M3G45.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Household",
     "affiliate_url": "https://amzn.to/4nNrqrf"
   },
@@ -212,7 +212,7 @@ export const PRODUCTS = [
     "asin": "B07Y9Y5JM4",
     "title": "MelodySusie Electric USB Nail Drill Machine,PC120I Portable Electric Nail File Efile Set for Acrylic Gel Nails, Manicure Pedicure Tool with Nail Drill Bits Sanding Bands Gold",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B07Y9Y5JM4.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/3Kib9Mz"
   },
@@ -220,7 +220,7 @@ export const PRODUCTS = [
     "asin": "B07J4KKFJ3",
     "title": "BONNIESTORE Winged Eyeliner Stamp 2 Pack,Dual-ended Eyeliner Stamp for Perfect Wing Cat Eyes,Long Lasting Liquid Eyeliner Pen Waterproof Smudge Proof Smudge Proof for All Eye Shapes",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B07J4KKFJ3.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/4pCNJ4D"
   },
@@ -228,7 +228,7 @@ export const PRODUCTS = [
     "asin": "B0DHRT3NTT",
     "title": "540 Titanium Derma Roller for Face Hair Beard Scalp,Beard Microneedle Roller,Personal Use Microneedling,Microdermabrasion Cosmetic Beauty Instrument for Men Women\uff08Black 1.o\uff09",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0DHRT3NTT.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/46BvaoE"
   },
@@ -236,7 +236,7 @@ export const PRODUCTS = [
     "asin": "B004Y9GTYE",
     "title": "Maybelline Instant Age Rewind Eraser Dark Circles Treatment Multi-Use Concealer, 120, 1 Count",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B004Y9GTYE.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/46SiDOY"
   },
@@ -244,7 +244,7 @@ export const PRODUCTS = [
     "asin": "B0B3GCCRVH",
     "title": "CeraVe Skin Renewing Eye Cream For Wrinkles, Under Eye Cream With Peptides + Caffeine + Niacinamide, For Wrinkles & Crows Feet, Paraben Free & Opthalmologist Tested",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0B3GCCRVH.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/3IAv9tc"
   },
@@ -252,7 +252,7 @@ export const PRODUCTS = [
     "asin": "B01EKUBU5Y",
     "title": "TruSkin Vitamin C Serum For Face \u2013 Anti Aging Face Serum with Vitamin C, Hyaluronic Acid, Vitamin E \u2013 Brightening Formula \u2013 Improve Appearance of Dark Spots, Tone, Fine Lines & Wrinkles, 2 Fl Oz",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B01EKUBU5Y.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/46BGz83"
   },
@@ -260,7 +260,7 @@ export const PRODUCTS = [
     "asin": "B00AREGVUM",
     "title": "Bio-Oil Skincare Body Oil Serum, Face and Body Moisturizer with Vitamin E & A, for Scars, Stretch Marks, Sensitive Skin, All Skin Types, Dermatologist Recommended, Non-Comedogenic, 6.7 Oz",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B00AREGVUM.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/4ngHXUy"
   },
@@ -268,7 +268,7 @@ export const PRODUCTS = [
     "asin": "B09KDMFMX4",
     "title": "SOL DE JANEIRO Brazilian Bum Bum Cream",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B09KDMFMX4.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/4msGdGR"
   },
@@ -276,7 +276,7 @@ export const PRODUCTS = [
     "asin": "B0BFRWTGZK",
     "title": "Amazon Basic Care Weekly (7-Day) Pill Organizer, Vitamin Planner, And Medicine Box, Medium Compartments, Blue",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0BFRWTGZK.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Health",
     "affiliate_url": "https://amzn.to/3IzYnbH"
   },
@@ -284,7 +284,7 @@ export const PRODUCTS = [
     "asin": "B00J9H8O6C",
     "title": "BioSilk Hydrating Therapy Pure Moisture Leave-In Spray, Replenishes Hair Moisture & Protects From Frizz, Sulfate, Paraben, & Cruelty-Free, 7 Oz",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B00J9H8O6C.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Hair Care",
     "affiliate_url": "https://amzn.to/3Kk0Asc"
   },
@@ -292,7 +292,7 @@ export const PRODUCTS = [
     "asin": "B004452DPM",
     "title": "CHI 44 Iron Guard Thermal Protection Spray, Nourishing Formula Helps Resist Heat Damage to Hair & Tame Frizz, 2 Oz",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B004452DPM.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Hair Care",
     "affiliate_url": "https://amzn.to/4gHkFF5"
   },
@@ -300,7 +300,7 @@ export const PRODUCTS = [
     "asin": "B004DHYZU2",
     "title": "Crack HAIR FIX Styling Treatment - Multi-Tasking, Anti-Frizz, Leave-In Styling Cream with Protection from Humidity, Chlorine, Heat Treatments & Sun, 3 oz",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B004DHYZU2.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Hair Care",
     "affiliate_url": "https://amzn.to/4pDCEA8"
   },
@@ -308,7 +308,7 @@ export const PRODUCTS = [
     "asin": "B01N8UM9HR",
     "title": "Medix 5.5 Retinol Body Lotion Firming Moisturizer | Crepey Skincare Treatment | Retinol Body Cream | Anti Aging Firming Cream For Women Targets Look Of Crepe Skin, Wrinkles, & Sagging Skin, 15 Fl Oz",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B01N8UM9HR.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/4gFFuk7"
   },
@@ -316,7 +316,7 @@ export const PRODUCTS = [
     "asin": "B081JHTPKP",
     "title": "Mise En Scene PerfectSerum Original - HairOil for Frizzy & Dry, Hydration and Nutrition Hairy Essence for Damage Care, Korean HairCare Product, Hair Serum 2.71 Fl. Oz.",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B081JHTPKP.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Hair Care",
     "affiliate_url": "https://amzn.to/3KiCluI"
   },
@@ -324,7 +324,7 @@ export const PRODUCTS = [
     "asin": "B01B5D3VOC",
     "title": "Gold Bond Age Renew Neck & Chest Firming Cream, 2 oz \u2013 Clinically Tested Moisturizer for Smoother, Firmer Skin",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B01B5D3VOC.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/4pDDsoE"
   },
@@ -332,7 +332,7 @@ export const PRODUCTS = [
     "asin": "B01B6SG6ZC",
     "title": "PROTOCOL FOR LIFE BALANCE NAC N-Acetyl Cysteine 1000mg - Glutathione Production & Respiratory Function - 120 Tabs",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B01B6SG6ZC.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Health",
     "affiliate_url": "https://amzn.to/3W2FEZl"
   },
@@ -340,7 +340,7 @@ export const PRODUCTS = [
     "asin": "B0FMP34X3X",
     "title": "Aligns_Probiotic Daily Supplement (84 Count.) for Digestive Balance - Supports Gut Health, Occasional Gas, Bloating & Abdominal Comfort - Gluten Free, Vegetarian Capsules",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0FMP34X3X.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Health",
     "affiliate_url": "https://amzn.to/46CeBsX"
   },
@@ -348,7 +348,7 @@ export const PRODUCTS = [
     "asin": "B0CB97GT21",
     "title": "NOW Foods L-Carnitine 500 mg, 240 Veg Caps - Fitness Support* - Purest Form - Non-GMO - Vegan/Vegetarian - 500mg Capsules - Amino Acid Health Supplement",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0CB97GT21.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Health",
     "affiliate_url": "https://amzn.to/4nK1nB9"
   },
@@ -356,7 +356,7 @@ export const PRODUCTS = [
     "asin": "B0753CVDC6",
     "title": "Source Naturals Berberine Vegetable Capsule, for Gastrointestinal Support* - 120 Vegetarian Capsules",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0753CVDC6.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Health",
     "affiliate_url": "https://amzn.to/3VRyCqx"
   },
@@ -364,7 +364,7 @@ export const PRODUCTS = [
     "asin": "B001TH7JWA",
     "title": "Trunature Grape Seed & Resveratrol 150 Softgels",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B001TH7JWA.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Health",
     "affiliate_url": "https://amzn.to/4pIBtQi"
   },
@@ -372,7 +372,7 @@ export const PRODUCTS = [
     "asin": "B001LF39BU",
     "title": "Carlson Chelated Magnesium 200mg, 180 Tablets",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B001LF39BU.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Health",
     "affiliate_url": "https://amzn.to/4mwKlFO"
   },
@@ -380,7 +380,7 @@ export const PRODUCTS = [
     "asin": "B002CQU54Q",
     "title": "Nordic Naturals Ultimate Omega, Lemon Flavor - 120 Soft Gels - 1280 mg Omega-3 - High-Potency Fish Oil Supplement with EPA & DHA - Promotes Brain & Heart Health - Non-GMO - 60 Servings",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B002CQU54Q.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Health",
     "affiliate_url": "https://amzn.to/46l6lP8"
   },
@@ -388,7 +388,7 @@ export const PRODUCTS = [
     "asin": "B00XWCSOZ6",
     "title": "Banana Boat Continuous Spf#50+ Spray 6 Ounce Sun Comfort (177ml) (2 Pack)",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B00XWCSOZ6.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/4njKY6Q"
   },
@@ -396,7 +396,7 @@ export const PRODUCTS = [
     "asin": "B07L6XQW1Q",
     "title": "L'Oreal Paris Revitalift Bright Reveal Anti-Aging Facial Cleanser with Glycolic Acid 5 fl. oz (Pack of 2)",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B07L6XQW1Q.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/4mB26Uq"
   },
@@ -404,7 +404,7 @@ export const PRODUCTS = [
     "asin": "B0CB79FWKZ",
     "title": "OLLY Max Strength Sleep Gummy, 10mg Melatonin, L-Theanine, Chamomile, Lemon Balm, Sugar Free, Vegetarian Sleep Aid, Strawberry - 50 Count",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0CB79FWKZ.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Health",
     "affiliate_url": "https://amzn.to/3IFQKjX"
   },
@@ -412,7 +412,7 @@ export const PRODUCTS = [
     "asin": "B019GMWA5K",
     "title": "Clairol Root Touch-Up by Nice'n Easy Permanent Hair Dye, 9A Light Ash Blonde Hair Color, Pack of 2",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B019GMWA5K.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Hair Care",
     "affiliate_url": "https://amzn.to/4pANRl6"
   },
@@ -420,7 +420,7 @@ export const PRODUCTS = [
     "asin": "B084W34G5C",
     "title": "L\u2019Or\u00e9al Paris Magic Root Permanent Hair Color, 10 Minute Hair Dye Kit to Rescue Roots with 100% Gray Hair Coverage, 9 Light Blonde, 2 Pack",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B084W34G5C.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Hair Care",
     "affiliate_url": "https://amzn.to/4nEjDM8"
   },
@@ -428,7 +428,7 @@ export const PRODUCTS = [
     "asin": "B0048EZNR4",
     "title": "OGX Renewing + Argan Oil of Morocco, Cold-Pressed Argan Oil for Hair Penetrating Treatment & Shine, Moisturizing & Strengthening Silky Oil for All Hair Types, Paraben & Sulfate Free, 3.3 fl oz",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0048EZNR4.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Hair Care",
     "affiliate_url": "https://amzn.to/46QCEp4"
   },
@@ -436,7 +436,7 @@ export const PRODUCTS = [
     "asin": "B083M7WZBZ",
     "title": "oico Moisture Recovery Moisturizing Conditioner | For Thick, Coarse, Dry Hair | Replenish Moisture | Restore Smoothness & Elasticity | Strengthen & Reduce Breakage | With Jojoba Oil & Shea Butter",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B083M7WZBZ.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Hair Care",
     "affiliate_url": "https://amzn.to/3Id6fzR"
   },
@@ -444,7 +444,7 @@ export const PRODUCTS = [
     "asin": "B0C8TSZ2CK",
     "title": "VALITIC Kojic Acid Dark Spot Remover Soap Bars with Vitamin C, Retinol, Collagen, Turmeric - Original Japanese Complex Infused with Hyaluronic Acid, Vitamin E, Shea Butter, Castile Olive Oil - 5 Pack",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0C8TSZ2CK.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/4pCRuqL"
   },
@@ -452,7 +452,7 @@ export const PRODUCTS = [
     "asin": "B014HJJTTM",
     "title": "Arvazallia Heat Protectant Spray with Argan Oil - Professional Grade Thermal Protector, Leave-in Conditioner, Anti-frizz, and Shine Spray",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B014HJJTTM.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Hair Care",
     "affiliate_url": "https://amzn.to/4mB3nLc"
   },
@@ -460,7 +460,7 @@ export const PRODUCTS = [
     "asin": "B001THDDFC",
     "title": "Ezy Dose Weekly (7-Day) AM/PM Pill Organizer, Vitamin and Medicine Box, Small Pop-out Compartments, 2 Times a Day, Blue and Purple Lids",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B001THDDFC.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Health",
     "affiliate_url": "https://amzn.to/46z3Es5"
   },
@@ -468,7 +468,7 @@ export const PRODUCTS = [
     "asin": "B0CSWHMD1B",
     "title": "Silicone Scalp Massager, Scalp Scrubber for Hair Growth with Soft Bristles, Scalp Exfoliator Brush Dandruff Removal Shampoo Brush for Wet Dry Scalp Care",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0CSWHMD1B.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Hair Care",
     "affiliate_url": "https://amzn.to/42MxDeN"
   },
@@ -476,7 +476,7 @@ export const PRODUCTS = [
     "asin": "B017NZFVCG",
     "title": "Saltverk Birch Smoked Sea Salt - Gourmet, Icelandic, Hand Harvested and Sustainably Made - 3.17 Oz Jar",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B017NZFVCG.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Kitchen",
     "affiliate_url": "https://amzn.to/46z3XmJ"
   },
@@ -484,7 +484,7 @@ export const PRODUCTS = [
     "asin": "B01EAS3ER8",
     "title": "BUG BITE THING Suction Tool - Bug Bites and Bee/Wasp Stings, Natural Insect Bite Relief- White/3 Pack",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B01EAS3ER8.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Household",
     "affiliate_url": "https://amzn.to/4gAfKpi"
   },
@@ -492,7 +492,7 @@ export const PRODUCTS = [
     "asin": "B00121UVU0",
     "title": "O'Keeffe's Working Hands Hand Cream for Extreme Dryness - 3.4 oz Jar (1 Pack) - Repairing Skincare for Cracked, Dry Hands",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B00121UVU0.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/3W43MLb"
   },
@@ -500,7 +500,7 @@ export const PRODUCTS = [
     "asin": "B09HN81KVR",
     "title": "LANEIGE Lip Sleeping Mask: Nourish, Hydrate, Vitamin C, Murumuru & Shea Butter, Antioxidants, Flaky, Dry Lips",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B09HN81KVR.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/3VzIdC3"
   },
@@ -508,7 +508,7 @@ export const PRODUCTS = [
     "asin": "B07XF623PG",
     "title": "L.A. COLORS Metal Nail Polish, Metallica CNL158",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B07XF623PG.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/3IgZw82"
   },
@@ -516,7 +516,7 @@ export const PRODUCTS = [
     "asin": "B0DZ6RGTLN",
     "title": "4PCS Soft Rubber Nail Polish Bottle Holder, Nail Polishes Stand, Anti-spill Bottle Stand, Painting Manicure Display Tools, Non Tippable Nail Art Supplies, for Nail Polish Organizer Accessories",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0DZ6RGTLN.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/4pDGhpK"
   },
@@ -524,7 +524,7 @@ export const PRODUCTS = [
     "asin": "B0DYNVPY7X",
     "title": "Resin Nail Art Palette with 5 Pcs Nail Art Painting Drawing Brushes, Nail Polish Mixing Palette Double-Ended Dotting Pen Nail Art Liner Brush Nail Drawing Brushes for Nail Art Design",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0DYNVPY7X.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/4pImFRG"
   },
@@ -532,7 +532,7 @@ export const PRODUCTS = [
     "asin": "B0CHRX1SZS",
     "title": "5pcs Nail Art Liner Brushes, Liner Brush For Nails Gel, Painting Art Design Brush Set Nail Dotting Drawing Tool For Long Lines, Thin Details, Fine Drawing Sizes 7/9/11/15/25 mm (Pink)",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0CHRX1SZS.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/4pAPD5K"
   },
@@ -540,7 +540,7 @@ export const PRODUCTS = [
     "asin": "B0C6551BVY",
     "title": "Rechargeable Soft Selfie Light for Phone, Camera, Laptop, 4-14H Battery Portable LED Light for Pictures, Phone Light Clip",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0C6551BVY.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Electronics",
     "affiliate_url": "https://amzn.to/48gqvez"
   },
@@ -548,7 +548,7 @@ export const PRODUCTS = [
     "asin": "B07RK94L8J",
     "title": "Cable Clips, Cord Holder, Adhesive Cord Clips, Wire Holder for Cable Management, Phone Charger, Desk, Wall, Nightstand and Office, White 9 PCS",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B07RK94L8J.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Electronics",
     "affiliate_url": "https://amzn.to/3Kk55TC"
   },
@@ -556,7 +556,7 @@ export const PRODUCTS = [
     "asin": "B0CQQ5XJLP",
     "title": "200PCS Precision Tip Cotton Swabs with Wooden Sticks, Pointed Tip Cotton Swabs for Nail Polish Touch Up, Disposable Makeup Applicators, Cotton Sticks for Makeup, Microblading Supplies",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B0CQQ5XJLP.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/48uOXbR"
   },
@@ -564,7 +564,7 @@ export const PRODUCTS = [
     "asin": "B09855HCGQ",
     "title": "Sally Hansen Nail Salon Pro Brush Kit, 1 Pack, Nail Art Brush Kit, Nail Tools",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B09855HCGQ.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Beauty",
     "affiliate_url": "https://amzn.to/3Kh5Ixk"
   },
@@ -572,7 +572,7 @@ export const PRODUCTS = [
     "asin": "B076Q4G7YZ",
     "title": "GAVISCON MAX Relief Acid Reflux & Heartburn, 50 chewable foamtabs",
     "price": null,
-    "image_url": "https://cheapandlazystuff.com/products/B076Q4G7YZ.jpg",
+    "image_url": "/placeholder-product.png",
     "category": "Health",
     "affiliate_url": "https://amzn.to/429X9dQ"
   }
