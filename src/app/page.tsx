@@ -253,12 +253,12 @@ export default function HomePage() {
             <div className="mb-12">
               <TrendingSection
                 products={trendingProducts.map(p => ({
-                  id: p.id.toString(),
+                  id: p.asin,
                   name: p.title,
                   price: '', // Hide prices until Amazon API is available
                   originalPrice: undefined,
-                  image: p.image,
-                  amazonUrl: p.amazonUrl || '#',
+                  image: p.image_url,
+                  amazonUrl: p.affiliate_url || '#',
                   badge: p.badge,
                   discount: p.discount
                 }))}
@@ -279,11 +279,11 @@ export default function HomePage() {
                       <CategorySection
                         title={category.title}
                         products={categoryProducts.map(p => ({
-                          id: p.id.toString(),
+                          id: p.asin,
                           name: p.title,
                           price: '', // Hide prices until Amazon API is available
-                          image: p.image,
-                          amazonUrl: p.amazonUrl || '#',
+                          image: p.image_url,
+                          amazonUrl: p.affiliate_url || '#',
                           badge: p.badge
                         }))}
                         headingImage={`/${category.title.toUpperCase().replace(/\s+/g, '_')}_RED_TOUCHING.png`}
