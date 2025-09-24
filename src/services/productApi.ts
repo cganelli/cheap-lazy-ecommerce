@@ -86,15 +86,6 @@ class ProductApiService {
     return this.fetchWithCache<T>(url, cacheKey, CACHE_TTL.PRODUCTS)
   }
 
-  // Static Products API implementation
-  private async fetchFromStaticProducts<T>(endpoint: string): Promise<T> {
-    const baseUrl = API_PROVIDERS.STATIC_PRODUCTS.baseUrl
-    const url = `${baseUrl}${endpoint}`
-    const cacheKey = this.getCacheKey('static', endpoint)
-
-    return this.fetchWithCache<T>(url, cacheKey, CACHE_TTL.PRODUCTS)
-  }
-
   private transformFakeStoreProduct(item: any): Product {
     return {
       id: item.id,
@@ -109,33 +100,6 @@ class ProductApiService {
       amazonUrl: '#', // Placeholder
       availability: 'in_stock',
       sku: `FS-${item.id}`
-    }
-  }
-
-  private transformStaticProduct(item: any): Product {
-    // Handle image URL - use placeholder if external URL doesn't exist
-    let imageUrl = '/placeholder-product.png'
-    if (item.image_url && item.image_url.startsWith('/')) {
-      // Local image path
-      imageUrl = item.image_url
-    } else if (item.image_url && item.image_url.includes('cheapandlazystuff.com')) {
-      // External image - use placeholder for now until images are uploaded
-      imageUrl = '/placeholder-product.png'
-    }
-
-    return {
-      id: item.asin || `static-${Math.random().toString(36).substr(2, 9)}`,
-      title: item.title,
-      name: item.title, // For backward compatibility
-      price: null, // Don't show prices until Amazon API is available
-      description: item.title, // Use title as description for now
-      category: item.category || 'Uncategorized',
-      image: imageUrl,
-      images: [imageUrl],
-      rating: { rate: 4.5, count: 100 }, // Default rating
-      amazonUrl: item.affiliate_url || '#',
-      availability: 'in_stock',
-      sku: item.asin || `static-${Math.random().toString(36).substr(2, 9)}`
     }
   }
 
@@ -158,11 +122,6 @@ class ProductApiService {
         case 'FAKE_STORE':
           const fakeStoreData = await this.fetchFromFakeStore<any[]>('/products')
           products = fakeStoreData.map(item => this.transformFakeStoreProduct(item))
-          break
-
-        case 'STATIC_PRODUCTS':
-          const staticData = await this.fetchFromStaticProducts<any>('')
-          products = staticData.items.map((item: any) => this.transformStaticProduct(item))
           break
 
         default:
@@ -188,11 +147,11 @@ class ProductApiService {
       }
 
       if (filters.minPrice !== undefined) {
-        filteredProducts = filteredProducts.filter(p => p.price !== null && p.price >= filters.minPrice!)
+        filteredProducts = filteredProducts.filter(p => p.price >= filters.minPrice!)
       }
 
       if (filters.maxPrice !== undefined) {
-        filteredProducts = filteredProducts.filter(p => p.price !== null && p.price <= filters.maxPrice!)
+        filteredProducts = filteredProducts.filter(p => p.price <= filters.maxPrice!)
       }
 
       if (filters.rating !== undefined) {
@@ -208,8 +167,8 @@ class ProductApiService {
 
           switch (filters.sortBy) {
             case 'price':
-              aVal = a.price || 0
-              bVal = b.price || 0
+              aVal = a.price
+              bVal = b.price
               break
             case 'rating':
               aVal = a.rating?.rate || 0
@@ -276,16 +235,6 @@ class ProductApiService {
           product = this.transformFakeStoreProduct(fakeStoreData)
           break
 
-        case 'STATIC_PRODUCTS':
-          const staticData = await this.fetchFromStaticProducts<any>('')
-          const foundItem = staticData.items.find((item: any) => 
-            item.asin === id || item.asin === id.toString()
-          )
-          if (foundItem) {
-            product = this.transformStaticProduct(foundItem)
-          }
-          break
-
         default:
           throw new Error(`Provider ${this.activeProvider} not implemented`)
       }
@@ -322,27 +271,6 @@ class ProductApiService {
             title: this.mapCategoryName(cat),
             slug: cat.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase(),
             itemCount: 0, // Will be calculated
-            isActive: true,
-            sortOrder: index
-          }))
-          break
-
-        case 'STATIC_PRODUCTS':
-          const staticData = await this.fetchFromStaticProducts<any>('')
-          const categoryMap = new Map<string, number>()
-          
-          // Count items per category
-          staticData.items.forEach((item: any) => {
-            const category = item.category || 'Uncategorized'
-            categoryMap.set(category, (categoryMap.get(category) || 0) + 1)
-          })
-
-          // Create category objects
-          categories = Array.from(categoryMap.entries()).map(([cat, count], index) => ({
-            id: cat.toLowerCase().replace(/[^a-zA-Z0-9]/g, '-'),
-            title: cat,
-            slug: cat.toLowerCase().replace(/[^a-zA-Z0-9]/g, '-'),
-            itemCount: count,
             isActive: true,
             sortOrder: index
           }))

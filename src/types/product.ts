@@ -4,7 +4,7 @@ export interface Product {
   id: string | number
   title: string
   name?: string // For backward compatibility
-  price: number | null
+  price: number
   originalPrice?: number
   description: string
   category: string
@@ -76,12 +76,6 @@ export const API_PROVIDERS = {
     name: 'FakeStore API',
     baseUrl: 'https://fakestoreapi.com',
     rateLimitPerMinute: 60,
-    isActive: false // Disabled due to external API issues
-  },
-  STATIC_PRODUCTS: {
-    name: 'Static Products JSON',
-    baseUrl: process.env.NODE_ENV === 'development' ? '/api/products.json' : '/api/products',
-    rateLimitPerMinute: 1000,
     isActive: true
   },
   AMAZON_PA: {

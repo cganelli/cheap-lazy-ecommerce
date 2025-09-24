@@ -8,21 +8,3 @@
 [[edge_functions]]
 path = "/.netlify/functions/amazon-items"
 function = "guard-amazon-items"
-
-[[redirects]]
-  from = "/api/products"
-  to = "/.netlify/functions/products"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/api/ping"
-  to = "/.netlify/functions/ping"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/api/hello"
-  to = "/.netlify/functions/hello"
-  status = 200
-  force = true

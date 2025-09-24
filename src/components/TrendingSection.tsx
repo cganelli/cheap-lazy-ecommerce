@@ -86,11 +86,9 @@ export default function TrendingSection({ products, loading = false }: TrendingS
                 {product.name}
               </h3>
               <div className="flex items-center gap-2">
-                {product.price && (
-                  <span className="text-xl font-bold custom-red">
-                    {product.price}
-                  </span>
-                )}
+                <span className="text-xl font-bold custom-red">
+                  {product.price}
+                </span>
                 {product.originalPrice && (
                   <span className="text-sm text-gray-500 line-through">
                     {product.originalPrice}
