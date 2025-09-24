@@ -102,7 +102,7 @@ export function useProducts(filters: ProductFilters = {}) {
       }
 
       // Apply pagination
-      const limit = memoizedFilters.limit || 20
+      const limit = memoizedFilters.limit ?? filteredProducts.length // Use all products if no limit specified
       const page = memoizedFilters.page || 1
       const startIndex = (page - 1) * limit
       const endIndex = startIndex + limit
