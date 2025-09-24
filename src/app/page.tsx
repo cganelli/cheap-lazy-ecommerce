@@ -7,6 +7,7 @@ import CategorySection from '@/components/CategorySection'
 import CategoryNavigation from '@/components/CategoryNavigation'
 import { Button } from '@/components/ui/button'
 import ProductCard from '@/components/ProductCard'
+import { Product } from '@/types/product'
 
 
 export default function HomePage() {
@@ -35,11 +36,11 @@ export default function HomePage() {
   }))
   
   // Get categories from products
-  const categories = [...new Set(allProducts.map(p => p.category))].map(cat => ({
+  const categories = [...new Set(allProducts.map((p: Product) => p.category)) as Set<string>].map((cat: string) => ({
     id: cat.toLowerCase().replace(/\s+/g, '-'),
     title: cat,
     slug: cat.toLowerCase().replace(/\s+/g, '-'),
-    itemCount: allProducts.filter(p => p.category === cat).length,
+    itemCount: allProducts.filter((p: Product) => p.category === cat).length,
     isActive: true
   })).sort((a, b) => a.title.localeCompare(b.title))
 
@@ -53,7 +54,7 @@ export default function HomePage() {
 
   // Search functionality
   const searchResults = searchQuery 
-    ? allProducts.filter(p => 
+    ? allProducts.filter((p: Product) => 
         p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.category.toLowerCase().includes(searchQuery.toLowerCase())
       ).slice(0, 12)
@@ -88,7 +89,7 @@ export default function HomePage() {
   }
 
   // Group products by category for display
-  const productsByCategory = allProducts.reduce((acc, product) => {
+  const productsByCategory = allProducts.reduce((acc: Record<string, Product[]>, product: Product) => {
     const category = product.category
     if (!acc[category]) {
       acc[category] = []
@@ -151,7 +152,7 @@ export default function HomePage() {
               </div>
             ) : searchResults.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {searchResults.map((product) => (
+                {searchResults.map((product: Product) => (
                   <div key={product.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
                     <div className="p-4">
                       <div className="relative mb-4">
@@ -212,7 +213,7 @@ export default function HomePage() {
             {/* Trending Section */}
             <div className="mb-12">
               <TrendingSection
-                products={trendingProducts.map(p => ({
+                products={trendingProducts.map((p: Product) => ({
                   id: p.id.toString(),
                   name: p.title,
                   price: '', // Hide prices until Amazon API is available
@@ -230,7 +231,7 @@ export default function HomePage() {
             <div className="space-y-12">
               {categories
                 .sort((a, b) => a.title.localeCompare(b.title)) // Sort alphabetically
-                .map((category) => {
+                .map((category: { id: string; title: string; slug: string; itemCount: number; isActive: boolean }) => {
                   const categoryProducts = productsByCategory[category.title] || []
                   console.log(`Category ${category.title}: ${categoryProducts.length} products`)
 
@@ -238,7 +239,7 @@ export default function HomePage() {
                     <div key={category.id} id={category.title.toLowerCase().replace(/\s+/g, '-')}>
                       <CategorySection
                         title={category.title}
-                        products={categoryProducts.map(p => ({
+                        products={categoryProducts.map((p: Product) => ({
                           id: p.id.toString(),
                           name: p.title,
                           price: '', // Hide prices until Amazon API is available
