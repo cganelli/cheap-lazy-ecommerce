@@ -76,11 +76,11 @@ class AmazonProductService {
       }
 
       if (filters.minPrice !== undefined) {
-        products = products.filter(p => p.price >= filters.minPrice!)
+        products = products.filter(p => p.price !== null && p.price >= filters.minPrice!)
       }
 
       if (filters.maxPrice !== undefined) {
-        products = products.filter(p => p.price <= filters.maxPrice!)
+        products = products.filter(p => p.price !== null && p.price <= filters.maxPrice!)
       }
 
       if (filters.rating !== undefined) {
@@ -96,8 +96,8 @@ class AmazonProductService {
 
           switch (filters.sortBy) {
             case 'price':
-              aVal = a.price
-              bVal = b.price
+              aVal = a.price || 0
+              bVal = b.price || 0
               break
             case 'rating':
               aVal = a.rating?.rate || 0

@@ -4,7 +4,7 @@ export interface Product {
   id: string | number
   title: string
   name?: string // For backward compatibility
-  price: number
+  price: number | null
   originalPrice?: number
   description: string
   category: string

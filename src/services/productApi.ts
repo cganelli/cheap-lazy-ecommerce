@@ -113,15 +113,25 @@ class ProductApiService {
   }
 
   private transformStaticProduct(item: any): Product {
+    // Handle image URL - use placeholder if external URL doesn't exist
+    let imageUrl = '/placeholder-product.png'
+    if (item.image_url && item.image_url.startsWith('/')) {
+      // Local image path
+      imageUrl = item.image_url
+    } else if (item.image_url && item.image_url.includes('cheapandlazystuff.com')) {
+      // External image - use placeholder for now until images are uploaded
+      imageUrl = '/placeholder-product.png'
+    }
+
     return {
       id: item.asin || `static-${Math.random().toString(36).substr(2, 9)}`,
       title: item.title,
       name: item.title, // For backward compatibility
-      price: item.price || 0,
+      price: null, // Don't show prices until Amazon API is available
       description: item.title, // Use title as description for now
       category: item.category || 'Uncategorized',
-      image: item.image_url || '/placeholder-product.png',
-      images: [item.image_url || '/placeholder-product.png'],
+      image: imageUrl,
+      images: [imageUrl],
       rating: { rate: 4.5, count: 100 }, // Default rating
       amazonUrl: item.affiliate_url || '#',
       availability: 'in_stock',
@@ -178,11 +188,11 @@ class ProductApiService {
       }
 
       if (filters.minPrice !== undefined) {
-        filteredProducts = filteredProducts.filter(p => p.price >= filters.minPrice!)
+        filteredProducts = filteredProducts.filter(p => p.price !== null && p.price >= filters.minPrice!)
       }
 
       if (filters.maxPrice !== undefined) {
-        filteredProducts = filteredProducts.filter(p => p.price <= filters.maxPrice!)
+        filteredProducts = filteredProducts.filter(p => p.price !== null && p.price <= filters.maxPrice!)
       }
 
       if (filters.rating !== undefined) {
@@ -198,8 +208,8 @@ class ProductApiService {
 
           switch (filters.sortBy) {
             case 'price':
-              aVal = a.price
-              bVal = b.price
+              aVal = a.price || 0
+              bVal = b.price || 0
               break
             case 'rating':
               aVal = a.rating?.rate || 0
