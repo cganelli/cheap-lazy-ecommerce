@@ -202,6 +202,9 @@ export function useCategories() {
 
       try {
         const staticProducts = getProductsSync()
+        console.log('Static products loaded:', staticProducts.length)
+        console.log('Categories found:', staticProducts.map(p => p.category))
+        
         const uniqueCategories = Array.from(
           new Set(staticProducts.map(p => p.category).filter(Boolean))
         ).map(name => ({
@@ -213,6 +216,7 @@ export function useCategories() {
           isActive: true
         }))
 
+        console.log('Processed categories:', uniqueCategories)
         setCategories(uniqueCategories)
       } catch (err) {
         console.error('Error loading categories:', err)

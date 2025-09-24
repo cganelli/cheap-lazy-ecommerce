@@ -12,7 +12,7 @@ export default function ProductCard(p: Props) {
   return (
     <article className="rounded-2xl border p-4 shadow-sm overflow-hidden bg-white">
       <a href={p.affiliateUrl} rel="nofollow sponsored" target="_blank">
-        <div className="w-full bg-gray-100 overflow-hidden rounded-xl" style={{aspectRatio: '1/2', height: '300px'}}>
+        <div className="w-full bg-gray-100 overflow-hidden rounded-xl" style={{aspectRatio: '1/3', height: '400px', width: '133px'}}>
           <img
             src={p.imageUrl}
             alt={p.title}

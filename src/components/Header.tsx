@@ -51,7 +51,7 @@ export default function Header({ showSearch = true }: HeaderProps) {
       <div className="max-w-5xl mx-auto px-4 pb-1 flex justify-between items-start">
         <div className="flex items-start">
           <p className="text-lg font-bold" style={{color: '#1D3557', opacity: 0.7}}>
-            As an Amazon Associate, I may earn from qualifying purchases.
+            As an Amazon Associate, I may earn commissions from qualifying purchases.
           </p>
         </div>
         <div className="text-right">
