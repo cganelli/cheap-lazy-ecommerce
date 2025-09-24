@@ -76,7 +76,7 @@ export const API_PROVIDERS = {
     name: 'FakeStore API',
     baseUrl: 'https://fakestoreapi.com',
     rateLimitPerMinute: 60,
-    isActive: true
+    isActive: false // Disabled - using static products instead
   },
   AMAZON_PA: {
     name: 'Amazon Product Advertising',

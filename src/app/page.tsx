@@ -10,43 +10,75 @@ import CategorySection from '@/components/CategorySection'
 import CategoryNavigation from '@/components/CategoryNavigation'
 import { Button } from '@/components/ui/button'
 import { useProducts, useCategories, useProductSearch, useProductFilters, useTrendingProducts } from '@/hooks/useProducts'
-import { amazonProductService } from '@/services/amazonProductService'
-import { useAmazonItems } from '@/hooks/useAmazonItems'
 import ProductCard from '@/components/ProductCard'
 
-// Amazon Products Section Component
-function AmazonProductsSection() {
-  // Only fetch Amazon products if we have real ASINs configured
-  // For now, return empty to avoid hanging on fake ASINs
-  const ASINS: string[] = []; // Add your real ASINs here when ready
-  const { items, loading, error } = useAmazonItems(ASINS);
+// Static Products Section Component
+function StaticProductsSection() {
+  const { products: staticProducts, loading } = useProducts({ limit: 8 })
 
-  // Don't show anything if no ASINs are configured
-  if (ASINS.length === 0) {
+  if (loading) {
     return (
       <div className="text-center text-gray-600 py-8">
-        <p>No Amazon products configured yet.</p>
-        <p className="text-sm mt-2">Add your ASINs to display real products.</p>
+        <p>Loading products...</p>
       </div>
-    );
+    )
+  }
+
+  if (staticProducts.length === 0) {
+    return (
+      <div className="text-center text-gray-600 py-8">
+        <p>No products available.</p>
+      </div>
+    )
   }
 
   return (
-    <div>
-      {loading && <p className="text-center text-gray-600">Loading products…</p>}
-      {error && <p className="text-center text-red-600 text-sm">Error: {error}</p>}
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {items.map((it) => (
-          <ProductCard
-            key={it.asin}
-            {...it}
-            ugcBlurb="Small, quick, and easy to clean. Perfect for one person."
-          />
-        ))}
-      </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {staticProducts.map((product) => (
+        <div key={product.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+          <div className="p-4">
+            <div className="relative mb-4">
+              <img
+                src={product.image}
+                alt={product.title}
+                className="w-full h-48 object-cover rounded-md"
+                onError={(e) => {
+                  e.currentTarget.src = '/placeholder-product.png'
+                }}
+              />
+            </div>
+            <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2">{product.title}</h4>
+            <div className="flex items-center mb-2">
+              {product.rating && (
+                <>
+                  <div className="flex items-center">
+                    {[...Array(5)].map((_, i) => (
+                      <span
+                        key={i}
+                        className={`text-sm ${
+                          i < Math.floor(product.rating!.rate)
+                            ? 'text-yellow-400'
+                            : 'text-gray-300'
+                        }`}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                  <span className="text-sm text-gray-600 ml-2">({product.rating.rate})</span>
+                </>
+              )}
+            </div>
+            <div className="flex items-center justify-between">
+              <Button size="sm" className="custom-bg-red hover:bg-red-600 text-white">
+                View Details
+              </Button>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
-  );
+  )
 }
 
 export default function HomePage() {
@@ -64,11 +96,11 @@ export default function HomePage() {
   const { products: searchResults, loading: searchLoading } = useProductSearch(searchQuery, { limit: 12 })
   const { categories, loading: categoriesLoading } = useCategories()
 
-  // Get trending products (prioritizes Amazon products)
+  // Get trending products
   const { products: trendingProducts, loading: trendingLoading } = useTrendingProducts(5)
 
-  // Check if using Amazon products
-  const usingAmazonProducts = amazonProductService.hasAmazonProducts()
+  // Always show static products (no Amazon check needed)
+  const usingAmazonProducts = false
 
   const handleSearch = (query: string) => {
     setSearchQuery(query)
@@ -296,35 +328,33 @@ export default function HomePage() {
           </>
         )}
 
-        {/* Amazon Products Section */}
+        {/* Static Products Section */}
         <div className="bg-white py-12 mb-8">
           <div className="max-w-7xl mx-auto px-4">
             <h2 className="text-2xl font-bold custom-blue mb-6 text-center">
               Actually Good Cheap Finds
             </h2>
-            <AmazonProductsSection />
+            <StaticProductsSection />
           </div>
         </div>
 
-        {/* API Status Indicator */}
+        {/* Static Products Status Indicator */}
         <div className="fixed bottom-4 right-4 z-50">
           <div className="bg-white rounded-lg shadow-lg p-3 text-sm">
             <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${usingAmazonProducts ? 'bg-red-500' : 'bg-green-500'}`}></div>
+              <div className="w-2 h-2 rounded-full bg-green-500"></div>
               <span className="text-gray-600">
-                {usingAmazonProducts ? 'Your Amazon Products' : 'Demo Products (FakeStore API)'}
+                Static Products (No API)
               </span>
             </div>
-            {usingAmazonProducts && (
-              <div className="mt-1">
-                <a
-                  href="/admin"
-                  className="text-xs text-blue-600 hover:underline"
-                >
-                  Manage Products →
-                </a>
-              </div>
-            )}
+            <div className="mt-1">
+              <a
+                href="/admin"
+                className="text-xs text-blue-600 hover:underline"
+              >
+                Manage Products →
+              </a>
+            </div>
           </div>
         </div>
 
@@ -358,10 +388,7 @@ export default function HomePage() {
                 © 2025 Cheap & Lazy Stuff. Find great deals on everything you need.
               </p>
               <p className="text-sm text-gray-500">
-                {usingAmazonProducts
-                  ? 'Amazon Associate Program - Personally Curated Products'
-                  : 'Powered by Dynamic Product APIs'
-                }
+                Static Product Catalog - No External APIs
               </p>
             </div>
 

@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { Product, Category, ProductFilters, ApiResponse } from '@/types/product'
 import { getProductsSync, Product as StaticProduct } from '@/lib/static-products'
-import { amazonProductService } from '@/services/amazonProductService'
 import { safeStorage } from '@/lib/safeStorage'
 
 // Convert static product to our Product type
@@ -36,92 +35,77 @@ export function useProducts(filters: ProductFilters = {}) {
     setError(null)
 
     try {
-      // Check if user has Amazon products configured
-      const hasAmazonProducts = amazonProductService.hasAmazonProducts()
+      // Use static products only
+      const staticProducts = getProductsSync()
+      let filteredProducts = staticProducts.map(convertStaticProduct)
 
-      if (hasAmazonProducts) {
-        // Use Amazon products if available
-        const response = await amazonProductService.getAllAmazonProducts(filters)
-        if (response.success) {
-          setProducts(response.data)
-          setPagination(response.pagination)
-        } else {
-          setError(response.message || 'Failed to fetch products')
-          setProducts([])
-        }
-      } else {
-        // Use static products
-        const staticProducts = getProductsSync()
-        let filteredProducts = staticProducts.map(convertStaticProduct)
+      // Apply filters
+      if (filters.category) {
+        filteredProducts = filteredProducts.filter(p => 
+          p.category.toLowerCase() === filters.category!.toLowerCase()
+        )
+      }
 
-        // Apply filters
-        if (filters.category) {
-          filteredProducts = filteredProducts.filter(p => 
-            p.category.toLowerCase() === filters.category!.toLowerCase()
-          )
-        }
+      if (filters.minPrice !== undefined) {
+        filteredProducts = filteredProducts.filter(p => p.price >= filters.minPrice!)
+      }
 
-        if (filters.minPrice !== undefined) {
-          filteredProducts = filteredProducts.filter(p => p.price >= filters.minPrice!)
-        }
+      if (filters.maxPrice !== undefined) {
+        filteredProducts = filteredProducts.filter(p => p.price <= filters.maxPrice!)
+      }
 
-        if (filters.maxPrice !== undefined) {
-          filteredProducts = filteredProducts.filter(p => p.price <= filters.maxPrice!)
-        }
+      if (filters.search) {
+        const searchTerm = filters.search.toLowerCase()
+        filteredProducts = filteredProducts.filter(p => 
+          p.title.toLowerCase().includes(searchTerm) ||
+          p.description.toLowerCase().includes(searchTerm)
+        )
+      }
 
-        if (filters.search) {
-          const searchTerm = filters.search.toLowerCase()
-          filteredProducts = filteredProducts.filter(p => 
-            p.title.toLowerCase().includes(searchTerm) ||
-            p.description.toLowerCase().includes(searchTerm)
-          )
-        }
+      // Apply sorting
+      if (filters.sortBy) {
+        filteredProducts.sort((a, b) => {
+          let aVal: any, bVal: any
+          
+          switch (filters.sortBy) {
+            case 'price':
+              aVal = a.price
+              bVal = b.price
+              break
+            case 'rating':
+              aVal = a.rating?.rate || 0
+              bVal = b.rating?.rate || 0
+              break
+            case 'name':
+              aVal = a.title.toLowerCase()
+              bVal = b.title.toLowerCase()
+              break
+            default:
+              return 0
+          }
 
-        // Apply sorting
-        if (filters.sortBy) {
-          filteredProducts.sort((a, b) => {
-            let aVal: any, bVal: any
-            
-            switch (filters.sortBy) {
-              case 'price':
-                aVal = a.price
-                bVal = b.price
-                break
-              case 'rating':
-                aVal = a.rating?.rate || 0
-                bVal = b.rating?.rate || 0
-                break
-              case 'name':
-                aVal = a.title.toLowerCase()
-                bVal = b.title.toLowerCase()
-                break
-              default:
-                return 0
-            }
-
-            if (filters.sortOrder === 'desc') {
-              return bVal > aVal ? 1 : -1
-            } else {
-              return aVal > bVal ? 1 : -1
-            }
-          })
-        }
-
-        // Apply pagination
-        const limit = filters.limit || 20
-        const page = filters.page || 1
-        const startIndex = (page - 1) * limit
-        const endIndex = startIndex + limit
-        const paginatedProducts = filteredProducts.slice(startIndex, endIndex)
-
-        setProducts(paginatedProducts)
-        setPagination({
-          page,
-          limit,
-          total: filteredProducts.length,
-          totalPages: Math.ceil(filteredProducts.length / limit)
+          if (filters.sortOrder === 'desc') {
+            return bVal > aVal ? 1 : -1
+          } else {
+            return aVal > bVal ? 1 : -1
+          }
         })
       }
+
+      // Apply pagination
+      const limit = filters.limit || 20
+      const page = filters.page || 1
+      const startIndex = (page - 1) * limit
+      const endIndex = startIndex + limit
+      const paginatedProducts = filteredProducts.slice(startIndex, endIndex)
+
+      setProducts(paginatedProducts)
+      setPagination({
+        page,
+        limit,
+        total: filteredProducts.length,
+        totalPages: Math.ceil(filteredProducts.length / limit)
+      })
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')
       setProducts([])
@@ -160,27 +144,14 @@ export function useProductsByCategory(category: string, limit?: number) {
     setError(null)
 
     try {
-      const hasAmazonProducts = amazonProductService.hasAmazonProducts()
-
-      if (hasAmazonProducts) {
-        // Use Amazon products if available
-        const response = await amazonProductService.getAmazonProductsByCategory(category, limit)
-        if (response.success) {
-          setProducts(response.data)
-        } else {
-          setError(response.message || 'Failed to fetch products')
-          setProducts([])
-        }
-      } else {
-        // Use static products
-        const staticProducts = getProductsSync()
-        const categoryProducts = staticProducts
-          .filter(product => product.category?.toLowerCase() === category.toLowerCase())
-          .slice(0, limit || 20)
-          .map(convertStaticProduct)
-        
-        setProducts(categoryProducts)
-      }
+      // Use static products only
+      const staticProducts = getProductsSync()
+      const categoryProducts = staticProducts
+        .filter(product => product.category?.toLowerCase() === category.toLowerCase())
+        .slice(0, limit || 20)
+        .map(convertStaticProduct)
+      
+      setProducts(categoryProducts)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')
       setProducts([])
@@ -218,61 +189,47 @@ export function useProductSearch(query: string, filters: ProductFilters = {}) {
     setError(null)
 
     try {
-      const hasAmazonProducts = amazonProductService.hasAmazonProducts()
+      // Use static products search only
+      const staticProducts = getProductsSync()
+      const searchTerm = query.toLowerCase()
+      
+      const searchResults = staticProducts
+        .filter(product => 
+          product.title.toLowerCase().includes(searchTerm) ||
+          (product.category && product.category.toLowerCase().includes(searchTerm))
+        )
+        .map(convertStaticProduct)
 
-      if (hasAmazonProducts) {
-        // Use Amazon search if available
-        const response = await amazonProductService.searchAmazonProducts(query, filters)
-        if (response.success) {
-          setProducts(response.data)
-          setPagination(response.pagination)
-        } else {
-          setError(response.message || 'Search failed')
-          setProducts([])
-        }
-      } else {
-        // Use static products search
-        const staticProducts = getProductsSync()
-        const searchTerm = query.toLowerCase()
-        
-        const searchResults = staticProducts
-          .filter(product => 
-            product.title.toLowerCase().includes(searchTerm) ||
-            (product.category && product.category.toLowerCase().includes(searchTerm))
-          )
-          .map(convertStaticProduct)
-
-        // Apply additional filters
-        let filteredResults = searchResults
-        if (filters.category) {
-          filteredResults = filteredResults.filter(p => 
-            p.category.toLowerCase() === filters.category!.toLowerCase()
-          )
-        }
-
-        if (filters.minPrice !== undefined) {
-          filteredResults = filteredResults.filter(p => p.price >= filters.minPrice!)
-        }
-
-        if (filters.maxPrice !== undefined) {
-          filteredResults = filteredResults.filter(p => p.price <= filters.maxPrice!)
-        }
-
-        // Apply pagination
-        const limit = filters.limit || 20
-        const page = filters.page || 1
-        const startIndex = (page - 1) * limit
-        const endIndex = startIndex + limit
-        const paginatedResults = filteredResults.slice(startIndex, endIndex)
-
-        setProducts(paginatedResults)
-        setPagination({
-          page,
-          limit,
-          total: filteredResults.length,
-          totalPages: Math.ceil(filteredResults.length / limit)
-        })
+      // Apply additional filters
+      let filteredResults = searchResults
+      if (filters.category) {
+        filteredResults = filteredResults.filter(p => 
+          p.category.toLowerCase() === filters.category!.toLowerCase()
+        )
       }
+
+      if (filters.minPrice !== undefined) {
+        filteredResults = filteredResults.filter(p => p.price >= filters.minPrice!)
+      }
+
+      if (filters.maxPrice !== undefined) {
+        filteredResults = filteredResults.filter(p => p.price <= filters.maxPrice!)
+      }
+
+      // Apply pagination
+      const limit = filters.limit || 20
+      const page = filters.page || 1
+      const startIndex = (page - 1) * limit
+      const endIndex = startIndex + limit
+      const paginatedResults = filteredResults.slice(startIndex, endIndex)
+
+      setProducts(paginatedResults)
+      setPagination({
+        page,
+        limit,
+        total: filteredResults.length,
+        totalPages: Math.ceil(filteredResults.length / limit)
+      })
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Search error occurred')
       setProducts([])
@@ -352,38 +309,25 @@ export function useCategories() {
     setError(null)
 
     try {
-      const hasAmazonProducts = amazonProductService.hasAmazonProducts()
+      // Generate categories from static products only
+      const staticProducts = getProductsSync()
+      const categoryMap = new Map<string, number>()
+      
+      staticProducts.forEach(product => {
+        const category = product.category || 'Uncategorized'
+        categoryMap.set(category, (categoryMap.get(category) || 0) + 1)
+      })
 
-      if (hasAmazonProducts) {
-        // Use Amazon categories if available
-        const response = await amazonProductService.getAmazonCategories()
-        if (response.success) {
-          setCategories(response.data)
-        } else {
-          setError(response.message || 'Failed to fetch categories')
-          setCategories([])
-        }
-      } else {
-        // Generate categories from static products
-        const staticProducts = getProductsSync()
-        const categoryMap = new Map<string, number>()
-        
-        staticProducts.forEach(product => {
-          const category = product.category || 'Uncategorized'
-          categoryMap.set(category, (categoryMap.get(category) || 0) + 1)
-        })
+      const categories: Category[] = Array.from(categoryMap.entries()).map(([name, count]) => ({
+        id: name.toLowerCase().replace(/\s+/g, '-'),
+        title: name,
+        name: name,
+        slug: name.toLowerCase().replace(/\s+/g, '-'),
+        itemCount: count,
+        isActive: true
+      }))
 
-        const categories: Category[] = Array.from(categoryMap.entries()).map(([name, count]) => ({
-          id: name.toLowerCase().replace(/\s+/g, '-'),
-          title: name,
-          name: name,
-          slug: name.toLowerCase().replace(/\s+/g, '-'),
-          itemCount: count,
-          isActive: true
-        }))
-
-        setCategories(categories)
-      }
+      setCategories(categories)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')
       setCategories([])
@@ -522,7 +466,7 @@ export function useFavorites() {
   }
 }
 
-// Hook for trending products (prioritizes Amazon products)
+// Hook for trending products
 export function useTrendingProducts(limit: number = 5) {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(false)
@@ -533,26 +477,13 @@ export function useTrendingProducts(limit: number = 5) {
     setError(null)
 
     try {
-      const hasAmazonProducts = amazonProductService.hasAmazonProducts()
-
-      if (hasAmazonProducts) {
-        // Use Amazon trending products if available
-        const response = await amazonProductService.getTrendingAmazonProducts(limit)
-        if (response.success) {
-          setProducts(response.data)
-        } else {
-          setError(response.message || 'Failed to fetch trending products')
-          setProducts([])
-        }
-      } else {
-        // Use static products as trending
-        const staticProducts = getProductsSync()
-        const trendingProducts = staticProducts
-          .slice(0, limit) // Take first N products as "trending"
-          .map(convertStaticProduct)
-        
-        setProducts(trendingProducts)
-      }
+      // Use static products as trending
+      const staticProducts = getProductsSync()
+      const trendingProducts = staticProducts
+        .slice(0, limit) // Take first N products as "trending"
+        .map(convertStaticProduct)
+      
+      setProducts(trendingProducts)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')
       setProducts([])
