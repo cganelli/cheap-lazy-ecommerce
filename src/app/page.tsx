@@ -291,36 +291,6 @@ export default function HomePage() {
           </>
         )}
 
-        {/* Static Products Section */}
-        <div className="bg-white py-12 mb-8">
-          <div className="max-w-7xl mx-auto px-4">
-            <h2 className="text-2xl font-bold custom-blue mb-6 text-center">
-              Actually Good Cheap Finds
-            </h2>
-            <StaticProductsSection />
-          </div>
-        </div>
-
-        {/* Static Products Status Indicator */}
-        <div className="fixed bottom-4 right-4 z-50">
-          <div className="bg-white rounded-lg shadow-lg p-3 text-sm">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500"></div>
-              <span className="text-gray-600">
-                Static Products (No API)
-              </span>
-            </div>
-            <div className="mt-1">
-              <a
-                href="/admin"
-                className="text-xs text-blue-600 hover:underline"
-              >
-                Manage Products →
-              </a>
-            </div>
-          </div>
-        </div>
-
         {/* Footer */}
         <footer className="mt-16 py-8 border-t border-gray-200">
           <div className="max-w-7xl mx-auto px-4">

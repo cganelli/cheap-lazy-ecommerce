@@ -53,7 +53,7 @@ export const PRODUCTS = [
     "title": "3 Pack Pet Food Can Covers Universal Can Lids Safe/Silicone Dog&Cat Food Can Lid Covers (green+blue+orange)",
     "price": null,
     "image_url": "/products/B095M6H5D7.jpg",
-    "category": "Beauty",
+    "category": "Pet Care",
     "affiliate_url": "https://amzn.to/4pBSQ51"
   },
   {
