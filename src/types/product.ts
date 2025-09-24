@@ -76,6 +76,12 @@ export const API_PROVIDERS = {
     name: 'FakeStore API',
     baseUrl: 'https://fakestoreapi.com',
     rateLimitPerMinute: 60,
+    isActive: false // Disabled due to external API issues
+  },
+  STATIC_PRODUCTS: {
+    name: 'Static Products JSON',
+    baseUrl: '/api/products',
+    rateLimitPerMinute: 1000,
     isActive: true
   },
   AMAZON_PA: {
