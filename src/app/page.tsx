@@ -137,12 +137,12 @@ export default function HomePage() {
     return acc
   }, {} as Record<string, typeof allProducts>)
 
-  // Debug logging
-  console.log('All products loaded:', allProducts.length)
-  console.log('Categories loaded:', categories.length)
-  console.log('Categories:', categories.map(c => c.title))
-  console.log('Products by category:', Object.keys(productsByCategory))
-  console.log('Products by category counts:', Object.entries(productsByCategory).map(([cat, prods]) => `${cat}: ${prods.length}`))
+  // Simple debug logging
+  console.log('📊 Homepage: Products loaded:', allProducts.length)
+  console.log('📊 Homepage: Categories loaded:', categories.length)
+  if (allProducts.length > 0) {
+    console.log('📊 Homepage: Product categories:', Object.keys(productsByCategory))
+  }
 
   // Show search results if searching
   const showSearchResults = searchQuery.trim().length > 0

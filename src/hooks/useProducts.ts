@@ -49,11 +49,17 @@ export function useProducts(filters: ProductFilters = {}) {
     try {
       // Use static products only
       const staticProducts = getProductsSync()
-      console.log('Raw static products:', staticProducts.length)
-      debugProducts()
+      console.log('🔍 Raw static products count:', staticProducts.length)
+      
+      if (staticProducts.length === 0) {
+        console.error('❌ No static products loaded!')
+        setProducts([])
+        setLoading(false)
+        return
+      }
       
       let filteredProducts = staticProducts.map(convertStaticProduct)
-      console.log('Converted products:', filteredProducts.length)
+      console.log('🔍 Converted products count:', filteredProducts.length)
 
       // Apply filters
       if (memoizedFilters.category && memoizedFilters.category !== 'All Categories') {
