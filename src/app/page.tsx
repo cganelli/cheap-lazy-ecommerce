@@ -89,7 +89,7 @@ export default function HomePage() {
   // Use hooks for dynamic data
   const { filters, updateFilter } = useProductFilters({
     category: selectedCategory === 'All Categories' ? undefined : selectedCategory,
-    limit: 8
+    limit: undefined // Remove limit to get all products
   })
 
   const { products: allProducts, loading: allProductsLoading } = useProducts(filters)

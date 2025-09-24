@@ -109,6 +109,9 @@ export function useProducts(filters: ProductFilters = {}) {
       const paginatedProducts = filteredProducts.slice(startIndex, endIndex)
 
       setProducts(paginatedProducts)
+      console.log('🔍 Setting products:', paginatedProducts.length)
+      console.log('🔍 Pagination:', { page, limit, total: filteredProducts.length })
+      
       setPagination({
         page,
         limit,
