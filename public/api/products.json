@@ -1,0 +1,66 @@
+[
+  {
+    "asin": "B0F7LSKLTZ",
+    "title": "Sample Product — Replace me",
+    "price": null,
+    "image_url": "/placeholder-product.png",
+    "category": "Kitchen",
+    "affiliate_url": "https://www.amazon.com/dp/B0F7LSKLTZ?tag=YOURTAG"
+  },
+  {
+    "asin": "B0C8QZQZQZ",
+    "title": "Dog Bark Deterrent Device, 3X Ultrasonic Anti Barking, 6 Training Modes 23 FT Range Barks No More Indoors Outdoors Behavior Correct Safe & Humane Rechargeable Compact Bark Control for Dogs",
+    "price": null,
+    "image_url": "/placeholder-product.png",
+    "category": "Pet Care",
+    "affiliate_url": "https://www.amazon.com/dp/B0C8QZQZQZ?tag=YOURTAG"
+  },
+  {
+    "asin": "B0D1R2T3Y4",
+    "title": "Wireless Bluetooth Headphones, Noise Cancelling Over-Ear Headphones with Microphone, 30H Playtime, Comfortable Earpads for Travel, Work, Gaming",
+    "price": null,
+    "image_url": "/placeholder-product.png",
+    "category": "Electronics",
+    "affiliate_url": "https://www.amazon.com/dp/B0D1R2T3Y4?tag=YOURTAG"
+  },
+  {
+    "asin": "B0E5S6U7V8",
+    "title": "Ceramic Non-Stick Cookware Set, 10-Piece Kitchen Cookware Set with Stainless Steel Handles, Oven Safe to 400°F, Dishwasher Safe",
+    "price": null,
+    "image_url": "/placeholder-product.png",
+    "category": "Kitchen",
+    "affiliate_url": "https://www.amazon.com/dp/B0E5S6U7V8?tag=YOURTAG"
+  },
+  {
+    "asin": "B0F9G0H1I2",
+    "title": "Vitamin C Serum for Face, 20% Vitamin C + E + Ferulic Acid, Anti-Aging Face Serum, Brightening Serum for Dark Spots, Fine Lines & Wrinkles",
+    "price": null,
+    "image_url": "/placeholder-product.png",
+    "category": "Beauty",
+    "affiliate_url": "https://www.amazon.com/dp/B0F9G0H1I2?tag=YOURTAG"
+  },
+  {
+    "asin": "B0G3J4K5L6",
+    "title": "Garden Hose 50ft, Expandable Garden Hose with 8 Function Spray Nozzle, Flexible Water Hose for Lawn, Car Washing, Watering Plants",
+    "price": null,
+    "image_url": "/placeholder-product.png",
+    "category": "Garden",
+    "affiliate_url": "https://www.amazon.com/dp/B0G3J4K5L6?tag=YOURTAG"
+  },
+  {
+    "asin": "B0H7M8N9O0",
+    "title": "Hair Dryer Brush, Ionic Hair Dryer with Diffuser, 2-in-1 Blow Dryer Brush for Straightening and Volumizing, Professional Hair Styling Tool",
+    "price": null,
+    "image_url": "/placeholder-product.png",
+    "category": "Hair Care",
+    "affiliate_url": "https://www.amazon.com/dp/B0H7M8N9O0?tag=YOURTAG"
+  },
+  {
+    "asin": "B0I9P0Q1R2",
+    "title": "Robot Vacuum Cleaner, Smart Vacuum with App Control, Self-Charging, 120min Runtime, Perfect for Pet Hair, Hard Floors and Carpets",
+    "price": null,
+    "image_url": "/placeholder-product.png",
+    "category": "Household",
+    "affiliate_url": "https://www.amazon.com/dp/B0I9P0Q1R2?tag=YOURTAG"
+  }
+]
