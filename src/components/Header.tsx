@@ -50,8 +50,7 @@ export default function Header({ showSearch = true }: HeaderProps) {
       {/* Amazon Affiliate Copy - aligned with privacy text */}
       <div className="max-w-5xl mx-auto px-4 pb-1 flex justify-between items-start">
         <div className="flex items-start">
-          <div className="w-6"></div> {/* Spacer to align with "Home" */}
-          <p className="text-sm" style={{color: '#1D3557', opacity: 0.7}}>
+          <p className="text-lg font-bold" style={{color: '#1D3557', opacity: 0.7}}>
             As an Amazon Associate, I may earn from qualifying purchases.
           </p>
         </div>

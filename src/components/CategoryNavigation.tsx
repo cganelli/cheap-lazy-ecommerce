@@ -1,54 +1,43 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
+import { useCategories } from '@/hooks/useProducts'
 
 interface CategoryNavigationProps {
   onCategorySelect: (category: string) => void
   selectedCategory?: string
 }
 
-const mainCategories = [
-  "All Categories",
-  "Beauty",
-  "Electronics",
-  "Garden",
-  "Hair Care",
-  "Household",
-  "Kitchen",
-  "Pet Care"
-]
-
-const allCategories = [
-  "All Categories",
-  "Auto",
-  "Beauty",
-  "Child and Baby",
-  "Dorm Essentials",
-  "Electronics",
-  "Games and Entertainment",
-  "Garden",
-  "Gifts and Special Occasions",
-  "Hair Care",
-  "Health",
-  "Household",
-  "Kitchen",
-  "Pet Care",
-  "Sports and Outdoors"
-]
-
 export default function CategoryNavigation({ onCategorySelect, selectedCategory = "All Categories" }: CategoryNavigationProps) {
   const [showAllCategories, setShowAllCategories] = useState(false)
   const router = useRouter()
   const [q, setQ] = useState('')
+  const { categories, loading } = useCategories()
+
+  // Create category arrays from the dynamic data
+  const mainCategories = ["All Categories", ...categories.slice(0, 7).map(cat => cat.title)]
+  const allCategories = ["All Categories", ...categories.map(cat => cat.title)]
 
   const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const next = q.trim();
     router.push(next ? '/?q=' + encodeURIComponent(next) : '/');
   }, [q, router]);
+
+  if (loading) {
+    return (
+      <div className="bg-white border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 py-3">
+          <div className="flex items-center gap-2">
+            <div className="animate-pulse bg-gray-200 h-8 w-32 rounded"></div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="bg-white border-b border-gray-200 shadow-sm">
