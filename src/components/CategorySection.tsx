@@ -104,6 +104,13 @@ export default function CategorySection({ title, products, featuredImage, itemCo
             View All {itemCount} Items
           </button>
         </div>
+
+        {/* Amazon affiliate disclaimer */}
+        <div className="mt-3 text-center">
+          <p className="text-xs text-red-600">
+            As an Amazon Associate, I may earn commissions from qualifying purchases.
+          </p>
+        </div>
       </div>
     </div>
   )

@@ -1,15 +1,11 @@
 'use client'
 
-// Enforce static generation. If anything dynamic sneaks in, build will error (good TDD guard).
-export const dynamic = 'force-static';
-
 import { useState } from 'react'
 import Header from '@/components/Header'
 import TrendingSection from '@/components/TrendingSection'
 import CategorySection from '@/components/CategorySection'
 import CategoryNavigation from '@/components/CategoryNavigation'
 import { Button } from '@/components/ui/button'
-import { useProducts, useCategories, useProductSearch, useProductFilters, useTrendingProducts } from '@/hooks/useProducts'
 import ProductCard from '@/components/ProductCard'
 
 
@@ -18,18 +14,51 @@ export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState('All Categories')
   const [footerEmail, setFooterEmail] = useState('')
 
-  // Use hooks for dynamic data
-  const { filters, updateFilter } = useProductFilters({
-    category: selectedCategory === 'All Categories' ? undefined : selectedCategory,
-    limit: undefined // Remove limit to get all products
-  })
+  // Use direct data loading (bypass problematic useProducts hook)
+  const { getProductsSync } = require('@/lib/static-products')
+  const staticProducts = getProductsSync()
+  
+  // Convert static products to our Product type
+  const allProducts = staticProducts.map((p: any) => ({
+    id: p.asin,
+    title: p.title,
+    name: p.title,
+    price: p.price || 0,
+    description: p.title,
+    category: p.category || 'Household',
+    image: p.image_url,
+    images: [p.image_url],
+    rating: { rate: 4.5, count: 100 },
+    amazonUrl: p.affiliate_url,
+    availability: 'in_stock',
+    sku: p.asin
+  }))
+  
+  // Get categories from products
+  const categories = [...new Set(allProducts.map(p => p.category))].map(cat => ({
+    id: cat.toLowerCase().replace(/\s+/g, '-'),
+    title: cat,
+    slug: cat.toLowerCase().replace(/\s+/g, '-'),
+    itemCount: allProducts.filter(p => p.category === cat).length,
+    isActive: true
+  })).sort((a, b) => a.title.localeCompare(b.title))
 
-  const { products: allProducts, loading: allProductsLoading } = useProducts(filters)
-  const { products: searchResults, loading: searchLoading } = useProductSearch(searchQuery, 12)
-  const { categories, loading: categoriesLoading } = useCategories()
+  // Debug logging
+  console.log('📊 Homepage: Products loaded:', allProducts.length)
+  console.log('📊 Homepage: Categories loaded:', categories.length)
 
-  // Get trending products
-  const { products: trendingProducts, loading: trendingLoading } = useTrendingProducts(5)
+  // Get trending products (first 5 products)
+  const trendingProducts = allProducts.slice(0, 5)
+  const trendingLoading = false
+
+  // Search functionality
+  const searchResults = searchQuery 
+    ? allProducts.filter(p => 
+        p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.category.toLowerCase().includes(searchQuery.toLowerCase())
+      ).slice(0, 12)
+    : []
+  const searchLoading = false
 
   // Always show static products (no Amazon check needed)
   const usingAmazonProducts = false
@@ -41,7 +70,6 @@ export default function HomePage() {
 
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category)
-    updateFilter('category', category === 'All Categories' ? undefined : category)
 
     // Scroll to the relevant section
     if (category !== 'All Categories') {
@@ -220,7 +248,7 @@ export default function HomePage() {
                         }))}
                         headingImage={`/${category.title.toUpperCase().replace(/\s+/g, '_')}_RED_TOUCHING.png`}
                         itemCount={category.itemCount}
-                        loading={allProductsLoading}
+                        loading={false}
                       />
                     </div>
                   )

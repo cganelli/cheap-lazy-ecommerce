@@ -2,24 +2,24 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { Product, Category, ProductFilters, ApiResponse } from '@/types/product'
-import { getProductsSync, Product as StaticProduct, debugProducts } from '@/lib/static-products'
+import { getProductsSync, Product as NormalizedProduct, debugProducts } from '@/lib/static-products'
 import { safeStorage } from '@/lib/safeStorage'
 
-// Convert static product to our Product type
-function convertStaticProduct(staticProduct: StaticProduct): Product {
+// Convert normalized product to our Product type
+function convertStaticProduct(normalizedProduct: NormalizedProduct): Product {
   return {
-    id: staticProduct.asin,
-    title: staticProduct.title,
-    name: staticProduct.title,
-    price: staticProduct.price || 0,
-    description: staticProduct.title,
-    category: staticProduct.category || 'Uncategorized',
-    image: staticProduct.image_url,
-    images: [staticProduct.image_url],
+    id: normalizedProduct.asin,
+    title: normalizedProduct.title,
+    name: normalizedProduct.title,
+    price: normalizedProduct.price || 0,
+    description: normalizedProduct.title,
+    category: normalizedProduct.category || 'Household', // Use normalized category with fallback
+    image: normalizedProduct.image_url,
+    images: [normalizedProduct.image_url],
     rating: { rate: 4.5, count: 100 }, // Default rating
-    amazonUrl: staticProduct.affiliate_url,
+    amazonUrl: normalizedProduct.affiliate_url,
     availability: 'in_stock',
-    sku: staticProduct.asin
+    sku: normalizedProduct.asin
   }
 }
 
@@ -50,6 +50,7 @@ export function useProducts(filters: ProductFilters = {}) {
       // Use static products only
       const staticProducts = getProductsSync()
       console.log('🔍 Raw static products count:', staticProducts.length)
+      console.log('🔍 First static product:', staticProducts[0])
       
       if (staticProducts.length === 0) {
         console.error('❌ No static products loaded!')
@@ -58,8 +59,13 @@ export function useProducts(filters: ProductFilters = {}) {
         return
       }
       
-      let filteredProducts = staticProducts.map(convertStaticProduct)
-      console.log('🔍 Converted products count:', filteredProducts.length)
+      // Convert products
+      console.log('🔍 Converting products...')
+      const convertedProducts = staticProducts.map(convertStaticProduct)
+      console.log('🔍 Converted products count:', convertedProducts.length)
+      console.log('🔍 First converted product:', convertedProducts[0])
+      
+      let filteredProducts = convertedProducts
 
       // Apply filters
       if (memoizedFilters.category && memoizedFilters.category !== 'All Categories') {
@@ -216,14 +222,18 @@ export function useCategories() {
         console.log('Static products loaded:', staticProducts.length)
         console.log('Categories found:', staticProducts.map(p => p.category))
         
+        // Convert static products to Product type first
+        const convertedProducts = staticProducts.map(convertStaticProduct)
+        console.log('Converted products:', convertedProducts.length)
+        
         const uniqueCategories = Array.from(
-          new Set(staticProducts.map(p => p.category).filter(Boolean))
+          new Set(convertedProducts.map(p => p.category).filter(Boolean))
         ).map(name => ({
           id: (name || 'Uncategorized').toLowerCase().replace(/\s+/g, '-'),
           title: name || 'Uncategorized',
           name: name || 'Uncategorized',
           slug: (name || 'Uncategorized').toLowerCase().replace(/\s+/g, '-'),
-          itemCount: staticProducts.filter(p => p.category === name).length,
+          itemCount: convertedProducts.filter(p => p.category === name).length,
           isActive: true
         }))
 

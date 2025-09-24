@@ -50,12 +50,13 @@ export default function Header({ showSearch = true }: HeaderProps) {
       {/* Amazon Affiliate Copy - aligned with privacy text */}
       <div className="max-w-5xl mx-auto px-4 pb-1 flex justify-between items-start">
         <div className="flex items-start">
-          <p className="text-lg font-bold" style={{color: '#1D3557', opacity: 0.7}}>
+          <p className="text-lg font-bold whitespace-nowrap" style={{color: '#1D3557', opacity: 0.7}}>
             As an Amazon Associate, I may earn commissions from qualifying purchases.
           </p>
         </div>
         <div className="text-right">
-          <p className="text-sm" style={{color: '#1D3557'}}>We respect your privacy. Unsubscribe anytime.</p>
+          <p className="text-sm" style={{color: '#1D3557'}}>We respect your privacy.</p>
+          <p className="text-sm" style={{color: '#1D3557'}}>Unsubscribe anytime.</p>
         </div>
       </div>
     </header>
