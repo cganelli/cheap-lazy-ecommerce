@@ -1,12 +1,16 @@
 'use client'
 
 import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react'
+import { ProductCardImage } from '@/components/ProductCardImage'
 
 interface Product {
   id: string
   name: string
   price: string
   image: string
+  imageSrcSet?: string
+  imageBlur?: string
+  imageRatio?: number
   amazonUrl: string
   badge?: string
 }
@@ -72,10 +76,12 @@ export default function CategorySection({ title, products, featuredImage, itemCo
               onClick={() => openAmazonLink(product.amazonUrl)}
             >
               <div className="relative">
-                <img
+                <ProductCardImage
                   src={product.image}
+                  srcSet={product.imageSrcSet}
                   alt={product.name}
-                  className="w-full h-32 object-cover"
+                  blur={product.imageBlur}
+                  ratio={product.imageRatio ? 1 / product.imageRatio : 4/5}
                 />
                 {product.badge && (
                   <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-medium px-2.5 py-0.5 rounded-full">

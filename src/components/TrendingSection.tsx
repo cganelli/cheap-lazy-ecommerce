@@ -1,6 +1,7 @@
 'use client'
 
 import { Plus, ExternalLink } from 'lucide-react'
+import { ProductCardImage } from '@/components/ProductCardImage'
 
 interface TrendingProduct {
   id: string
@@ -8,6 +9,9 @@ interface TrendingProduct {
   price: string
   originalPrice?: string
   image: string
+  imageSrcSet?: string
+  imageBlur?: string
+  imageRatio?: number
   amazonUrl: string
   badge?: string
   discount?: string
@@ -57,10 +61,12 @@ export default function TrendingSection({ products, loading = false }: TrendingS
             onClick={() => openAmazonLink(product.amazonUrl)}
           >
             <div className="relative">
-              <img
+              <ProductCardImage
                 src={product.image}
+                srcSet={product.imageSrcSet}
                 alt={product.name}
-                className="w-full h-48 object-cover"
+                blur={product.imageBlur}
+                ratio={product.imageRatio ? 1 / product.imageRatio : 4/5}
               />
               {product.badge && (
                 <span className="absolute top-3 left-3 bg-red-600 text-white font-semibold text-xs px-2.5 py-0.5 rounded-full">
