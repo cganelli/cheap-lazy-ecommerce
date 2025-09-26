@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Header from '@/components/Header'
 import TrendingSection from '@/components/TrendingSection'
 import CategorySection from '@/components/CategorySection'
@@ -8,6 +8,8 @@ import CategoryNavigation from '@/components/CategoryNavigation'
 import { Button } from '@/components/ui/button'
 import ProductCard from '@/components/ProductCard'
 import { Product } from '@/types/product'
+import { ProductCardImage } from '@/components/ProductCardImage'
+import Fuse from 'fuse.js'
 
 
 export default function HomePage() {
@@ -28,6 +30,9 @@ export default function HomePage() {
     description: p.title,
     category: p.category || 'Household',
     image: p.image_url,
+    imageSrcSet: p.image_srcset,
+    imageBlur: p.image_blur,
+    imageRatio: p.image_ratio,
     images: [p.image_url],
     rating: { rate: 4.5, count: 100 },
     amazonUrl: p.affiliate_url,
@@ -52,13 +57,17 @@ export default function HomePage() {
   const trendingProducts = allProducts.slice(0, 5)
   const trendingLoading = false
 
-  // Search functionality
-  const searchResults = searchQuery 
-    ? allProducts.filter((p: Product) => 
-        p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.category.toLowerCase().includes(searchQuery.toLowerCase())
-      ).slice(0, 12)
-    : []
+  // Set up Fuse.js search
+  const fuse = useMemo(() => new Fuse(allProducts, {
+    keys: ['title', 'category', 'sku'],
+    threshold: 0.35,
+  }), [allProducts]);
+
+  // Search functionality from Fuse.js
+  const searchResults: Product[] = useMemo(() => {
+    if (!searchQuery.trim()) return [];
+    return fuse.search(searchQuery).map(r => r.item) as Product[];
+  }, [fuse, searchQuery]);
   const searchLoading = false
 
   // Always show static products (no Amazon check needed)
@@ -151,51 +160,28 @@ export default function HomePage() {
                 ))}
               </div>
             ) : searchResults.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <section className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                 {searchResults.map((product: Product) => (
-                  <div key={product.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                    <div className="p-4">
-                      <div className="relative mb-4">
-                        <img
-                          src={product.image}
-                          alt={product.title}
-                          className="w-full h-48 object-cover rounded-md"
-                          onError={(e) => {
-                            e.currentTarget.src = '/placeholder-product.png'
-                          }}
-                        />
-                      </div>
-                      <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2">{product.title}</h4>
-                      <div className="flex items-center mb-2">
-                        {product.rating && (
-                          <>
-                            <div className="flex items-center">
-                              {[...Array(5)].map((_, i) => (
-                                <span
-                                  key={i}
-                                  className={`text-sm ${
-                                    i < Math.floor(product.rating!.rate)
-                                      ? 'text-yellow-400'
-                                      : 'text-gray-300'
-                                  }`}
-                                >
-                                  ★
-                                </span>
-                              ))}
-                            </div>
-                            <span className="text-sm text-gray-600 ml-2">({product.rating.rate})</span>
-                          </>
-                        )}
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <Button size="sm" className="custom-bg-red hover:bg-red-600 text-white">
-                          View Details
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
+                  <article key={product.id} className="flex flex-col">
+                    <ProductCardImage
+                      src={product.image}
+                      srcSet={(product as any).imageSrcSet}
+                      alt={product.title}
+                      blur={(product as any).imageBlur}
+                      ratio={(product as any).imageRatio && Number.isFinite((product as any).imageRatio) ? (product as any).imageRatio * 1 : 4/5}
+                    />
+                    <h3 className="mt-2 text-sm font-medium leading-tight">{product.title}</h3>
+                    <a
+                      href={(product as any).amazonUrl}
+                      target="_blank"
+                      rel="nofollow sponsored noopener noreferrer"
+                      className="mt-1 text-xs underline"
+                    >
+                      View on Amazon
+                    </a>
+                  </article>
                 ))}
-              </div>
+              </section>
             ) : (
               <div className="text-center py-12">
                 <p className="text-gray-500 text-lg">No products found matching "{searchQuery}".</p>
@@ -219,6 +205,9 @@ export default function HomePage() {
                   price: '', // Hide prices until Amazon API is available
                   originalPrice: undefined,
                   image: p.image,
+                  imageSrcSet: (p as any).imageSrcSet,
+                  imageBlur: (p as any).imageBlur,
+                  imageRatio: (p as any).imageRatio,
                   amazonUrl: p.amazonUrl || '#',
                   badge: p.badge,
                   discount: p.discount
@@ -244,6 +233,9 @@ export default function HomePage() {
                           name: p.title,
                           price: '', // Hide prices until Amazon API is available
                           image: p.image,
+                          imageSrcSet: (p as any).imageSrcSet,
+                          imageBlur: (p as any).imageBlur,
+                          imageRatio: (p as any).imageRatio,
                           amazonUrl: p.amazonUrl || '#',
                           badge: p.badge
                         }))}
