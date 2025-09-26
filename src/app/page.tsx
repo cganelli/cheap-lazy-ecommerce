@@ -10,6 +10,7 @@ import ProductCard from '@/components/ProductCard'
 import { Product } from '@/types/product'
 import { ProductCardImage } from '@/components/ProductCardImage'
 import Fuse from 'fuse.js'
+import SearchBox from '@/components/SearchBox'
 
 
 export default function HomePage() {
@@ -132,6 +133,10 @@ export default function HomePage() {
       </div>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
+        {/* Search Box */}
+        <div className="mb-8 flex justify-center">
+          <SearchBox />
+        </div>
 
         {showSearchResults ? (
           /* Search Results */
