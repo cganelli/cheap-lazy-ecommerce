@@ -11,7 +11,19 @@ import { Product } from '@/types/product'
 import { ProductCardImage } from '@/components/ProductCardImage'
 import Fuse from 'fuse.js'
 import SearchBox from '@/components/SearchBox'
+import CategoryShelf from '@/components/CategoryShelf'
+import { products } from '@/lib/static-products'
 
+function byCategory() {
+  const map = new Map<string, typeof products>();
+  for (const p of products) {
+    const key = p.category ?? 'Other';
+    if (!map.has(key)) map.set(key, []);
+    map.get(key)!.push(p);
+  }
+  // Sort categories by name (optional)
+  return [...map.entries()].sort((a,b) => a[0].localeCompare(b[0]));
+}
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -117,6 +129,7 @@ export default function HomePage() {
 
   // Show search results if searching
   const showSearchResults = searchQuery.trim().length > 0
+  const cats = byCategory();
 
   return (
     <div className="min-h-screen" style={{backgroundColor: '#A0B5D0'}}>
@@ -201,58 +214,10 @@ export default function HomePage() {
           </div>
         ) : (
           <>
-            {/* Trending Section */}
-            <div className="mb-12">
-              <TrendingSection
-                products={trendingProducts.map((p: Product) => ({
-                  id: p.id.toString(),
-                  name: p.title,
-                  price: '', // Hide prices until Amazon API is available
-                  originalPrice: undefined,
-                  image: p.image,
-                  imageSrcSet: (p as any).imageSrcSet,
-                  imageBlur: (p as any).imageBlur,
-                  imageRatio: (p as any).imageRatio,
-                  amazonUrl: p.amazonUrl || '#',
-                  badge: p.badge,
-                  discount: p.discount
-                }))}
-                loading={trendingLoading}
-              />
-            </div>
-
-            {/* Category Sections - Always show all categories in alphabetical order */}
-            <div className="space-y-12">
-              {categories
-                .sort((a, b) => a.title.localeCompare(b.title)) // Sort alphabetically
-                .map((category: { id: string; title: string; slug: string; itemCount: number; isActive: boolean }) => {
-                  const categoryProducts = productsByCategory[category.title] || []
-                  console.log(`Category ${category.title}: ${categoryProducts.length} products`)
-
-                  return (
-                    <div key={category.id} id={category.title.toLowerCase().replace(/\s+/g, '-')}>
-                      <CategorySection
-                        title={category.title}
-                        products={categoryProducts.map((p: Product) => ({
-                          id: p.id.toString(),
-                          name: p.title,
-                          price: '', // Hide prices until Amazon API is available
-                          image: p.image,
-                          imageSrcSet: (p as any).imageSrcSet,
-                          imageBlur: (p as any).imageBlur,
-                          imageRatio: (p as any).imageRatio,
-                          amazonUrl: p.amazonUrl || '#',
-                          badge: p.badge
-                        }))}
-                        headingImage={`/${category.title.toUpperCase().replace(/\s+/g, '_')}_RED_TOUCHING.png`}
-                        itemCount={category.itemCount}
-                        loading={false}
-                      />
-                    </div>
-                  )
-                })
-              }
-            </div>
+            {/* Category Shelves */}
+            {cats.map(([name, items]) => (
+              <CategoryShelf key={name} title={name} items={items} initialLimit={6} />
+            ))}
           </>
         )}
 
