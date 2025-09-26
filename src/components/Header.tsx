@@ -4,9 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 
-type HeaderProps = { showSearch?: boolean }; // no onSearch prop
-
-export default function Header({ showSearch = true }: HeaderProps) {
+export default function Header() {
   const router = useRouter();
   const [email, setEmail] = useState('');
 
@@ -27,24 +25,22 @@ export default function Header({ showSearch = true }: HeaderProps) {
           <Link href="/terms" style={{color: '#1D3557'}}>Terms</Link>
         </div>
 
-        {showSearch && (
-          <div className="flex-1 flex items-center justify-end">
-            <div className="text-right">
-              <h3 className="text-sm font-semibold mb-1" style={{color: '#1D3557'}}>Get the Best Deals First!</h3>
-              <form onSubmit={handleNewsletterSignup} className="flex items-center gap-2">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="border rounded px-2 py-1 text-sm"
-                />
-                <button type="submit" className="border rounded px-2 py-1 text-sm bg-red-600 text-white hover:bg-red-700">Subscribe</button>
-              </form>
-            </div>
+        <div className="flex-1 flex items-center justify-end">
+          <div className="text-right">
+            <h3 className="text-sm font-semibold mb-1" style={{color: '#1D3557'}}>Get the Best Deals First!</h3>
+            <form onSubmit={handleNewsletterSignup} className="flex items-center gap-2">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="border rounded px-2 py-1 text-sm"
+              />
+              <button type="submit" className="border rounded px-2 py-1 text-sm bg-red-600 text-white hover:bg-red-700">Subscribe</button>
+            </form>
           </div>
-        )}
+        </div>
       </nav>
       
       {/* Amazon Affiliate Copy - aligned with privacy text */}

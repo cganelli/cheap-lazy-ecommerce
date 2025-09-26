@@ -17,10 +17,7 @@ test('expands to show all items', () => {
   expect(screen.getByRole('button', { name: /Collapse/i })).toBeInTheDocument();
 });
 
-test('scroll arrows call scrollBy', () => {
+test('shows affiliate disclaimer', () => {
   render(<CategoryShelf title="Demo" items={make(8)} initialLimit={6} />);
-  const left = screen.getByRole('button', { name: /Scroll left/i });
-  // Not asserting pixels (jsdom), but button exists and is clickable:
-  fireEvent.click(left);
-  expect(left).toBeEnabled();
+  expect(screen.getByText(/As an Amazon Associate, I may earn commissions from qualifying purchases/i)).toBeInTheDocument();
 });

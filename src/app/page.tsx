@@ -187,16 +187,9 @@ export default function HomePage() {
                       alt={product.title}
                       blur={(product as any).imageBlur}
                       ratio={(product as any).imageRatio && Number.isFinite((product as any).imageRatio) ? (product as any).imageRatio * 1 : 4/5}
+                      affiliateUrl={(product as any).amazonUrl}
                     />
                     <h3 className="mt-2 text-sm font-medium leading-tight">{product.title}</h3>
-                    <a
-                      href={(product as any).amazonUrl}
-                      target="_blank"
-                      rel="nofollow sponsored noopener noreferrer"
-                      className="mt-1 text-xs underline"
-                    >
-                      View on Amazon
-                    </a>
                   </article>
                 ))}
               </section>

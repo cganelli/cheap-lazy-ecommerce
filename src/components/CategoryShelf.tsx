@@ -26,20 +26,10 @@ export default function CategoryShelf({
 
   return (
     <section className="my-8">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-xl font-semibold">{title}</h2>
-        <div className="flex items-center gap-3">
-          {!expanded && <span className="text-sm text-gray-600">See all {items.length} items</span>}
-          {canScroll && (
-            <div className="flex gap-2">
-              <button aria-label="Scroll left" onClick={() => scroll('left')}
-                      className="rounded border bg-white px-2 py-1 shadow-sm">‹</button>
-              <button aria-label="Scroll right" onClick={() => scroll('right')}
-                      className="rounded border bg-white px-2 py-1 shadow-sm">›</button>
-            </div>
-          )}
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="mb-4">
+          <h2 className="text-xl font-semibold">{title}</h2>
         </div>
-      </div>
 
       {/* Track */}
       {!expanded ? (
@@ -50,13 +40,9 @@ export default function CategoryShelf({
             <article key={p.asin} className="snap-start shrink-0 w-44 sm:w-56">
               <ProductCardImage
                 src={p.image_url} srcSet={p.image_srcset} alt={p.title}
-                ratio={p.image_ratio ?? 4/5}
+                ratio={p.image_ratio ?? 4/5} affiliateUrl={p.affiliate_url}
               />
               <h3 className="mt-2 text-sm font-medium leading-tight line-clamp-2">{p.title}</h3>
-              {p.affiliate_url && (
-                <a href={p.affiliate_url} target="_blank" rel="nofollow sponsored noopener noreferrer"
-                   className="mt-1 block text-xs underline">View on Amazon</a>
-              )}
             </article>
           ))}
         </div>
@@ -65,19 +51,15 @@ export default function CategoryShelf({
           {shown.map(p => (
             <article key={p.asin}>
               <ProductCardImage src={p.image_url} srcSet={p.image_srcset}
-                                alt={p.title} ratio={p.image_ratio ?? 4/5} />
+                                alt={p.title} ratio={p.image_ratio ?? 4/5} affiliateUrl={p.affiliate_url} />
               <h3 className="mt-2 text-sm font-medium leading-tight line-clamp-2">{p.title}</h3>
-              {p.affiliate_url && (
-                <a href={p.affiliate_url} target="_blank" rel="nofollow sponsored noopener noreferrer"
-                   className="mt-1 block text-xs underline">View on Amazon</a>
-              )}
             </article>
           ))}
         </div>
       )}
 
       {/* View all / Collapse */}
-      <div className="mt-6 flex justify-center">
+      <div className="mt-6 flex flex-col items-center">
         {!expanded ? (
           <button onClick={() => setExpanded(true)}
                   className="rounded-2xl border px-6 py-2 text-base font-medium shadow-sm">
@@ -89,6 +71,10 @@ export default function CategoryShelf({
             Collapse
           </button>
         )}
+        <p className="mt-2 text-xs text-gray-500 text-center">
+          As an Amazon Associate, I may earn commissions from qualifying purchases.
+        </p>
+      </div>
       </div>
     </section>
   );
