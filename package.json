@@ -11,7 +11,8 @@
     "preview:out": "npx http-server out -p 4321",
     "img:build": "node scripts/build-images.mjs",
     "img:clean": "rm -f public/products/*.webp",
-    "test": "vitest --config vitest.config.mts",
+    "test": "vitest --run --config vitest.config.mts",
+    "test:watch": "vitest --config vitest.config.mts",
     "test:run": "vitest run --config vitest.config.mts",
     "test:ui": "vitest --ui --config vitest.config.mts"
   },
