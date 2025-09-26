@@ -243,9 +243,6 @@ export default function HomePage() {
               <p className="text-gray-600 mb-2">
                 © 2025 Cheap & Lazy Stuff. Find great deals on everything you need.
               </p>
-              <p className="text-sm text-gray-500">
-                Static Product Catalog - No External APIs
-              </p>
             </div>
 
             {/* Footer Links */}

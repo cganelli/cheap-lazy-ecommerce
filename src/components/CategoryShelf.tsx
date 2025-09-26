@@ -8,6 +8,24 @@ export type Product = {
   affiliate_url?: string; image_url: string; image_srcset?: string; image_ratio?: number;
 };
 
+// Map category names to their stylized image files
+const categoryImageMap: Record<string, string> = {
+  'Beauty': '/BEAUTY_RED_TOUCHING.png',
+  'Electronics': '/ELECTRONICS_RED_TOUCHING.png',
+  'Hair Care': '/HAIR_CARE_RED_TOUCHING.png',
+  'Health': '/HEALTH_RED_TOUCHING.png',
+  'Household': '/HOUSEHOLD_RED_TOUCHING.png',
+  'Kitchen': '/KITCHEN_RED_TOUCHING.png',
+  'Pet Care': '/PET_CARE_RED_TOUCHING.png',
+  'Auto': '/AUTO_RED_TOUCHING.png',
+  'Child and Baby': '/CHILD_AND_BABY_RED_TOUCHING.png',
+  'Dorm Essentials': '/DORM_ESSENTIALS_RED_TOUCHING.png',
+  'Games and Entertainment': '/GAMES_AND_ENTERTAINMENT_RED_TOUCHING.png',
+  'Garden': '/GARDEN_RED_TOUCHING.png',
+  'Special Occasions': '/SPECIAL_OCCASIONS_RED_TOUCHING.png',
+  'Sports and Outdoor': '/SPORTS_AND_OUTDOOR_RED_TOUCHING.png',
+};
+
 export default function CategoryShelf({
   title, items, initialLimit = 6,
 }: { title: string; items: Product[]; initialLimit?: number }) {
@@ -28,7 +46,15 @@ export default function CategoryShelf({
     <section className="my-8">
       <div className="bg-white rounded-lg shadow-md p-6">
         <div className="mb-4">
-          <h2 className="text-xl font-semibold">{title}</h2>
+          {categoryImageMap[title] ? (
+            <img 
+              src={categoryImageMap[title]} 
+              alt={title}
+              className="h-12 object-contain"
+            />
+          ) : (
+            <h2 className="text-xl font-semibold">{title}</h2>
+          )}
         </div>
 
       {/* Track */}
@@ -62,16 +88,16 @@ export default function CategoryShelf({
       <div className="mt-6 flex flex-col items-center">
         {!expanded ? (
           <button onClick={() => setExpanded(true)}
-                  className="rounded-2xl border px-6 py-2 text-base font-medium shadow-sm">
+                  className="rounded-2xl border-2 border-red-600 px-6 py-2 text-base font-medium shadow-sm text-red-600 hover:bg-red-600 hover:text-white transition-colors">
             View All {items.length} Items
           </button>
         ) : (
           <button onClick={() => { setExpanded(false); trackRef.current?.scrollTo({ left: 0, behavior: 'smooth' }); }}
-                  className="rounded-2xl border px-6 py-2 text-base font-medium shadow-sm">
+                  className="rounded-2xl border-2 border-red-600 px-6 py-2 text-base font-medium shadow-sm text-red-600 hover:bg-red-600 hover:text-white transition-colors">
             Collapse
           </button>
         )}
-        <p className="mt-2 text-xs text-gray-500 text-center">
+        <p className="mt-2 text-xs text-red-600 text-center">
           As an Amazon Associate, I may earn commissions from qualifying purchases.
         </p>
       </div>
