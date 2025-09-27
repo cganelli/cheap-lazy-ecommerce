@@ -1,10 +1,10 @@
 'use client';
 export const dynamic = 'force-static';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '@/components/Header';
 import DisclosureSection from '@/components/DisclosureSection';
-import { useState } from 'react';
+import HashAnchor from '@/components/HashAnchor';
 
 export default function AboutPage() {
   const [footerEmail, setFooterEmail] = useState('');
@@ -17,9 +17,11 @@ export default function AboutPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{backgroundColor: '#A0B5D0'}}>
+    <div className="min-h-screen" style={{ backgroundColor: '#A0B5D0' }}>
       <Header />
-      
+      {/* ensures #disclosure is scrolled with the right offset on load */}
+      <HashAnchor id="disclosure" extraOffset={16} />
+
       {/* Hero Banner */}
       <div className="w-full mb-4 pt-4" style={{backgroundColor: '#A0B5D0', height: '116px', overflow: 'hidden'}}>
         <img
@@ -79,8 +81,8 @@ export default function AboutPage() {
         </div>
       </main>
 
-      {/* Disclosure Section */}
-      <div className="max-w-7xl mx-auto px-4 py-8 mt-32 sm:mt-8">
+      {/* Disclosure Section — make this the hash target */}
+      <div id="disclosure" className="max-w-7xl mx-auto px-4 py-8 mt-32 sm:mt-8">
         <DisclosureSection />
       </div>
 
