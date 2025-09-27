@@ -48,6 +48,10 @@ export default function Header() {
         <p className="w-full text-xs text-slate-700 sm:text-sm">
           As an Amazon Associate, I may earn commissions from qualifying purchases.
         </p>
+        <div className="text-right mt-1">
+          <p className="text-xs text-slate-700 sm:text-sm">We respect your privacy.</p>
+          <p className="text-xs text-slate-700 sm:text-sm">Unsubscribe anytime.</p>
+        </div>
       </div>
     </header>
   );
