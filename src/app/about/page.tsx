@@ -80,7 +80,7 @@ export default function AboutPage() {
       </main>
 
       {/* Disclosure Section */}
-      <div className="max-w-7xl mx-auto px-4 py-8 mt-16 sm:mt-8">
+      <div className="max-w-7xl mx-auto px-4 py-8 mt-32 sm:mt-8">
         <DisclosureSection />
       </div>
 

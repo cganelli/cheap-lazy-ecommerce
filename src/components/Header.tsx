@@ -17,7 +17,7 @@ export default function Header() {
 
   return (
     <header className="border-b">
-      <nav className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3">
+      <nav className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-1.5">
         <div className="flex items-center gap-4">
           <Link href="/" style={{color: '#1D3557'}}>Home</Link>
           <Link href="/about" style={{color: '#1D3557'}}>About</Link>
@@ -48,7 +48,7 @@ export default function Header() {
       </nav>
       
       {/* Amazon Affiliate Copy - directly under navigation */}
-      <div className="mx-auto max-w-6xl px-4 pb-1">
+      <div className="mx-auto max-w-6xl px-4 pb-0.5">
         <p className="text-xs text-slate-700 sm:text-sm">
           As an Amazon Associate, I may earn commissions from qualifying purchases.
         </p>
