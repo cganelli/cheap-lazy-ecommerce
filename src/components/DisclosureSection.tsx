@@ -1,5 +1,14 @@
 import React from 'react';
 
+/**
+ * DisclosureSection Component
+ * 
+ * A reusable component that displays the affiliate disclosure information.
+ * Used on the About page and can be linked to from other pages via anchor.
+ * 
+ * Location: src/components/DisclosureSection.tsx
+ * Purpose: Provide consistent affiliate disclosure across the site
+ */
 export default function DisclosureSection() {
   return (
     <section
