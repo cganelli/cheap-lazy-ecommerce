@@ -14,7 +14,6 @@ import { ProductCardImage } from '@/components/ProductCardImage'
 import Fuse from 'fuse.js'
 import SearchBox from '@/components/SearchBox'
 import CategoryShelf from '@/components/CategoryShelf'
-import SiteLogo from '@/components/SiteLogo'
 import { products } from '@/lib/static-products'
 
 function byCategory() {
@@ -149,8 +148,12 @@ export default function HomePage() {
       </div>
 
       {/* Hero Banner */}
-      <div className="w-full mb-4" style={{backgroundColor: '#A0B5D0', height: '116px', overflow: 'hidden'}}>
-        <SiteLogo className="mx-auto" />
+      <div className="w-full mb-4 pt-4" style={{backgroundColor: '#A0B5D0', height: '116px', overflow: 'hidden'}}>
+        <img
+          src="/Cheap-Lazy-Hero-2.png"
+          alt="Cheap & Lazy Stuff - Too cheap to waste money. Too lazy to waste time."
+          className="w-full h-full object-cover"
+        />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
