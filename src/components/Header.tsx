@@ -39,6 +39,10 @@ export default function Header() {
               />
               <button type="submit" className="rounded bg-red-600 px-3 py-1 text-sm font-medium text-white">Subscribe</button>
             </form>
+            <div className="mt-1">
+              <p className="text-xs text-slate-700">We respect your privacy.</p>
+              <p className="text-xs text-slate-700">Unsubscribe anytime.</p>
+            </div>
           </div>
         </div>
       </nav>
@@ -48,10 +52,6 @@ export default function Header() {
         <p className="w-full text-xs text-slate-700 sm:text-sm">
           As an Amazon Associate, I may earn commissions from qualifying purchases.
         </p>
-        <div className="text-right mt-1">
-          <p className="text-xs text-slate-700 sm:text-sm">We respect your privacy.</p>
-          <p className="text-xs text-slate-700 sm:text-sm">Unsubscribe anytime.</p>
-        </div>
       </div>
     </header>
   );

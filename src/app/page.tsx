@@ -142,7 +142,7 @@ export default function HomePage() {
         <img
           src="/Cheap-Lazy-Hero-2.png"
           alt="Cheap & Lazy Stuff - Too cheap to waste money. Too lazy to waste time."
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover sm:object-contain"
         />
       </div>
 

@@ -38,9 +38,9 @@ export default function AboutPage() {
             className="w-full h-auto object-cover"
           />
           
-          {/* Medium Blue Box (35% width) with white border */}
+          {/* Medium Blue Box (35% width on desktop, full width on mobile) with white border */}
           <div 
-            className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[35%] min-h-[400px] border-4 border-white"
+            className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[95%] sm:w-[35%] min-h-[400px] border-4 border-white"
             style={{backgroundColor: '#A0B5D0'}}
           >
             {/* Profile Image */}
