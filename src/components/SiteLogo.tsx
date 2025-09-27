@@ -17,8 +17,7 @@ type Props = {
 
 export default function SiteLogo({
   className = '',
-  // point this at the exact asset you use in your header/site brand
-  src = '/Cheap-Lazy-Hero-2.png',
+  src = '/Cheap-Lazy-Hero-2.png',         // <- use the same asset your other pages use
   alt = 'Cheap & Lazy Stuff',
 }: Props) {
   return (
@@ -29,7 +28,7 @@ export default function SiteLogo({
       height={400}
       decoding="async"
       loading="eager"
-      className={`h-auto w-[min(92vw,820px)] md:w-[min(80vw,980px)] ${className}`}
+      className={`h-auto w-[min(92vw,980px)] md:w-[min(88vw,1100px)] ${className}`}
     />
   );
 }

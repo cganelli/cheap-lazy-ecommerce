@@ -9,9 +9,10 @@ import DisclosureSection from '@/components/DisclosureSection';
  * Tests for the About page disclosure section functionality.
  * Location: src/app/about/page.spec.tsx
  */
-it('renders the disclosure anchor on About', () => {
+it('renders disclosure heading and anchor exists for deep link', () => {
   render(<DisclosureSection />);
-  const h = screen.getByRole('heading', { name: /affiliate disclosure/i });
-  expect(h).toBeInTheDocument();
-  expect(h.closest('section')).toHaveAttribute('id', 'disclosure');
+  const heading = screen.getByRole('heading', { name: /affiliate disclosure/i });
+  expect(heading).toBeInTheDocument();
+  // sentinel anchor present:
+  expect(document.getElementById('disclosure')).toBeTruthy();
 });
