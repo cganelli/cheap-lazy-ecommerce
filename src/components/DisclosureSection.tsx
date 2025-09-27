@@ -14,7 +14,7 @@ export default function DisclosureSection() {
     <section
       id="disclosure"
       aria-labelledby="disclosure-heading"
-      className="scroll-mt-28 md:scroll-mt-32 rounded-xl border bg-slate-50 p-4 md:p-6"
+      className="scroll-mt-[240px] sm:scroll-mt-40 rounded-xl border bg-slate-50 p-4 md:p-6"
     >
       <h2 id="disclosure-heading" className="mb-2 text-lg font-semibold">
         Affiliate Disclosure

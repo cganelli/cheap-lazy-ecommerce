@@ -14,6 +14,7 @@ import { ProductCardImage } from '@/components/ProductCardImage'
 import Fuse from 'fuse.js'
 import SearchBox from '@/components/SearchBox'
 import CategoryShelf from '@/components/CategoryShelf'
+import SiteLogo from '@/components/SiteLogo'
 import { products } from '@/lib/static-products'
 
 function byCategory() {
@@ -140,18 +141,16 @@ export default function HomePage() {
     <div className="min-h-screen" style={{backgroundColor: '#A0B5D0'}}>
       <Header />
       
-      {/* Category nav pills */}
-      <div className="mt-3 flex gap-2 overflow-x-auto pb-1 [-webkit-overflow-scrolling:touch]">
-        <CategoryNavigation onCategorySelect={handleCategorySelect} selectedCategory={selectedCategory} />
+      {/* Category nav pills - Full-bleed band (edge-to-edge) with inner max width */}
+      <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen border-b bg-white">
+        <div className="mx-auto max-w-7xl px-4 py-2">
+          <CategoryNavigation onCategorySelect={handleCategorySelect} selectedCategory={selectedCategory} />
+        </div>
       </div>
 
       {/* Hero Banner */}
       <div className="w-full mb-4" style={{backgroundColor: '#A0B5D0', height: '116px', overflow: 'hidden'}}>
-        <img
-          src="/Cheap-Lazy-Hero-2.png"
-          alt="Cheap & Lazy Stuff - Too cheap to waste money. Too lazy to waste time."
-          className="w-full h-full object-contain sm:object-cover"
-        />
+        <SiteLogo className="mx-auto" />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 py-8">

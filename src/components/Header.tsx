@@ -25,7 +25,7 @@ export default function Header() {
           <Link href="/terms" style={{color: '#1D3557'}}>Terms</Link>
         </div>
 
-        <div className="flex-1 flex items-center justify-end">
+        <div className="ml-auto flex flex-wrap items-center gap-2">
           <div className="text-right">
             <h3 className="text-sm font-semibold mb-1" style={{color: '#1D3557'}}>Get the Best Deals First!</h3>
             <form onSubmit={handleNewsletterSignup} className="flex items-center gap-2">
@@ -39,20 +39,18 @@ export default function Header() {
               />
               <button type="submit" className="rounded bg-red-600 px-3 py-1 text-sm font-medium text-white">Subscribe</button>
             </form>
-            <div className="mt-1">
-              <p className="text-xs text-slate-700">We respect your privacy.</p>
-              <p className="text-xs text-slate-700">Unsubscribe anytime.</p>
-            </div>
+          </div>
+          
+          {/* one single row for the small copy (wraps as needed on tiny screens) */}
+          <div className="flex flex-wrap items-center gap-x-2 text-[11px] sm:text-xs text-slate-700">
+            <span>We respect your privacy.</span>
+            <span className="hidden sm:inline">•</span>
+            <span>Unsubscribe anytime.</span>
+            <span className="hidden sm:inline">•</span>
+            <span>As an Amazon Associate, I may earn commissions from qualifying purchases.</span>
           </div>
         </div>
       </nav>
-      
-      {/* Amazon Affiliate Copy - directly under navigation */}
-      <div className="mx-auto max-w-6xl px-4 pb-0.5">
-        <p className="text-xs text-slate-700 sm:text-sm">
-          As an Amazon Associate, I may earn commissions from qualifying purchases.
-        </p>
-      </div>
     </header>
   );
 }
