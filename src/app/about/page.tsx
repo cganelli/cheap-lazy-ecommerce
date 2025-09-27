@@ -1,7 +1,9 @@
 'use client';
 export const dynamic = 'force-static';
 
+import React from 'react';
 import Header from '@/components/Header';
+import DisclosureSection from '@/components/DisclosureSection';
 import { useState } from 'react';
 
 export default function AboutPage() {
@@ -25,6 +27,11 @@ export default function AboutPage() {
           alt="Cheap & Lazy Stuff - Too cheap to waste money. Too lazy to waste time."
           className="w-full h-full object-cover"
         />
+      </div>
+
+      {/* Disclosure Section */}
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <DisclosureSection />
       </div>
 
       <main className="relative">
