@@ -1,6 +1,7 @@
 'use client';
 export const dynamic = 'force-static';
 
+import React from 'react';
 import Header from '@/components/Header';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -184,6 +185,7 @@ export default function PrivacyPage() {
               <a href="/about" className="text-gray-600 hover:text-red-600 text-sm">About</a>
               <a href="/privacy" className="text-gray-600 hover:text-red-600 text-sm">Privacy Policy</a>
               <a href="/terms" className="text-gray-600 hover:text-red-600 text-sm">Terms</a>
+              <a href="/about#disclosure" className="text-gray-600 hover:text-red-600 text-sm">Affiliate Disclosure</a>
             </div>
 
             {/* Social Media Links */}

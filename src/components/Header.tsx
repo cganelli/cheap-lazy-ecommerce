@@ -17,7 +17,7 @@ export default function Header() {
 
   return (
     <header className="border-b">
-      <nav className="max-w-5xl mx-auto flex items-center gap-4 p-1">
+      <nav className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3">
         <div className="flex items-center gap-4">
           <Link href="/" style={{color: '#1D3557'}}>Home</Link>
           <Link href="/about" style={{color: '#1D3557'}}>About</Link>
@@ -35,25 +35,19 @@ export default function Header() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="border rounded px-2 py-1 text-sm"
+                className="w-[min(220px,50vw)] sm:w-64 rounded border px-2 py-1 text-sm"
               />
-              <button type="submit" className="border rounded px-2 py-1 text-sm bg-red-600 text-white hover:bg-red-700">Subscribe</button>
+              <button type="submit" className="rounded bg-red-600 px-3 py-1 text-sm font-medium text-white">Subscribe</button>
             </form>
           </div>
         </div>
       </nav>
       
-      {/* Amazon Affiliate Copy - aligned with privacy text */}
-      <div className="max-w-5xl mx-auto px-4 pb-1 flex justify-between items-start">
-        <div className="flex items-start">
-          <p className="text-lg font-bold whitespace-nowrap" style={{color: '#1D3557', opacity: 0.7}}>
-            As an Amazon Associate, I may earn commissions from qualifying purchases.
-          </p>
-        </div>
-        <div className="text-right">
-          <p className="text-sm" style={{color: '#1D3557'}}>We respect your privacy.</p>
-          <p className="text-sm" style={{color: '#1D3557'}}>Unsubscribe anytime.</p>
-        </div>
+      {/* Amazon Affiliate Copy - full width on mobile */}
+      <div className="mx-auto max-w-6xl px-4 pb-1">
+        <p className="w-full text-xs text-slate-700 sm:text-sm">
+          As an Amazon Associate, I may earn commissions from qualifying purchases.
+        </p>
       </div>
     </header>
   );
