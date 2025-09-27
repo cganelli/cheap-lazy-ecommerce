@@ -4,6 +4,7 @@ export const dynamic = 'force-static';
 import React from 'react';
 import Header from '@/components/Header';
 import DisclosureSection from '@/components/DisclosureSection';
+import HashAnchor from '@/components/HashAnchor';
 import { useState } from 'react';
 
 export default function AboutPage() {
@@ -19,6 +20,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen" style={{backgroundColor: '#A0B5D0'}}>
       <Header />
+      <HashAnchor id="disclosure" />
       
       {/* Hero Banner */}
       <div className="w-full mb-4 pt-4" style={{backgroundColor: '#A0B5D0', height: '116px', overflow: 'hidden'}}>
@@ -80,7 +82,7 @@ export default function AboutPage() {
       </main>
 
       {/* Disclosure Section */}
-      <div className="max-w-7xl mx-auto px-4 py-8 mt-32 sm:mt-8">
+      <div id="disclosure" className="max-w-7xl mx-auto px-4 py-8 mt-32 sm:mt-8">
         <DisclosureSection />
       </div>
 
