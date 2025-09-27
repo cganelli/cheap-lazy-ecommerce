@@ -138,11 +138,11 @@ export default function HomePage() {
       <CategoryNavigation onCategorySelect={handleCategorySelect} selectedCategory={selectedCategory} />
 
       {/* Hero Banner */}
-      <div className="w-full mb-4" style={{backgroundColor: '#A0B5D0', height: '200px', overflow: 'hidden'}}>
+      <div className="w-full mb-4 h-32 sm:h-48 md:h-52" style={{backgroundColor: '#A0B5D0', overflow: 'hidden'}}>
         <img
           src="/Cheap-Lazy-Hero-2.png"
           alt="Cheap & Lazy Stuff - Too cheap to waste money. Too lazy to waste time."
-          className="w-full h-full object-cover sm:object-contain"
+          className="w-full h-full object-contain"
         />
       </div>
 

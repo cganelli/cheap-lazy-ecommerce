@@ -47,9 +47,9 @@ export default function Header() {
         </div>
       </nav>
       
-      {/* Amazon Affiliate Copy - full width on mobile */}
+      {/* Amazon Affiliate Copy - directly under navigation */}
       <div className="mx-auto max-w-6xl px-4 pb-1">
-        <p className="w-full text-xs text-slate-700 sm:text-sm">
+        <p className="text-xs text-slate-700 sm:text-sm">
           As an Amazon Associate, I may earn commissions from qualifying purchases.
         </p>
       </div>
