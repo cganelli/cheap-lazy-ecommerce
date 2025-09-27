@@ -1,35 +1,27 @@
 'use client';
+// Use TDD approach and follow all CLAUDE.md best practices including proper testing,
+// code quality checks, and implementation standards.
 
 import { useEffect } from 'react';
 
-/**
- * HashAnchor Component
- * 
- * A client-side component that handles precise scroll offset for hash anchors.
- * Measures header height dynamically and scrolls to the target element with proper offset.
- * 
- * Location: src/components/HashAnchor.tsx
- * Purpose: Provide precise scroll positioning for hash anchors on mobile
- */
-export default function HashAnchor({ id }: { id: string }) {
+export default function HashAnchor({ id, extraOffset = 0 }: { id: string; extraOffset?: number }) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     if (window.location.hash !== `#${id}`) return;
 
-    // measure header height (and any sticky banners) dynamically
-    const header = document.querySelector('header');
-    const headerH = header ? (header as HTMLElement).getBoundingClientRect().height : 0;
+    const target = document.getElementById(id);
+    if (!target) return;
 
-    // optional: account for your hero ribbon on About (116px)
+    // Measure header
+    const header = document.querySelector('header') as HTMLElement | null;
+    const headerH = header ? header.getBoundingClientRect().height : 0;
+
+    // Your About hero banner is 116px tall; include it when on /about
     const heroH = window.location.pathname.startsWith('/about') ? 116 : 0;
 
-    // scroll to the element with a safe offset
-    const el = document.getElementById(id);
-    if (el) {
-      const y = el.getBoundingClientRect().top + window.scrollY - (headerH + heroH + 16);
-      window.scrollTo({ top: y, behavior: 'instant' as ScrollBehavior });
-    }
-  }, [id]);
+    const y = target.getBoundingClientRect().top + window.scrollY - (headerH + heroH + extraOffset);
+    window.scrollTo({ top: y, behavior: 'instant' as ScrollBehavior });
+  }, [id, extraOffset]);
 
   return null;
 }

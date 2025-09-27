@@ -1,10 +1,16 @@
 'use client';
 
+// Use TDD approach and follow all CLAUDE.md best practices including proper testing,
+// code quality checks, and implementation standards.
+
 import React from 'react';
 import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Header() {
+  // build tag so you can confirm the deployed version in DevTools
+  if (typeof window !== 'undefined') console.log('Header build tag: v-mobile-grid-2');
+
   const [email, setEmail] = useState('');
 
   const handleNewsletterSignup = (e: React.FormEvent) => {
@@ -17,11 +23,11 @@ export default function Header() {
   return (
     <header className="border-b bg-slate-200/80">
       <div className="mx-auto max-w-6xl px-4 py-3">
-        {/* ROW 1: nav (left) + email form (right) */}
-        <div className="grid grid-cols-12 items-center gap-3">
-          {/* Nav stays horizontal on mobile; wraps only if truly necessary */}
-          <nav className="col-span-12 sm:col-span-8">
-            <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 text-base">
+        {/* ROW 1: nav (left) + email form (right) — stays ONE ROW even on phones */}
+        <div className="grid grid-cols-[1fr_auto] items-center gap-3">
+          {/* Horizontal nav with safe overflow on very small screens */}
+          <nav className="min-w-0 overflow-x-auto">
+            <ul className="flex items-center gap-6 whitespace-nowrap">
               <li><Link href="/">Home</Link></li>
               <li><Link href="/about">About</Link></li>
               <li><Link href="/privacy">Privacy</Link></li>
@@ -29,8 +35,8 @@ export default function Header() {
             </ul>
           </nav>
 
-          {/* Email signup pinned to right */}
-          <form onSubmit={handleNewsletterSignup} className="col-span-12 sm:col-span-4 ml-auto flex items-center justify-start sm:justify-end gap-2">
+          {/* Email signup pinned to right at all widths */}
+          <form onSubmit={handleNewsletterSignup} className="justify-self-end flex items-center gap-2">
             <label htmlFor="hdr-news" className="sr-only">Get the Best Deals First!</label>
             <input
               id="hdr-news"
@@ -50,15 +56,12 @@ export default function Header() {
           </form>
         </div>
 
-        {/* ROW 2: affiliate sentence (left) + privacy/unsub (right, aligned under input) */}
-        <div className="mt-2 grid grid-cols-12 items-center gap-3 text-[11px] sm:text-xs text-slate-700">
-          {/* Affiliate sentence FIRST per your request */}
-          <div className="col-span-12 sm:col-span-8">
+        {/* ROW 2: affiliate sentence FIRST (left) + privacy/unsub RIGHT under input */}
+        <div className="mt-2 grid grid-cols-[1fr_auto] items-center gap-3 text-[11px] sm:text-xs text-slate-700">
+          <div className="truncate">
             As an Amazon Associate, I may earn commissions from qualifying purchases.
           </div>
-
-          {/* This block lines up under the email input above */}
-          <div className="col-span-12 sm:col-span-4 flex justify-start sm:justify-end gap-2">
+          <div className="justify-self-end flex items-center gap-2">
             <span>We respect your privacy.</span>
             <span className="hidden sm:inline">•</span>
             <span>Unsubscribe anytime.</span>
