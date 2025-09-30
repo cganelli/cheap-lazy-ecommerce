@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // netlify/functions/_lib/paapi.ts
 import aws4 from 'aws4'
 

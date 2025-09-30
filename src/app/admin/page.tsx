@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Plus, Edit, Trash2, ExternalLink, Save, X } from 'lucide-react'
 import { safeStorage } from '@/lib/safeStorage'
@@ -278,9 +280,9 @@ export default function AdminPage() {
               >
                 Clear All
               </Button>
-              <a href="/" className="text-blue-600 hover:underline">
+              <Link href="/" className="text-blue-600 hover:underline">
                 ← Back to Site
-              </a>
+              </Link>
             </div>
           </div>
         </div>

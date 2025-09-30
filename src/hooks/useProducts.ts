@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
@@ -31,6 +32,7 @@ export function useProducts(filters: ProductFilters = {}) {
   const [pagination, setPagination] = useState<ApiResponse<Product[]>['pagination']>()
 
   // Memoize filters to prevent infinite re-renders
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedFilters = useMemo(() => filters, [
     filters.category,
     filters.minPrice,

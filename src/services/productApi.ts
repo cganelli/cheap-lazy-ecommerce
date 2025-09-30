@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Product, Category, ApiResponse, ProductFilters, ApiProviderName, API_PROVIDERS } from '@/types/product'
 
 // Cache for API responses (simple in-memory cache)

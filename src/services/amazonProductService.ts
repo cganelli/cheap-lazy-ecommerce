@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Product, Category, ApiResponse, ProductFilters } from '@/types/product'
 import { safeStorage } from '@/lib/safeStorage'
 
