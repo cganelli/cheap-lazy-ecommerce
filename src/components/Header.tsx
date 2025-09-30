@@ -1,44 +1,76 @@
 'use client';
 
-// Use TDD approach and follow all CLAUDE.md best practices including proper testing,
-// code quality checks, and implementation standards.
-
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { useState } from 'react';
 
 export default function Header() {
-  // Build tag so you can verify in DevTools this header shipped
-  if (typeof window !== 'undefined') console.log('Header build tag: v-mobile-grid-3');
-
   const [email, setEmail] = useState('');
 
   const handleNewsletterSignup = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Newsletter signup:', email);
+    console.log('Header build tag: v-mobile-grid-4');
     alert('Thank you for subscribing to our newsletter!');
     setEmail('');
   };
 
   return (
     <header className="border-b bg-slate-200/80">
-      <div className="mx-auto max-w-6xl px-4 py-3">
-        {/* ROW 1 (mobile stacked): email top, nav below. Desktop: nav left + email right */}
-        <div className="flex flex-col gap-2 sm:grid sm:grid-cols-[1fr_auto] sm:items-center sm:gap-3">
-          {/* Email */}
+      <div className="mx-auto w-full max-w-6xl px-4 py-3">
+        {/* 
+          MOBILE-FIRST STACK (DOM order == mobile order):
+          1) Tabs (nav)
+          2) Email form
+          3) Privacy/Unsubscribe
+          4) Amazon affiliate
+          
+          On desktop (≥sm), we use grid columns + order classes to place:
+          - Row 1: Tabs (left, col-span-8), Email (right, col-span-4)
+          - Row 2: Affiliate (left, col-span-8), Privacy/Unsub (right, col-span-4)
+        */}
+        <div className="grid grid-cols-12 gap-x-3 gap-y-2">
+          {/* TABS — mobile: first; desktop: row 1 left */}
+          <nav
+            aria-label="Site"
+            className="
+              col-span-12
+              sm:order-1 sm:col-span-8
+            "
+          >
+            <ul
+              className="
+                flex items-center gap-x-6
+                overflow-x-auto whitespace-nowrap
+                [-webkit-overflow-scrolling:touch]
+                pr-1
+              "
+            >
+              <li><Link href="/">Home</Link></li>
+              <li><Link href="/about">About</Link></li>
+              <li><Link href="/privacy">Privacy</Link></li>
+              <li><Link href="/terms">Terms</Link></li>
+            </ul>
+          </nav>
+
+          {/* EMAIL — mobile: second; desktop: row 1 right */}
           <form
             onSubmit={handleNewsletterSignup}
-            className="order-1 sm:order-none justify-self-end flex items-center gap-2"
+            className="
+              col-span-12 flex items-center gap-2
+              sm:order-2 sm:col-span-4 sm:justify-end
+            "
+            aria-label="Newsletter signup"
           >
-            <label htmlFor="hdr-news" className="sr-only">Get the Best Deals First!</label>
+            <label htmlFor="hdr-email" className="sr-only">
+              Get the Best Deals First!
+            </label>
             <input
-              id="hdr-news"
+              id="hdr-email"
               type="email"
-              placeholder="Enter your email"
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-[min(240px,70vw)] sm:w-72 rounded border px-3 py-1.5 text-sm"
+              placeholder="Enter your email"
+              className="w-[min(420px,100%)] rounded border px-3 py-1.5 text-sm"
             />
             <button
               type="submit"
@@ -48,26 +80,28 @@ export default function Header() {
             </button>
           </form>
 
-          {/* Horizontal nav */}
-          <nav className="order-2 sm:order-none min-w-0 overflow-x-auto [-webkit-overflow-scrolling:touch]">
-            <ul className="flex items-center gap-6 whitespace-nowrap snap-x snap-mandatory">
-              <li className="snap-start"><Link href="/">Home</Link></li>
-              <li className="snap-start"><Link href="/about">About</Link></li>
-              <li className="snap-start"><Link href="/privacy">Privacy</Link></li>
-              <li className="snap-start"><Link href="/terms">Terms</Link></li>
-            </ul>
-          </nav>
-        </div>
-
-        {/* ROW 2: affiliate sentence left + privacy/unsub right */}
-        <div className="mt-2 grid grid-cols-[1fr_auto] items-center gap-3 text-[11px] sm:text-xs text-slate-700">
-          <div className="truncate">
-            As an Amazon Associate, I may earn commissions from qualifying purchases.
+          {/* PRIVACY/UNSUB — mobile: third; desktop: row 2 right */}
+          <div
+            className="
+              col-span-12 text-xs text-slate-700
+              sm:order-4 sm:col-span-4 sm:flex sm:justify-end
+            "
+          >
+            <div className="flex items-center gap-2">
+              <span>We respect your privacy.</span>
+              <span className="hidden sm:inline">•</span>
+              <span>Unsubscribe anytime.</span>
+            </div>
           </div>
-          <div className="justify-self-end flex items-center gap-2">
-            <span>We respect your privacy.</span>
-            <span className="hidden sm:inline">•</span>
-            <span>Unsubscribe anytime.</span>
+
+          {/* AFFILIATE — mobile: fourth; desktop: row 2 left */}
+          <div
+            className="
+              col-span-12 text-xs text-slate-700
+              sm:order-3 sm:col-span-8
+            "
+          >
+            As an Amazon Associate, I may earn commissions from qualifying purchases.
           </div>
         </div>
       </div>
