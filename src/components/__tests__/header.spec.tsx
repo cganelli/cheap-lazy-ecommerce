@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Header from '../Header';
+import Header from '@/components/Header';
 
-it('renders horizontal nav and an email input', () => {
+it('renders horizontal nav and email input', () => {
   render(<Header />);
   ['Home', 'About', 'Privacy', 'Terms'].forEach(t =>
     expect(screen.getByRole('link', { name: t })).toBeInTheDocument()
