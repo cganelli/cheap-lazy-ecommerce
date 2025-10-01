@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Header from '../Header';
+import Header from './Header';
 
 describe('Header layout (mobile-first DOM order)', () => {
   test('renders tabs before email form and text blocks', () => {
@@ -24,3 +24,4 @@ describe('Header layout (mobile-first DOM order)', () => {
     expect(nav.firstElementChild).toHaveClass('overflow-x-auto');
   });
 });
+

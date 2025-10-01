@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // netlify/functions/amazon-items.ts
 import type { Handler } from '@netlify/functions'
 import aws4 from 'aws4'

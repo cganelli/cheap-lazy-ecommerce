@@ -4,24 +4,38 @@
 
 import { useEffect } from 'react';
 
-export default function HashAnchor({ id, extraOffset = 0 }: { id: string; extraOffset?: number }) {
+function scrollToId(id: string, extraOffset = 0) {
+  const target = document.getElementById(id);
+  if (!target) return;
+
+  const header = document.querySelector('header') as HTMLElement | null;
+  const headerH = header ? header.getBoundingClientRect().height : 0;
+
+  // If About has a hero with id="about-hero", measure it dynamically
+  const hero = document.getElementById('about-hero') as HTMLElement | null;
+  const heroH = hero ? hero.getBoundingClientRect().height : 0;
+
+  const y = target.getBoundingClientRect().top + window.scrollY - (headerH + heroH + extraOffset);
+  window.scrollTo({ top: y, behavior: 'instant' as ScrollBehavior });
+}
+
+export default function HashAnchor({ id, extraOffset = 16 }: { id: string; extraOffset?: number }) {
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (window.location.hash !== `#${id}`) return;
-
-    const target = document.getElementById(id);
-    if (!target) return;
-
-    // Measure header
-    const header = document.querySelector('header') as HTMLElement | null;
-    const headerH = header ? header.getBoundingClientRect().height : 0;
-
-    // Your About hero banner is 116px tall; include it when on /about
-    const heroH = window.location.pathname.startsWith('/about') ? 116 : 0;
-
-    const y = target.getBoundingClientRect().top + window.scrollY - (headerH + heroH + extraOffset);
-    window.scrollTo({ top: y, behavior: 'instant' as ScrollBehavior });
+    const apply = () => {
+      if (window.location.hash === `#${id}`) scrollToId(id, extraOffset);
+    };
+    // on mount
+    apply();
+    // on hash change
+    window.addEventListener('hashchange', apply);
+    // after late layout settles
+    window.addEventListener('load', apply);
+    return () => {
+      window.removeEventListener('hashchange', apply);
+      window.removeEventListener('load', apply);
+    };
   }, [id, extraOffset]);
 
+  if (typeof window !== 'undefined') console.log('HashAnchor tag: v-hash-anchor-2 for', id);
   return null;
 }

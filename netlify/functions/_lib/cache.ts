@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // netlify/functions/_lib/cache.ts
 import { getStore } from '@netlify/blobs'
 

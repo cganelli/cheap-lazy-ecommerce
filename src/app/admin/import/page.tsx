@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // app/admin/import/page.tsx
 // Admin page for importing products via CSV file upload
 // Supports columns: asin, name, affiliate_url, category
