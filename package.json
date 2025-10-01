@@ -5,13 +5,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "next build && next export -o out",
+    "test": "vitest --run --config vitest.config.mts",
+    "test:watch": "vitest --config vitest.config.mts",
+    "test:ci": "vitest --run --reporter=dot --config vitest.config.mts",
     "lint": "eslint . --ext .js,.ts,.tsx --ignore-pattern '.next' --ignore-pattern 'out' --ignore-pattern '.netlify'",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "test": "vitest --config vitest.config.mts",
-    "test:ci": "vitest --run --config vitest.config.mts"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@netlify/blobs": "^10.0.10",
