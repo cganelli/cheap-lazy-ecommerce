@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export -o out",
+    "build": "next build",
     "test": "vitest --run --config vitest.config.mts",
     "test:watch": "vitest --config vitest.config.mts",
     "test:ci": "vitest --run --reporter=dot --config vitest.config.mts",
