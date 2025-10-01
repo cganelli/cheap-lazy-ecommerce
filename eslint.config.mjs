@@ -24,6 +24,13 @@ const eslintConfig = [
       "jsx-a11y/alt-text": "off",
     },
   },
+  {
+    // Override for next-env.d.ts: Next.js generates triple-slash references
+    files: ["next-env.d.ts"],
+    rules: {
+      "@typescript-eslint/triple-slash-reference": "off",
+    },
+  },
 ];
 
 export default eslintConfig;
