@@ -35,7 +35,8 @@ export function ProductCardImage({
       <a 
         href={affiliateUrl} 
         target="_blank" 
-        rel="nofollow sponsored noopener noreferrer"
+        rel="sponsored noopener noreferrer"
+        aria-label={`Buy ${alt} on Amazon (opens in a new tab)`}
         className="block"
       >
         {imageContent}

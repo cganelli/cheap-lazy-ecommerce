@@ -101,7 +101,8 @@ export default function SearchBox({
               <a
                 href={p.affiliate_url}
                 target="_blank"
-                rel="nofollow sponsored noopener noreferrer"
+                rel="sponsored noopener noreferrer"
+                aria-label={`Buy ${p.title} on Amazon (opens in a new tab)`}
                 className="flex w-full items-center gap-3"
               >
                 {/* Thumbnail (portrait ~4/5, 64x80) */}

@@ -63,22 +63,22 @@ export default function CategoryShelf({
              className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1"
              style={{ scrollPaddingLeft: 8, scrollSnapType: 'x mandatory' }}>
           {shown.map(p => (
-            <article key={p.asin} className="snap-start shrink-0 w-44 sm:w-56">
+            <article key={p.asin} className="snap-start shrink-0 w-44 sm:w-56" aria-labelledby={`${p.asin}-title`}>
               <ProductCardImage
                 src={p.image_url} srcSet={p.image_srcset} alt={p.title}
                 ratio={p.image_ratio ?? 4/5} affiliateUrl={p.affiliate_url}
               />
-              <h3 className="mt-2 text-sm font-medium leading-tight line-clamp-2">{p.title}</h3>
+              <h3 id={`${p.asin}-title`} className="mt-2 text-sm font-medium leading-tight line-clamp-2">{p.title}</h3>
             </article>
           ))}
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {shown.map(p => (
-            <article key={p.asin}>
+            <article key={p.asin} aria-labelledby={`${p.asin}-title`}>
               <ProductCardImage src={p.image_url} srcSet={p.image_srcset}
                                 alt={p.title} ratio={p.image_ratio ?? 4/5} affiliateUrl={p.affiliate_url} />
-              <h3 className="mt-2 text-sm font-medium leading-tight line-clamp-2">{p.title}</h3>
+              <h3 id={`${p.asin}-title`} className="mt-2 text-sm font-medium leading-tight line-clamp-2">{p.title}</h3>
             </article>
           ))}
         </div>
