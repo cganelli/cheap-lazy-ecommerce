@@ -1,0 +1,12 @@
+{
+  "standard": "WCAG2AA",
+  "defaults": { "timeout": 60000, "screenCapture": "./.pa11y/${date}-${url}.png" },
+  "urls": [
+    "http://localhost:4321/",
+    "http://localhost:4321/about",
+    "http://localhost:4321/about#disclosure",
+    "http://localhost:4321/privacy",
+    "http://localhost:4321/terms",
+    "http://localhost:4321/search"
+  ]
+}
