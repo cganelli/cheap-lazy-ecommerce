@@ -10,7 +10,7 @@
     "test:watch": "vitest --config vitest.config.mts",
     "test:ci": "vitest --run --reporter=dot --config vitest.config.mts",
     "test:a11y": "vitest --run --config vitest.config.mts",
-    "a11y:local": "npm run build && npx http-server out -p 4321 & PID=$! && pa11y-ci || true; kill $PID || true",
+    "a11y:local": "npm run build && npx http-server out -p 4321 & SERVER_PID=$! && npx wait-on http://localhost:4321 && pa11y-ci; CODE=$?; kill $SERVER_PID || true; exit $CODE",
     "lint": "eslint . --ext .js,.ts,.tsx --ignore-pattern '.next' --ignore-pattern 'out' --ignore-pattern '.netlify'",
     "typecheck": "tsc --noEmit"
   },
@@ -60,6 +60,7 @@
     "sharp": "^0.34.4",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "wait-on": "^9.0.1"
   }
 }

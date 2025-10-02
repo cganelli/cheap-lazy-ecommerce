@@ -121,7 +121,7 @@ export default function SearchBox({
                 </div>
                 <div className="min-w-0">
                   <div className="truncate text-sm font-medium leading-tight">{p.title}</div>
-                  {p.category ? <div className="truncate text-xs text-gray-600">{p.category}</div> : null}
+                  {p.category ? <div className="truncate text-xs text-gray-700">{p.category}</div> : null}
                 </div>
               </a>
             </li>

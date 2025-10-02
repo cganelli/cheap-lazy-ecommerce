@@ -112,7 +112,12 @@ export default function HomePage() {
   const handleFooterNewsletterSignup = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Footer newsletter signup:', footerEmail);
-    alert('Thank you for subscribing to our newsletter!');
+    
+    const status = document.getElementById('footer-email-status');
+    if (status) {
+      status.textContent = 'Thanks! Please check your email.';
+    }
+    
     setFooterEmail('');
   }
 
@@ -158,6 +163,8 @@ export default function HomePage() {
       </div>
 
       <main id="main" className="max-w-7xl mx-auto px-4 py-8">
+        <h1 className="sr-only">Cheap & Lazy Stuff - Find the best deals on quality products</h1>
+        
         {/* Search Box */}
         <div className="mb-8 flex justify-center">
           <SearchBox />
@@ -234,17 +241,28 @@ export default function HomePage() {
               onSubmit={handleFooterNewsletterSignup}
               className="mx-auto flex max-w-md flex-col items-center justify-center gap-4 sm:flex-row"
             >
+              <label htmlFor="footer-email" className="sr-only">Email address</label>
               <input
+                id="footer-email"
+                name="email"
                 value={footerEmail}
                 onChange={(e) => setFooterEmail(e.target.value)}
                 type="email"
                 placeholder="Enter your email"
                 required
+                aria-describedby="footer-email-help"
                 className="w-[min(220px,50vw)] sm:w-64 rounded border px-3 py-2 text-sm"
               />
-              <button className="rounded bg-red-600 px-4 py-2 text-sm font-medium text-white">
+              <p id="footer-email-help" className="sr-only">
+                Enter a valid email address.
+              </p>
+              <button 
+                type="submit"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 bg-red-600 text-white"
+              >
                 Subscribe
               </button>
+              <div id="footer-email-status" aria-live="polite" className="sr-only" />
             </form>
 
             {/* Footer Links */}
@@ -253,12 +271,13 @@ export default function HomePage() {
               <Link href="/about">About</Link>
               <Link href="/privacy">Privacy</Link>
               <Link href="/terms">Terms</Link>
+              <Link href="/accessibility">Accessibility</Link>
               {/* NEW: anchored link into About */}
               <Link href="/about#disclosure">Affiliate Disclosure</Link>
             </nav>
 
             {/* Short disclosure line (kept small on phones) */}
-            <p className="mt-6 text-center text-xs text-gray-600 sm:text-sm">
+            <p className="mt-6 text-center text-xs text-gray-700 sm:text-sm">
               As an Amazon Associate, I may earn commissions from qualifying purchases.
             </p>
           </div>

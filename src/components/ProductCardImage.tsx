@@ -22,9 +22,9 @@ export function ProductCardImage({
         height={1000}
         style={blur ? { backgroundImage: `url(${blur})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' } : undefined}
       />
-      {/* Red circle + overlay */}
-      <div className="absolute top-2 right-2 w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg transition-transform duration-300 hover:scale-110">
-        +
+      {/* Buy on Amazon overlay */}
+      <div className="absolute top-2 right-2 bg-red-600 text-white font-bold text-xs px-2 py-1 rounded shadow-lg transition-transform duration-300 hover:scale-110">
+        Buy on Amazon
       </div>
     </div>
   );

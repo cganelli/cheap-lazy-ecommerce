@@ -9,9 +9,7 @@ const nextConfig = {
   },
 
   // Safe extras (optional)
-  experimental: {
-    typedRoutes: true,
-  },
+  typedRoutes: true,
 };
 
 export default nextConfig;
