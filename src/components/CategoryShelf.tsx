@@ -59,18 +59,38 @@ export default function CategoryShelf({
 
       {/* Track */}
       {!expanded ? (
-        <div ref={trackRef}
-             className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1"
-             style={{ scrollPaddingLeft: 8, scrollSnapType: 'x mandatory' }}>
-          {shown.map(p => (
-            <article key={p.asin} className="snap-start shrink-0 w-44 sm:w-56" aria-labelledby={`${p.asin}-title`}>
-              <ProductCardImage
-                src={p.image_url} srcSet={p.image_srcset} alt={p.title}
-                ratio={p.image_ratio ?? 4/5} affiliateUrl={p.affiliate_url}
-              />
-              <h3 id={`${p.asin}-title`} className="mt-2 text-sm font-medium leading-tight line-clamp-2">{p.title}</h3>
-            </article>
-          ))}
+        <div className="flex items-center gap-2">
+          {canScroll && (
+            <button 
+              aria-label="Scroll left"
+              onClick={() => scroll('left')}
+              className="shrink-0 rounded border bg-white px-2 py-1 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600"
+            >
+              ‹
+            </button>
+          )}
+          <div ref={trackRef}
+               className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1"
+               style={{ scrollPaddingLeft: 8, scrollSnapType: 'x mandatory' }}>
+            {shown.map(p => (
+              <article key={p.asin} className="snap-start shrink-0 w-44 sm:w-56" aria-labelledby={`${p.asin}-title`}>
+                <ProductCardImage
+                  src={p.image_url} srcSet={p.image_srcset} alt={p.title}
+                  ratio={p.image_ratio ?? 4/5} affiliateUrl={p.affiliate_url}
+                />
+                <h3 id={`${p.asin}-title`} className="mt-2 text-sm font-medium leading-tight line-clamp-2">{p.title}</h3>
+              </article>
+            ))}
+          </div>
+          {canScroll && (
+            <button 
+              aria-label="Scroll right"
+              onClick={() => scroll('right')}
+              className="shrink-0 rounded border bg-white px-2 py-1 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600"
+            >
+              ›
+            </button>
+          )}
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
