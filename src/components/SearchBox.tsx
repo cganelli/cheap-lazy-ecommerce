@@ -81,7 +81,7 @@ export default function SearchBox({
         aria-controls={listId}
         aria-expanded={open}
         role="combobox"
-        className="w-full rounded-md border px-3 py-2 shadow-sm outline-none focus:ring"
+        className="w-full rounded-md border px-3 py-2 shadow-sm outline-none focus:ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600"
       />
 
       {open && results.length > 0 && (

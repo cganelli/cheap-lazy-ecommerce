@@ -44,10 +44,10 @@ export default function Header() {
                 pr-1
               "
             >
-              <li><Link href="/">Home</Link></li>
-              <li><Link href="/about">About</Link></li>
-              <li><Link href="/privacy">Privacy</Link></li>
-              <li><Link href="/terms">Terms</Link></li>
+              <li><Link href="/" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600">Home</Link></li>
+              <li><Link href="/about" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600">About</Link></li>
+              <li><Link href="/privacy" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600">Privacy</Link></li>
+              <li><Link href="/terms" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600">Terms</Link></li>
             </ul>
           </nav>
 
@@ -70,11 +70,11 @@ export default function Header() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="w-[min(420px,100%)] rounded border px-3 py-1.5 text-sm"
+              className="w-[min(420px,100%)] rounded border px-3 py-1.5 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600"
             />
             <button
               type="submit"
-              className="rounded bg-red-600 px-3 py-1.5 text-sm font-medium text-white"
+              className="rounded bg-red-600 px-3 py-1.5 text-sm font-medium text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600"
             >
               Subscribe
             </button>

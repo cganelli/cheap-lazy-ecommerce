@@ -35,7 +35,7 @@ export default function AboutPage() {
         />
       </div>
 
-      <main className="relative">
+      <main id="main" className="relative">
         {/* Background Image */}
         <div className="relative w-full">
           <img

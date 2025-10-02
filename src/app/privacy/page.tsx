@@ -29,7 +29,7 @@ export default function PrivacyPage() {
         />
       </div>
 
-      <main className="bg-white min-h-screen">
+      <main id="main" className="bg-white min-h-screen">
         <div className="max-w-4xl mx-auto px-4 py-12">
           <h1 className="text-4xl font-bold custom-blue mb-8 text-center">Privacy Policy</h1>
           <p className="text-gray-600 mb-8 text-center">

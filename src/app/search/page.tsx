@@ -16,7 +16,7 @@ function SearchContent() {
   const results = q ? fuse.search(q).map(r => r.item) : products;
 
   return (
-    <main className="mx-auto max-w-6xl p-4">
+    <main id="main" className="mx-auto max-w-6xl p-4">
       <h1 className="mb-3 text-lg font-semibold">Search</h1>
       <p className="mb-6 text-sm text-gray-600">Results for "{q}" — {results.length} items</p>
       <section className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">

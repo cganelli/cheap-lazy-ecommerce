@@ -157,7 +157,7 @@ export default function HomePage() {
         />
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main id="main" className="max-w-7xl mx-auto px-4 py-8">
         {/* Search Box */}
         <div className="mb-8 flex justify-center">
           <SearchBox />

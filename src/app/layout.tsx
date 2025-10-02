@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import SkipLink from "@/components/SkipLink";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -45,6 +46,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png?v=4" />
       </head>
       <body className={`${inter.variable} antialiased`}>
+        <SkipLink />
         {children}
       </body>
     </html>

@@ -88,12 +88,12 @@ export default function CategoryShelf({
       <div className="mt-6 flex flex-col items-center">
         {!expanded ? (
           <button onClick={() => setExpanded(true)}
-                  className="rounded-2xl border-2 border-red-600 px-6 py-2 text-base font-medium shadow-sm text-red-600 hover:bg-red-600 hover:text-white transition-colors">
+                  className="rounded-2xl border-2 border-red-600 px-6 py-2 text-base font-medium shadow-sm text-red-600 hover:bg-red-600 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600">
             View All {items.length} Items
           </button>
         ) : (
           <button onClick={() => { setExpanded(false); trackRef.current?.scrollTo({ left: 0, behavior: 'smooth' }); }}
-                  className="rounded-2xl border-2 border-red-600 px-6 py-2 text-base font-medium shadow-sm text-red-600 hover:bg-red-600 hover:text-white transition-colors">
+                  className="rounded-2xl border-2 border-red-600 px-6 py-2 text-base font-medium shadow-sm text-red-600 hover:bg-red-600 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600">
             Collapse
           </button>
         )}
