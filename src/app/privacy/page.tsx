@@ -12,7 +12,12 @@ export default function PrivacyPage() {
   const handleFooterNewsletterSignup = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Footer newsletter signup:', footerEmail);
-    alert('Thank you for subscribing to our newsletter!');
+    
+    const status = document.getElementById('privacy-footer-email-status');
+    if (status) {
+      status.textContent = 'Thanks! Please check your email.';
+    }
+    
     setFooterEmail('');
   };
 
@@ -29,7 +34,7 @@ export default function PrivacyPage() {
         />
       </div>
 
-      <main className="bg-white min-h-screen">
+      <main id="main" className="bg-white min-h-screen">
         <div className="max-w-4xl mx-auto px-4 py-12">
           <h1 className="text-4xl font-bold custom-blue mb-8 text-center">Privacy Policy</h1>
           <p className="text-gray-600 mb-8 text-center">
@@ -154,17 +159,25 @@ export default function PrivacyPage() {
               <h2 className="text-2xl font-bold custom-blue mb-4">Get the Best Deals First!</h2>
               <p className="text-gray-600 mb-6">Subscribe to our newsletter and never miss out on amazing deals, new arrivals, and exclusive offers.</p>
               <form onSubmit={handleFooterNewsletterSignup} className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
+                <label htmlFor="privacy-footer-email" className="sr-only">Email address</label>
                 <input
+                  id="privacy-footer-email"
+                  name="email"
                   type="email"
                   placeholder="Enter your email address"
                   value={footerEmail}
                   onChange={(e) => setFooterEmail(e.target.value)}
                   required
+                  aria-describedby="privacy-footer-email-help"
                   className="flex-1 w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500"
                 />
+                <p id="privacy-footer-email-help" className="sr-only">
+                  Enter a valid email address.
+                </p>
                 <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary h-10 px-4 py-2 custom-bg-red hover:bg-red-600 text-white w-full sm:w-auto" type="submit">
                   Subscribe Now
                 </button>
+                <div id="privacy-footer-email-status" aria-live="polite" className="sr-only" />
               </form>
               <p className="text-xs text-gray-500 mt-3">We respect your privacy. Unsubscribe anytime.</p>
             </div>
@@ -185,6 +198,7 @@ export default function PrivacyPage() {
               <a href="/about" className="text-gray-600 hover:text-red-600 text-sm">About</a>
               <a href="/privacy" className="text-gray-600 hover:text-red-600 text-sm">Privacy Policy</a>
               <a href="/terms" className="text-gray-600 hover:text-red-600 text-sm">Terms</a>
+              <a href="/accessibility" className="text-gray-600 hover:text-red-600 text-sm">Accessibility</a>
               <a href="/about#disclosure" className="text-gray-600 hover:text-red-600 text-sm">Affiliate Disclosure</a>
             </div>
 

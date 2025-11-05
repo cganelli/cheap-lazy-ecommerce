@@ -35,7 +35,7 @@ export default function TrendingSection({ products, loading = false }: TrendingS
           alt="What's New"
           className="h-16 mb-2 object-contain"
         />
-        <p className="text-gray-600">
+        <p className="text-gray-700">
           {loading ? 'Loading trending products...' : 'Hot deals and popular items flying off the shelves'}
         </p>
       </div>

@@ -46,7 +46,7 @@ export default function CategorySection({ title, products, featuredImage, itemCo
             )}
           </div>
           <div className="flex items-center gap-2">
-            <p className="text-gray-600 text-sm">See all {itemCount} items</p>
+            <p className="text-gray-700 text-sm">See all {itemCount} items</p>
             <span className="bg-red-100 text-red-600 border border-red-200 text-xs font-medium px-2.5 py-0.5 rounded-full">
               {itemCount}
             </span>

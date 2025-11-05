@@ -21,3 +21,16 @@ test('shows affiliate disclaimer', () => {
   render(<CategoryShelf title="Demo" items={make(8)} initialLimit={6} />);
   expect(screen.getByText(/As an Amazon Associate, I may earn commissions from qualifying purchases/i)).toBeInTheDocument();
 });
+
+test('shows scroll arrows when there are more items than initial limit', () => {
+  render(<CategoryShelf title="Demo" items={make(8)} initialLimit={6} />);
+  expect(screen.getByRole('button', { name: /scroll left/i })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /scroll right/i })).toBeInTheDocument();
+});
+
+test('hides scroll arrows when expanded', () => {
+  render(<CategoryShelf title="Demo" items={make(8)} initialLimit={6} />);
+  fireEvent.click(screen.getByRole('button', { name: /View All 8 Items/i }));
+  expect(screen.queryByRole('button', { name: /scroll left/i })).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: /scroll right/i })).not.toBeInTheDocument();
+});

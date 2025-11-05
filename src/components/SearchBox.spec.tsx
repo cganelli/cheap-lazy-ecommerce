@@ -28,7 +28,7 @@ test('result item links have affiliate rel/target', async () => {
   const list = await screen.findByRole('listbox');
   const link = within(list).getAllByRole('link')[0] as HTMLAnchorElement;
   expect(link).toHaveAttribute('target', '_blank');
-  expect(link.getAttribute('rel')).toMatch(/nofollow/);
   expect(link.getAttribute('rel')).toMatch(/sponsored/);
   expect(link.getAttribute('rel')).toMatch(/noopener/);
+  expect(link.getAttribute('rel')).toMatch(/noreferrer/);
 });

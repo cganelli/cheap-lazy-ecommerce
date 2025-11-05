@@ -81,7 +81,7 @@ export default function SearchBox({
         aria-controls={listId}
         aria-expanded={open}
         role="combobox"
-        className="w-full rounded-md border px-3 py-2 shadow-sm outline-none focus:ring"
+        className="w-full rounded-md border px-3 py-2 shadow-sm outline-none focus:ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600"
       />
 
       {open && results.length > 0 && (
@@ -101,7 +101,8 @@ export default function SearchBox({
               <a
                 href={p.affiliate_url}
                 target="_blank"
-                rel="nofollow sponsored noopener noreferrer"
+                rel="sponsored noopener noreferrer"
+                aria-label={`Buy ${p.title} on Amazon (opens in a new tab)`}
                 className="flex w-full items-center gap-3"
               >
                 {/* Thumbnail (portrait ~4/5, 64x80) */}
@@ -120,7 +121,7 @@ export default function SearchBox({
                 </div>
                 <div className="min-w-0">
                   <div className="truncate text-sm font-medium leading-tight">{p.title}</div>
-                  {p.category ? <div className="truncate text-xs text-gray-600">{p.category}</div> : null}
+                  {p.category ? <div className="truncate text-xs text-gray-700">{p.category}</div> : null}
                 </div>
               </a>
             </li>
