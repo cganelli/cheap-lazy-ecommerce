@@ -154,7 +154,7 @@ export default function HomePage() {
       </div>
 
       {/* Hero Banner */}
-      <div className="w-full mb-4 pt-4" style={{backgroundColor: '#A0B5D0', height: '116px', overflow: 'hidden'}}>
+      <div className="w-full mb-2 pt-4" style={{backgroundColor: '#A0B5D0', height: '116px', overflow: 'hidden'}}>
         <img
           src="/Cheap-Lazy-Hero-2.png"
           alt="Cheap & Lazy Stuff - Too cheap to waste money. Too lazy to waste time."
@@ -162,8 +162,15 @@ export default function HomePage() {
         />
       </div>
 
-      <main id="main" className="max-w-7xl mx-auto px-4 py-8">
+      <main id="main" className="max-w-7xl mx-auto px-4 pt-4 pb-8">
         <h1 className="sr-only">Cheap & Lazy Stuff - Find the best deals on quality products</h1>
+        
+        {/* Tagline */}
+        <div className="mb-6 flex justify-center">
+          <p className="text-3xl font-bold text-blue-900">
+            Too cheap to waste money. Too lazy to waste time.
+          </p>
+        </div>
         
         {/* Search Box */}
         <div className="mb-8 flex justify-center">
