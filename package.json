@@ -12,7 +12,8 @@
     "test:a11y": "vitest --run --config vitest.config.mts",
     "a11y:local": "npm run build && npx http-server out -p 4321 & SERVER_PID=$! && npx wait-on http://localhost:4321 && pa11y-ci; CODE=$?; kill $SERVER_PID || true; exit $CODE",
     "lint": "eslint . --ext .js,.ts,.tsx --ignore-pattern '.next' --ignore-pattern 'out' --ignore-pattern '.netlify'",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "branch:setup": "bash ./scripts/branch-setup.sh"
   },
   "dependencies": {
     "@netlify/blobs": "^10.0.10",
