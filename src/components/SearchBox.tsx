@@ -80,8 +80,9 @@ export default function SearchBox({
         aria-autocomplete="list"
         aria-controls={listId}
         aria-expanded={open}
+        aria-activedescendant={open && results.length > 0 ? `${listId}-option-${active}` : undefined}
         role="combobox"
-        className="w-full rounded-md border px-3 py-2 shadow-sm outline-none focus:ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600"
+        className="w-full rounded-md border-0 px-3 py-2 shadow-sm outline-none ring-4 ring-red-600 focus:ring-4 focus:ring-red-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-600 bg-white"
       />
 
       {open && results.length > 0 && (
@@ -93,9 +94,10 @@ export default function SearchBox({
           {results.map((p, i) => (
             <li
               key={p.asin}
+              id={`${listId}-option-${i}`}
               role="option"
               aria-selected={i === active}
-              className={`flex items-center gap-3 p-2 hover:bg-gray-50 ${i === active ? 'bg-gray-100' : ''}`}
+              className={`flex items-center gap-3 p-2 hover:bg-gray-50 focus-within:bg-gray-100 ${i === active ? 'bg-gray-100' : ''}`}
               onMouseEnter={() => setActive(i)}
             >
               <a
@@ -128,8 +130,8 @@ export default function SearchBox({
           ))}
 
           {/* Optional link to a full results page */}
-          <li className="border-t p-2 text-right text-xs">
-            <a href={`/search?q=${encodeURIComponent(q)}`} className="underline">View all results</a>
+          <li className="border-t p-2 text-right text-xs" role="none">
+            <a href={`/search?q=${encodeURIComponent(q)}`} className="underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600">View all results</a>
           </li>
         </ul>
       )}

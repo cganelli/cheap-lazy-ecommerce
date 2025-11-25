@@ -5,11 +5,12 @@ import { ProductCardImage } from '@/components/ProductCardImage';
 
 export type Product = {
   asin: string; title: string; category?: string;
-  affiliate_url?: string; image_url: string; image_srcset?: string; image_ratio?: number;
+  affiliate_url?: string; image_url: string; image_srcset?: string; image_ratio?: number; reviewUrl?: string;
 };
 
 // Map category names to their stylized image files
 const categoryImageMap: Record<string, string> = {
+  'My Reviews': '/MY_REVIEWS_RED_TOUCHING_FIXED.png',
   'Beauty': '/BEAUTY_RED_TOUCHING.png',
   'Electronics': '/ELECTRONICS_RED_TOUCHING.png',
   'Hair Care': '/HAIR_CARE_RED_TOUCHING.png',
@@ -42,18 +43,25 @@ export default function CategoryShelf({
     el.scrollBy({ left: delta, behavior: 'smooth' });
   }
 
+  // Convert category name to kebab-case for ID
+  const sectionId = title.toLowerCase().replace(/\s+/g, '-');
+
   return (
-    <section className="my-8">
+    <section id={sectionId} className="my-8 scroll-mt-20" aria-labelledby={`${sectionId}-heading`}>
       <div className="bg-white rounded-lg shadow-md p-6">
         <div className="mb-4">
           {categoryImageMap[title] ? (
-            <img 
-              src={categoryImageMap[title]} 
-              alt={title}
-              className="h-12 object-contain"
-            />
+            <>
+              <h2 id={`${sectionId}-heading`} className="sr-only">{title}</h2>
+              <img 
+                src={categoryImageMap[title]} 
+                alt=""
+                aria-hidden="true"
+                className="h-12 object-contain"
+              />
+            </>
           ) : (
-            <h2 className="text-xl font-semibold">{title}</h2>
+            <h2 id={`${sectionId}-heading`} className="text-xl font-semibold">{title}</h2>
           )}
         </div>
 
@@ -76,7 +84,7 @@ export default function CategoryShelf({
               <article key={p.asin} className="snap-start shrink-0 w-44 sm:w-56" aria-labelledby={`${p.asin}-title`}>
                 <ProductCardImage
                   src={p.image_url} srcSet={p.image_srcset} alt={p.title}
-                  ratio={p.image_ratio ?? 4/5} affiliateUrl={p.affiliate_url}
+                  ratio={p.image_ratio ?? 4/5} affiliateUrl={p.affiliate_url} reviewUrl={p.reviewUrl}
                 />
                 <h3 id={`${p.asin}-title`} className="mt-2 text-sm font-medium leading-tight line-clamp-2">{p.title}</h3>
               </article>
@@ -97,7 +105,7 @@ export default function CategoryShelf({
           {shown.map(p => (
             <article key={p.asin} aria-labelledby={`${p.asin}-title`}>
               <ProductCardImage src={p.image_url} srcSet={p.image_srcset}
-                                alt={p.title} ratio={p.image_ratio ?? 4/5} affiliateUrl={p.affiliate_url} />
+                                alt={p.title} ratio={p.image_ratio ?? 4/5} affiliateUrl={p.affiliate_url} reviewUrl={p.reviewUrl} />
               <h3 id={`${p.asin}-title`} className="mt-2 text-sm font-medium leading-tight line-clamp-2">{p.title}</h3>
             </article>
           ))}
@@ -108,12 +116,12 @@ export default function CategoryShelf({
       <div className="mt-6 flex flex-col items-center">
         {!expanded ? (
           <button onClick={() => setExpanded(true)}
-                  className="rounded-2xl border-2 border-red-600 px-6 py-2 text-base font-medium shadow-sm text-red-600 hover:bg-red-600 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600">
+                  className="rounded-2xl bg-white px-6 py-2 text-base font-bold shadow-sm ring-4 ring-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-600">
             View All {items.length} Items
           </button>
         ) : (
           <button onClick={() => { setExpanded(false); trackRef.current?.scrollTo({ left: 0, behavior: 'smooth' }); }}
-                  className="rounded-2xl border-2 border-red-600 px-6 py-2 text-base font-medium shadow-sm text-red-600 hover:bg-red-600 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600">
+                  className="rounded-2xl bg-white px-6 py-2 text-base font-bold shadow-sm ring-4 ring-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-600">
             Collapse
           </button>
         )}

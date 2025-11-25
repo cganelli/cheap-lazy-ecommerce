@@ -10,6 +10,9 @@ const nextConfig = {
 
   // Safe extras (optional)
   typedRoutes: true,
+
+  // Security headers (applied via Netlify _headers file or middleware)
+  // Note: For static export, headers should be configured in netlify.toml or _headers file
 };
 
 export default nextConfig;

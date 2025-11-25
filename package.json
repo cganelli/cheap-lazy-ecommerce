@@ -10,9 +10,11 @@
     "test:watch": "vitest --config vitest.config.mts",
     "test:ci": "vitest --run --reporter=dot --config vitest.config.mts",
     "test:a11y": "vitest --run --config vitest.config.mts",
-    "a11y:local": "npm run build && npx http-server out -p 4321 & SERVER_PID=$! && npx wait-on http://localhost:4321 && pa11y-ci; CODE=$?; kill $SERVER_PID || true; exit $CODE",
+    "a11y:local": "npm run build && npx image.pnghttp-server out -p 4321 & SERVER_PID=$! && npx wait-on http://localhost:4321 && pa11y-ci; CODE=$?; kill $SERVER_PID || true; exit $CODE",
     "lint": "eslint . --ext .js,.ts,.tsx --ignore-pattern '.next' --ignore-pattern 'out' --ignore-pattern '.netlify'",
     "typecheck": "tsc --noEmit",
+    "img:build": "node scripts/build-images.mjs",
+    "img:clean": "rm -f public/products/*.webp",
     "branch:setup": "bash ./scripts/branch-setup.sh"
   },
   "dependencies": {

@@ -17,10 +17,14 @@ import SearchBox from '@/components/SearchBox'
 import { getProductsSync } from '@/lib/static-products'
 import CategoryShelf from '@/components/CategoryShelf'
 import { products } from '@/lib/static-products'
+import { mergeReviewUrls } from '@/lib/mergeReviewUrls'
+import MyReviewsSection from '@/components/MyReviewsSection'
 
 function byCategory() {
-  const map = new Map<string, typeof products>();
-  for (const p of products) {
+  // Merge review URLs before categorizing
+  const productsWithReviews = mergeReviewUrls(products);
+  const map = new Map<string, typeof productsWithReviews>();
+  for (const p of productsWithReviews) {
     const key = p.category ?? 'Other';
     if (!map.has(key)) map.set(key, []);
     map.get(key)!.push(p);
@@ -41,7 +45,7 @@ export default function HomePage() {
   const staticProducts = getProductsSync()
   
   // Convert static products to our Product type
-  const allProducts = staticProducts.map((p: any) => ({
+  const allProductsRaw = staticProducts.map((p: any) => ({
     id: p.asin,
     title: p.title,
     name: p.title,
@@ -56,8 +60,12 @@ export default function HomePage() {
     rating: { rate: 4.5, count: 100 },
     amazonUrl: p.affiliate_url,
     availability: 'in_stock',
-    sku: p.asin
+    sku: p.asin,
+    asin: p.asin // Add asin for mergeReviewUrls
   }))
+  
+  // Merge review URLs from reviewUrls.json
+  const allProducts = mergeReviewUrls(allProductsRaw)
   
   // Get categories from products
   const categoryList = [...new Set(allProducts.map((p: any) => p.category)) as Set<string>].map((cat: string) => ({
@@ -102,10 +110,14 @@ export default function HomePage() {
 
     // Scroll to the relevant section
     if (category !== 'All Categories') {
-      const element = document.getElementById(category.toLowerCase().replace(/\s+/g, '-'))
+      const sectionId = category.toLowerCase().replace(/\s+/g, '-')
+      const element = document.getElementById(sectionId)
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
+    } else {
+      // Scroll to top for "All Categories"
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 
@@ -167,7 +179,7 @@ export default function HomePage() {
         
         {/* Tagline */}
         <div className="mb-6 flex justify-center">
-          <p className="text-3xl font-bold text-blue-900">
+          <p className="text-3xl font-bold" style={{ color: '#1D3557' }}>
             Too cheap to waste money. Too lazy to waste time.
           </p>
         </div>
@@ -179,9 +191,9 @@ export default function HomePage() {
 
         {showSearchResults ? (
           /* Search Results */
-          <div className="mb-12">
+          <div className="mb-12" role="region" aria-labelledby="search-results-heading">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold custom-blue">
+              <h2 id="search-results-heading" className="text-2xl font-bold custom-blue">
                 Search results for "{searchQuery}"
               </h2>
               {searchLoading && (
@@ -214,6 +226,7 @@ export default function HomePage() {
                       blur={(product as any).imageBlur}
                       ratio={(product as any).imageRatio && Number.isFinite((product as any).imageRatio) ? (product as any).imageRatio * 1 : 4/5}
                       affiliateUrl={(product as any).amazonUrl}
+                      reviewUrl={(product as any).reviewUrl}
                     />
                     <h3 className="mt-2 text-sm font-medium leading-tight">{product.title}</h3>
                   </article>
@@ -233,6 +246,26 @@ export default function HomePage() {
           </div>
         ) : (
           <>
+            {/* My Reviews Section - Products with review videos */}
+            {(() => {
+              // ASINs to exclude from My Reviews section (but keep review buttons on thumbnails)
+              const excludedFromMyReviews = ['B001FB6IFY', 'B0002AQMZU', 'B01EKUBU5Y', 'B004452DPM']; // Polder, Vet's Best, TruSkin, Chi44
+              
+              const productsWithReviews = allProducts
+                .filter((p: any) => p.reviewUrl && !excludedFromMyReviews.includes(p.sku || p.id))
+                .slice(0, 6)
+                .map((p: any) => ({
+                  asin: p.sku || p.id,
+                  title: p.title,
+                  reviewUrl: p.reviewUrl,
+                  amazonUrl: p.amazonUrl
+                }));
+              
+              return productsWithReviews.length > 0 ? (
+                <MyReviewsSection key="My Reviews" items={productsWithReviews} />
+              ) : null;
+            })()}
+            
             {/* Category Shelves */}
             {cats.map(([name, items]) => (
               <CategoryShelf key={name} title={name} items={items} initialLimit={6} />
@@ -252,9 +285,10 @@ export default function HomePage() {
               <input
                 id="footer-email"
                 name="email"
+                type="email"
+                autoComplete="email"
                 value={footerEmail}
                 onChange={(e) => setFooterEmail(e.target.value)}
-                type="email"
                 placeholder="Enter your email"
                 required
                 aria-describedby="footer-email-help"

@@ -107,6 +107,13 @@ export default function ImportProductsPage() {
       return;
     }
 
+    // Security: File size limit (5MB)
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+    if (file.size > MAX_FILE_SIZE) {
+      setErrors([`File is too large. Maximum size is ${MAX_FILE_SIZE / 1024 / 1024}MB.`]);
+      return;
+    }
+
     // Check if file is CSV-like
     const fileName = file.name.toLowerCase();
     const fileType = file.type.toLowerCase();
@@ -166,6 +173,13 @@ export default function ImportProductsPage() {
     );
     
     if (csvFile) {
+      // Security: File size limit (5MB)
+      const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+      if (csvFile.size > MAX_FILE_SIZE) {
+        setErrors([`File is too large. Maximum size is ${MAX_FILE_SIZE / 1024 / 1024}MB.`]);
+        return;
+      }
+
       // Simulate file input change
       const dataTransfer = new DataTransfer();
       dataTransfer.items.add(csvFile);

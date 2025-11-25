@@ -1,0 +1,30 @@
+# Security Headers
+# These headers are applied to all responses when deployed on Netlify
+# Note: This file does NOT affect Next.js dev server (localhost:3000)
+
+/*
+  # Content Security Policy
+  # Note: frame-ancestors 'none' prevents our site from being embedded elsewhere (good for security)
+  # frame-src allows us to embed Google Drive iframes (needed for review videos)
+  # Note: Google Drive has its own CSP that may show warnings in console - this is expected and videos still work
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://drive.google.com https://accounts.google.com https://*.googleapis.com; style-src 'self' 'unsafe-inline' https://drive.google.com https://accounts.google.com https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://drive.google.com https://accounts.google.com https://*.googleapis.com https://webservices.amazon.com https://cheapandlazystuff.com; frame-src 'self' https://drive.google.com https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests;
+
+  # Prevent MIME type sniffing
+  X-Content-Type-Options: nosniff
+
+  # Note: X-Frame-Options is redundant with CSP frame-ancestors, but kept for older browsers
+  # We use 'SAMEORIGIN' instead of 'DENY' to allow same-origin iframes if needed
+  X-Frame-Options: SAMEORIGIN
+
+  # XSS Protection (legacy, but still useful)
+  X-XSS-Protection: 1; mode=block
+
+  # Referrer Policy
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # Permissions Policy (formerly Feature Policy)
+  # Allow fullscreen for iframes (needed for Google Drive video player)
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), fullscreen=(self "https://drive.google.com" "https://accounts.google.com")
+
+  # Strict Transport Security (HSTS) - Only apply on HTTPS
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload

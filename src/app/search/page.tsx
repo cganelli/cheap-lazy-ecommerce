@@ -4,16 +4,19 @@ import Fuse from 'fuse.js';
 import { useSearchParams } from 'next/navigation';
 import { products } from '@/lib/static-products';
 import { ProductCardImage } from '@/components/ProductCardImage';
+import { mergeReviewUrls } from '@/lib/mergeReviewUrls';
 
 function SearchContent() {
   const params = useSearchParams();
   const q = params.get('q') ?? '';
-  const fuse = useMemo(() => new Fuse(products, {
+  // Merge review URLs once at load
+  const productsWithReviews = useMemo(() => mergeReviewUrls(products), []);
+  const fuse = useMemo(() => new Fuse(productsWithReviews, {
     keys: ['title', 'category', 'asin'],
     threshold: 0.35,
     ignoreLocation: true,
-  }), []);
-  const results = q ? fuse.search(q).map(r => r.item) : products;
+  }), [productsWithReviews]);
+  const results = q ? fuse.search(q).map(r => r.item) : productsWithReviews;
 
   return (
     <main id="main" className="mx-auto max-w-6xl p-4">
@@ -28,6 +31,7 @@ function SearchContent() {
               alt={p.title}
               ratio={p.image_ratio ?? 4/5}
               affiliateUrl={p.affiliate_url}
+              reviewUrl={'reviewUrl' in p ? (p as { reviewUrl?: string }).reviewUrl : undefined}
             />
             <h3 id={`${p.asin}-title`} className="mt-2 text-sm font-medium leading-tight">{p.title}</h3>
             {p.affiliate_url && (

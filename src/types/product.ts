@@ -17,6 +17,7 @@ export interface Product {
   badge?: string
   discount?: string
   amazonUrl?: string
+  reviewUrl?: string // Google Drive preview link or direct video URL
   availability?: 'in_stock' | 'out_of_stock' | 'limited'
   brand?: string
   sku?: string

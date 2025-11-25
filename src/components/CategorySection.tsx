@@ -12,6 +12,7 @@ interface Product {
   imageBlur?: string
   imageRatio?: number
   amazonUrl: string
+  reviewUrl?: string
   badge?: string
 }
 
@@ -82,6 +83,8 @@ export default function CategorySection({ title, products, featuredImage, itemCo
                   alt={product.name}
                   blur={product.imageBlur}
                   ratio={product.imageRatio ? 1 / product.imageRatio : 4/5}
+                  affiliateUrl={product.amazonUrl}
+                  reviewUrl={product.reviewUrl}
                 />
                 {product.badge && (
                   <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-medium px-2.5 py-0.5 rounded-full">

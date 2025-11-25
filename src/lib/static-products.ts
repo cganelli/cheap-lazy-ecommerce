@@ -10,6 +10,7 @@ export type Product = {
   image_blur?: string;
   image_ratio?: number; // width/height, e.g., 4/5 for portrait
   affiliate_url: string;
+  review_url?: string; // Google Drive preview link or direct video URL
   price?: number | null;
 };
 

@@ -164,6 +164,7 @@ export default function PrivacyPage() {
                   id="privacy-footer-email"
                   name="email"
                   type="email"
+                  autoComplete="email"
                   placeholder="Enter your email address"
                   value={footerEmail}
                   onChange={(e) => setFooterEmail(e.target.value)}

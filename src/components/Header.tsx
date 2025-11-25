@@ -98,6 +98,7 @@ export default function Header() {
               <input
                 id="hdr-email"
                 type="email"
+                autoComplete="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}

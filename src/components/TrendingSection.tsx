@@ -13,6 +13,7 @@ interface TrendingProduct {
   imageBlur?: string
   imageRatio?: number
   amazonUrl: string
+  reviewUrl?: string
   badge?: string
   discount?: string
 }
@@ -67,6 +68,8 @@ export default function TrendingSection({ products, loading = false }: TrendingS
                 alt={product.name}
                 blur={product.imageBlur}
                 ratio={product.imageRatio ? 1 / product.imageRatio : 4/5}
+                affiliateUrl={product.amazonUrl}
+                reviewUrl={product.reviewUrl}
               />
               {product.badge && (
                 <span className="absolute top-3 left-3 bg-red-600 text-white font-semibold text-xs px-2.5 py-0.5 rounded-full">

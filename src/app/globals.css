@@ -99,3 +99,16 @@ body {
 .custom-bg-light-blue {
   background-color: var(--light-blue);
 }
+
+/* Hide pop-out buttons in review modal */
+dialog[aria-labelledby="review-title"] iframe {
+  /* Attempt to hide Google Drive pop-out button (may not work due to iframe restrictions) */
+  overflow: hidden;
+}
+
+/* Ensure review modal content fits above the fold */
+dialog[aria-labelledby="review-title"] {
+  display: flex;
+  flex-direction: column;
+  max-height: 95vh;
+}
