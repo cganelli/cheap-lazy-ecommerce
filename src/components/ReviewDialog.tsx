@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
 type ReviewDialogProps = {
   open: boolean;
@@ -33,7 +33,7 @@ export default function ReviewDialog({
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const previouslyFocusedElement = useRef<HTMLElement | null>(null);
 
-  const stopVideo = () => {
+  const stopVideo = useCallback(() => {
     // Stop iframe by removing src (cross-origin restrictions prevent direct control)
     if (iframeRef.current) {
       iframeRef.current.src = '';
@@ -43,12 +43,12 @@ export default function ReviewDialog({
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
     }
-  };
+  }, []); // Empty deps: only uses refs which are stable
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     stopVideo();
     onClose();
-  };
+  }, [stopVideo, onClose]);
 
   useEffect(() => {
     const dlg = dialogRef.current;
@@ -72,7 +72,7 @@ export default function ReviewDialog({
         previouslyFocusedElement.current = null;
       }
     }
-  }, [open]);
+  }, [open, stopVideo]);
 
   // Handle backdrop clicks and escape key
   useEffect(() => {
@@ -98,7 +98,7 @@ export default function ReviewDialog({
       dlg.removeEventListener('click', handleBackdropClick);
       document.removeEventListener('keydown', handleEscape);
     };
-  }, []);
+  }, [handleClose]);
 
   // Remove pop-out functionality from Google Drive URLs
   const getIframeUrl = (url: string) => {

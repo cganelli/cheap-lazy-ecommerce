@@ -22,12 +22,14 @@ type ReviewProduct = {
  * Purpose: Display review video covers in a dedicated section
  */
 export default function MyReviewsSection({ items }: { items: ReviewProduct[] }) {
+  // All hooks must be called at the top level, before any early returns
   const trackRef = useRef<HTMLDivElement>(null);
-
-  if (items.length === 0) return null;
-
+  
   // Check if scrolling is needed on mobile (more than 2 items)
   const canScroll = useMemo(() => items.length > 2, [items.length]);
+
+  // Early return AFTER all hooks
+  if (items.length === 0) return null;
 
   function scroll(dir: 'left' | 'right') {
     const el = trackRef.current;
