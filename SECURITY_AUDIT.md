@@ -5,7 +5,7 @@
 
 ## Executive Summary
 
-This security audit was conducted to identify and remediate vulnerabilities before the website launch. Critical issues were found and fixed, including unauthenticated admin API endpoints, missing input validation, and lack of security headers.
+This security audit was conducted to identify and remediate vulnerabilities before the website launch. Critical issues were found and fixed, including unauthenticated admin API endpoints, missing input validation, and lack of security headers. Additional security hardening includes rate limiting, security event logging, admin UI removal from production, and security.txt implementation for responsible disclosure.
 
 ## Critical Issues Fixed ✅
 
@@ -120,22 +120,33 @@ This security audit was conducted to identify and remediate vulnerabilities befo
 
 ### High Priority
 
-1. **Dependency Vulnerabilities** ⚠️
-   - **Status:** 4 vulnerabilities found (1 high, 3 moderate)
-   - **Details:**
-     - `glob` (high): Command injection vulnerability (dev dependency)
-     - `js-yaml` (moderate): Prototype pollution (dev dependency)
-     - `tar` (moderate): Race condition (dev dependency)
-     - `vite` (moderate): File system bypass (dev dependency)
-   - **Action Required:** Run `npm audit fix` to update dependencies
-   - **Risk:** Low (all are dev dependencies, not used in production)
-   - **Priority:** High (fix before launch)
+1. **Dependency Vulnerabilities** ✅
+   - **Status:** Fixed - All vulnerabilities resolved
+   - **Action Taken:** 
+     - Ran `npm audit fix` which automatically updated vulnerable dependencies
+     - All 4 vulnerabilities (1 high, 3 moderate) were resolved:
+       - `glob` (high): Command injection vulnerability - fixed
+       - `js-yaml` (moderate): Prototype pollution - fixed
+       - `tar` (moderate): Race condition - fixed
+       - `vite` (moderate): File system bypass - fixed
+   - **Current Status:** `npm audit` reports 0 vulnerabilities
+   - **Risk:** None (all vulnerabilities resolved)
+   - **Priority:** ✅ Completed
 
-2. **Rate Limiting**
-   - **Status:** Not implemented
-   - **Recommendation:** Add rate limiting to API endpoints to prevent abuse
-   - **Implementation:** Use Netlify's built-in rate limiting or implement custom solution
-   - **Priority:** High (should be implemented before launch)
+2. **Rate Limiting** ✅
+   - **Status:** Implemented
+   - **Implementation:** 
+     - Created `src/lib/rateLimiter.ts` with sliding window algorithm
+     - 20 requests per 60 seconds per identifier per route
+     - Identifier derived from IP address (`x-forwarded-for`) or safe key prefix
+     - Returns HTTP 429 with `Retry-After` header when limit exceeded
+     - Integrated into both admin API routes (`/api/admin/products/import` and `/api/admin/products/bulk`)
+   - **Files Created:**
+     - `src/lib/rateLimiter.ts`
+   - **Files Modified:**
+     - `src/app/api/admin/products/import/route.ts`
+     - `src/app/api/admin/products/bulk/route.ts`
+   - **Priority:** ✅ Completed
 
 3. **Content Security Policy Tuning**
    - **Status:** Basic CSP implemented
@@ -143,31 +154,49 @@ This security audit was conducted to identify and remediate vulnerabilities befo
    - **Note:** Current CSP allows `unsafe-inline` and `unsafe-eval` for scripts (required for Next.js static export)
    - **Priority:** Medium
 
-3. **Dependency Security Scanning**
-   - **Status:** Not automated
-   - **Recommendation:** Run `npm audit` regularly and update vulnerable dependencies
-   - **Command:** `npm audit` and `npm audit fix`
-   - **Priority:** High (run before launch)
+3. **Dependency Security Scanning** ✅
+   - **Status:** Routine established
+   - **Implementation:**
+     - Run `npm audit` regularly to check for vulnerabilities
+     - Run `npm audit fix` to automatically fix vulnerabilities when possible
+     - Verify with `npm audit` after fixes to confirm no high/critical issues remain
+     - All vulnerabilities resolved as of November 2025
+   - **Commands:** `npm audit` and `npm audit fix`
+   - **Priority:** ✅ Completed (routine established)
 
 ### Medium Priority
 
-4. **Admin Page Access Control**
-   - **Status:** Admin pages are client-side only (no server-side protection)
-   - **Recommendation:** Add authentication/authorization to admin pages
-   - **Options:** 
-     - Password protection
-     - IP whitelisting (via Netlify)
-     - OAuth integration
-   - **Priority:** Medium (if admin pages are publicly accessible)
+4. **Admin Page Access Control** ✅
+   - **Status:** Admin UI removed from production static export
+   - **Implementation:**
+     - Created `scripts/remove-admin-from-export.mjs` to remove admin paths from static export
+     - Admin pages and API routes excluded from production build
+     - Admin functionality remains available in local development only
+     - Production static export contains no admin UI or API routes
+   - **Files Created:**
+     - `scripts/remove-admin-from-export.mjs`
+   - **Files Modified:**
+     - `package.json` (build script updated)
+   - **Priority:** ✅ Completed
 
-5. **Logging and Monitoring**
-   - **Status:** Basic console logging
-   - **Recommendation:** Implement proper logging for security events
-   - **Events to log:**
-     - Failed authentication attempts
-     - API errors
-     - Unusual request patterns
-   - **Priority:** Medium
+5. **Logging and Monitoring** ✅
+   - **Status:** Implemented
+   - **Implementation:**
+     - Created `src/lib/logSecurityEvent.ts` for centralized security logging
+     - Logs security events with environment-aware verbosity
+     - Never logs secrets, full URLs, or sensitive data
+     - Uses `console.warn` for expected bad behavior, `console.error` for unexpected errors
+     - Events logged:
+       - `auth_failed`: Failed authentication attempts
+       - `validation_failed`: Input validation failures
+       - `rate_limited`: Rate limit violations
+       - `internal_error`: Unexpected internal errors
+   - **Files Created:**
+     - `src/lib/logSecurityEvent.ts`
+   - **Files Modified:**
+     - `src/app/api/admin/products/import/route.ts`
+     - `src/app/api/admin/products/bulk/route.ts`
+   - **Priority:** ✅ Completed
 
 6. **HTTPS Enforcement**
    - **Status:** HSTS header configured
@@ -181,10 +210,16 @@ This security audit was conducted to identify and remediate vulnerabilities befo
    - **Recommendation:** Add SRI hashes for external scripts (if any)
    - **Priority:** Low (no external scripts currently)
 
-8. **Security.txt File**
-   - **Status:** Not implemented
-   - **Recommendation:** Add `/.well-known/security.txt` for responsible disclosure
-   - **Priority:** Low
+8. **Security.txt File** ✅
+   - **Status:** Implemented
+   - **Implementation:**
+     - Created `public/.well-known/security.txt`
+     - Provides standard contact information for security researchers
+     - Points to accessibility page for policy and acknowledgments
+     - Expires: December 31, 2026
+   - **Files Created:**
+     - `public/.well-known/security.txt`
+   - **Priority:** ✅ Completed
 
 ## Environment Variables Security
 
@@ -207,16 +242,20 @@ This security audit was conducted to identify and remediate vulnerabilities befo
 
 Before launch, verify:
 
-- [ ] All admin API routes require authentication
-- [ ] Invalid authentication returns 401
-- [ ] Input validation rejects malformed data
-- [ ] File size limits are enforced
-- [ ] Security headers are present (check with browser dev tools)
-- [ ] HTTPS is enforced
-- [ ] No sensitive data in client-side code
-- [ ] `npm audit` shows no critical vulnerabilities
-- [ ] Error messages don't leak sensitive information
-- [ ] External links have proper `rel` attributes
+- [x] All admin API routes require authentication
+- [x] Invalid authentication returns 401
+- [x] Input validation rejects malformed data
+- [x] File size limits are enforced
+- [x] Security headers are present (check with browser dev tools)
+- [x] HTTPS is enforced
+- [x] No sensitive data in client-side code
+- [x] `npm audit` shows no critical vulnerabilities
+- [x] Error messages don't leak sensitive information
+- [x] External links have proper `rel` attributes
+- [x] Rate limiting implemented for admin API routes
+- [x] Security event logging implemented
+- [x] Admin UI removed from production static export
+- [x] Security.txt file created for responsible disclosure
 
 ## Security Headers Verification
 
@@ -264,4 +303,29 @@ If a security issue is discovered:
 - Implemented security headers
 - Added file upload size limits
 - Improved error handling
+
+**November 25, 2025:**
+- Fixed npm dependency vulnerabilities
+  - Ran `npm audit fix` to resolve all 4 vulnerabilities (1 high, 3 moderate)
+  - All vulnerabilities in dev dependencies (glob, js-yaml, tar, vite) resolved
+  - Current status: 0 vulnerabilities reported by `npm audit`
+  - Established routine for regular dependency security scanning
+- Added security-focused logging system (`logSecurityEvent.ts`)
+  - Centralized logging for all security events
+  - Environment-aware verbosity (details only in dev)
+  - Sanitization to prevent secret leakage
+  - Logs: auth failures, validation failures, rate limits, internal errors
+- Implemented rate limiting for admin API routes
+  - Sliding window algorithm (20 requests per 60 seconds)
+  - Safe identifier derivation (IP or key prefix)
+  - HTTP 429 responses with Retry-After header
+  - Integrated into both admin import and bulk routes
+- Removed admin UI from production static export
+  - Admin pages and API routes excluded from build output
+  - Admin functionality available only in local development
+  - Production deployment contains no admin endpoints
+- Added security.txt file
+  - Standard `.well-known/security.txt` for responsible disclosure
+  - Contact information for security researchers
+  - Policy and acknowledgment links
 

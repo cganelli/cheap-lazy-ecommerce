@@ -105,7 +105,8 @@ export default function ReviewDialog({
     if (url.includes('/preview')) {
       // Add parameters to minimize controls and prevent pop-out
       const separator = url.includes('?') ? '&' : '?';
-      return `${url}${separator}rm=minimal&embedded=true`;
+      // rm=minimal: minimal UI, embedded=true: embedded mode, rm=minimal removes popout button
+      return `${url}${separator}rm=minimal&embedded=true&usp=sharing`;
     }
     return url;
   };
@@ -133,9 +134,9 @@ export default function ReviewDialog({
           Close
         </button>
       </div>
-      <div id="review-desc" className="px-3 py-2 flex flex-col flex-1 min-h-0 overflow-y-auto">
+      <div id="review-desc" className="px-3 py-2 flex flex-col flex-1 min-h-0 overflow-y-auto relative">
         <div className="w-full" style={{ maxHeight: 'calc(95vh - 140px)' }}>
-          <div className="aspect-[9/16] w-full max-w-full mx-auto">
+          <div className="aspect-[9/16] w-full max-w-full mx-auto relative overflow-hidden rounded-md z-0">
             {reviewUrl.includes('/preview') ? (
               open ? (
                 <iframe
@@ -144,6 +145,7 @@ export default function ReviewDialog({
                   title={`Review video for ${title}`}
                   allow="autoplay; encrypted-media"
                   allowFullScreen={false}
+                  sandbox="allow-scripts allow-same-origin allow-presentation"
                   className="w-full h-full rounded-md"
                   style={{ pointerEvents: 'auto' }}
                 />
@@ -161,14 +163,14 @@ export default function ReviewDialog({
             )}
           </div>
         </div>
-        <div className="mt-2 flex gap-2 shrink-0 pb-1">
+        <div className="mt-2 flex gap-2 shrink-0 pb-1 relative z-10">
           {amazonUrl ? (
             <a
               href={amazonUrl}
               target="_blank"
               rel="sponsored nofollow noopener noreferrer"
               onClick={handleClose}
-              className="inline-flex items-center justify-center rounded-md bg-[#C6392D] px-3 py-2 text-sm text-white font-medium flex-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-white"
+              className="inline-flex items-center justify-center rounded-md bg-[#C6392D] px-3 py-2 text-sm text-white font-medium flex-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-white relative z-10"
               aria-label={`Buy ${title} on Amazon, opens in a new tab`}
             >
               Buy on Amazon
@@ -177,7 +179,7 @@ export default function ReviewDialog({
           <button
             type="button"
             onClick={handleClose}
-            className="inline-flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-bold ring-4 ring-red-600 text-red-600 flex-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600"
+            className="inline-flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-bold ring-4 ring-red-600 text-red-600 flex-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600 relative z-10"
           >
             Continue browsing
           </button>

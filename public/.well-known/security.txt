@@ -1,0 +1,6 @@
+Contact: mailto:hello@cheapandlazystuff.com
+Policy: https://www.cheapandlazystuff.com/accessibility
+Acknowledgments: https://www.cheapandlazystuff.com/accessibility
+Preferred-Languages: en
+Expires: 2026-12-31T23:59:59Z
+

@@ -19,6 +19,7 @@ import CategoryShelf from '@/components/CategoryShelf'
 import { products } from '@/lib/static-products'
 import { mergeReviewUrls } from '@/lib/mergeReviewUrls'
 import MyReviewsSection from '@/components/MyReviewsSection'
+import { Facebook, Instagram, Youtube } from 'lucide-react'
 
 function byCategory() {
   // Merge review URLs before categorizing
@@ -85,15 +86,31 @@ export default function HomePage() {
   const trendingLoading = false
 
   // Set up Fuse.js search
-  const fuse = useMemo(() => new Fuse(allProducts, {
-    keys: ['title', 'category', 'sku'],
-    threshold: 0.35,
-  }), [allProducts]);
+  const fuse = useMemo(() => {
+    if (!allProducts || allProducts.length === 0) {
+      return null;
+    }
+    try {
+      return new Fuse(allProducts, {
+        keys: ['title', 'category', 'sku'],
+        threshold: 0.35,
+      });
+    } catch (error) {
+      console.error('Error initializing Fuse:', error);
+      return null;
+    }
+  }, [allProducts]);
 
   // Search functionality from Fuse.js
   const searchResults: Product[] = useMemo(() => {
     if (!searchQuery.trim()) return [];
-    return fuse.search(searchQuery).map(r => r.item) as Product[];
+    if (!fuse) return [];
+    try {
+      return fuse.search(searchQuery).map(r => r.item) as Product[];
+    } catch (error) {
+      console.error('Error searching with Fuse:', error);
+      return [];
+    }
   }, [fuse, searchQuery]);
   const searchLoading = false
 
@@ -316,6 +333,64 @@ export default function HomePage() {
               {/* NEW: anchored link into About */}
               <Link href="/about#disclosure">Affiliate Disclosure</Link>
             </nav>
+
+            {/* Social Media Icons */}
+            <div className="mt-6 flex items-center justify-center gap-4">
+              <a
+                href="https://www.tiktok.com/@cheapandlazystuff"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-red-600 hover:text-red-700 transition-colors"
+                aria-label="Follow us on TikTok"
+              >
+                <svg className="h-12 w-12 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                </svg>
+              </a>
+              <a
+                href="https://www.instagram.com/cheapandlazystuff/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-red-600 hover:text-red-700 transition-colors"
+                aria-label="Follow us on Instagram"
+              >
+                <Instagram className="h-12 w-12 shrink-0" />
+              </a>
+              <a
+                href="https://www.facebook.com/cheapandlazystuff/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-red-600 hover:text-red-700 transition-colors"
+                aria-label="Follow us on Facebook"
+              >
+                <Facebook className="h-12 w-12 shrink-0" />
+              </a>
+              <a
+                href="https://www.youtube.com/@CheapAndLazyStuff"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-red-600 hover:text-red-700 transition-colors"
+                aria-label="Follow us on YouTube"
+              >
+                <Youtube className="h-12 w-12 shrink-0" />
+              </a>
+              <a
+                href="https://www.pinterest.com/CheapAndLazyStuff"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-red-600 hover:text-red-700 transition-colors"
+                aria-label="Follow us on Pinterest"
+              >
+                <img
+                  src="/pinterest-logo.svg"
+                  alt="Pinterest"
+                  className="h-12 w-12 shrink-0"
+                  width={48}
+                  height={48}
+                  loading="lazy"
+                />
+              </a>
+            </div>
 
             {/* Short disclosure line (kept small on phones) */}
             <p className="mt-6 text-center text-xs text-gray-700 sm:text-sm">
